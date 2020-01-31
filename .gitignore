@@ -1,0 +1,12 @@
+# Solution and Project
+*.sln
+*.csproj
+
+# Auto generated Unity stuff
+obj/
+Temp/
+Logs/
+Library/
+
+# IDE auto-generated files
+.idea/
