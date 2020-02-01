@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using VDUnityFramework.Singleton;
 
-namespace Singleton
+namespace JoystickData
 {
-	public class MovementHandler : Singleton<MovementHandler>
+	public static class MovementHandler
 	{
 		/// <summary>
 		/// Returns a vector3 containing the joystick axis values
@@ -20,14 +19,7 @@ namespace Singleton
 
 		public static Vector3 GetClampedJoystickInput(uint joystickNumber, float maxLength)
 		{
-			Vector3 input = GetJoystickInput(joystickNumber);
-
-			if (input.magnitude > maxLength)
-			{
-				return input.normalized * maxLength;
-			}
-
-			return input;
+			return Vector3.ClampMagnitude(GetJoystickInput(joystickNumber), maxLength);
 		}
 	}
 }
