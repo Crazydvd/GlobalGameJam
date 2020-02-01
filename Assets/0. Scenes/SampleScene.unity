@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ed8deb67b64b28a38d8eccd9d34edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  margin: {x: 0, y: 0, z: 0, w: 0}
+  margin: {x: 30, y: 30, z: 60, w: 5}
 --- !u!1 &139686986
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ed8deb67b64b28a38d8eccd9d34edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  margin: {x: 0, y: 0, z: 0, w: 0}
+  margin: {x: 30, y: 30, z: 60, w: 5}
 --- !u!1 &591109122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,7 +1259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b33d41e84ea4a2b4ebcdde7b99f09e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMaxDistance: {x: 15, y: 30}
+  minMaxDistance: {x: 10, y: 40}
   tagToSearchFor: Player
   objects: []
 --- !u!1 &1100926936
