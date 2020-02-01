@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 114676098}
   - component: {fileID: 114676097}
   - component: {fileID: 114676096}
+  - component: {fileID: 114676103}
   m_Layer: 0
   m_Name: Player (2)
   m_TagString: Player
@@ -257,6 +258,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114676103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114676095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62ed8deb67b64b28a38d8eccd9d34edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  margin: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &139686986
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +320,7 @@ GameObject:
   - component: {fileID: 285931758}
   - component: {fileID: 285931757}
   - component: {fileID: 285931756}
+  - component: {fileID: 285931759}
   m_Layer: 0
   m_Name: Player (1)
   m_TagString: Player
@@ -427,6 +442,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Number: 1
+--- !u!114 &285931759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285931751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62ed8deb67b64b28a38d8eccd9d34edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  margin: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &591109122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1216,9 +1244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f4a8cec939f9542be774a9a1a1c4a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 15, z: -2}
   tagToSearchFor: Player
   objects: []
+  offset: {x: 0, y: 15, z: -2}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1231,7 +1259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b33d41e84ea4a2b4ebcdde7b99f09e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0, z: 0}
+  minMaxDistance: {x: 15, y: 30}
   tagToSearchFor: Player
   objects: []
 --- !u!1 &1100926936

@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Linq;
+using Interfaces;
 using UnityEngine;
 using VDUnityFramework.BaseClasses;
 
 namespace MovementScripts
 {
-	public class MoveToAveragePosition : BetterMonoBehaviour
+	public class MoveToAveragePosition : BetterMonoBehaviour, ICameraMover
 	{
-		[SerializeField] private Vector3 offset = Vector3.zero;
 		[SerializeField] private string tagToSearchFor = "Player";
 
 		[Header("Will search for the tag if empty.")]
 		[SerializeField] private GameObject[] objects = new GameObject[0];
+
+		
+		[SerializeField] private Vector3 offset;
+		// ReSharper disable once ConvertToAutoProperty
+		public Vector3 Offset
+		{
+			get => offset;
+			set => offset = value;
+		}
 
 		private void Start()
 		{
