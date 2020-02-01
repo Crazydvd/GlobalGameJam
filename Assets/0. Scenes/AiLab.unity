@@ -379,10 +379,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 292654523, guid: 4b1755551bf0ee7499612558aeef3421, type: 3}
-      propertyPath: m_Radius
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2460813803030779767, guid: 4b1755551bf0ee7499612558aeef3421,
         type: 3}
       propertyPath: m_Name
@@ -907,6 +903,8 @@ GameObject:
   - component: {fileID: 1570420372}
   - component: {fileID: 1570420371}
   - component: {fileID: 1570420370}
+  - component: {fileID: 1570420374}
+  - component: {fileID: 1570420373}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -979,6 +977,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1570420373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570420369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b33d41e84ea4a2b4ebcdde7b99f09e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minMaxDistance: {x: 15, y: 30}
+  tagToSearchFor: Player
+  objects: []
+--- !u!114 &1570420374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570420369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f4a8cec939f9542be774a9a1a1c4a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagToSearchFor: Player
+  objects: []
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &1635414624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,16 +1506,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sheep
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531759334905943936, guid: dff8d55e5d7cc8348b8d3d7ef4cf919c,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531759334905943939, guid: dff8d55e5d7cc8348b8d3d7ef4cf919c,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8531759334905943943, guid: dff8d55e5d7cc8348b8d3d7ef4cf919c,
         type: 3}

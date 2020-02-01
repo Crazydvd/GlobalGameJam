@@ -37,6 +37,23 @@ namespace AI
 			Vector3 accelleration = GetSteerOrientation();
 
 			Steer(accelleration);
+			LookWhereYouGoing();
+		}
+		
+		private void LookWhereYouGoing()
+		{
+			Vector3 direction = CachedRigidBody.velocity;
+        
+			direction.Normalize();
+
+			if (direction.magnitude > 0.001)
+			{
+				float targetRotation = -1 * (Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg);
+				float newRotation = Mathf.LerpAngle(CachedRigidBody.rotation.eulerAngles.y, targetRotation, Time.deltaTime * sheepBehaviourManager.RotateSpeed);
+				CachedRigidBody.rotation = Quaternion.Euler(0,newRotation,0);
+            
+			}
+        
 		}
 		
 		private void Steer(Vector3 linearAcceleration)

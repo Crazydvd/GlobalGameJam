@@ -7,7 +7,7 @@ namespace Gameplay
 	[ExecuteInEditMode]
 	public class AttractScript : BetterMonoBehaviour
 	{
-		public Vector3 LureOrigin => sphereCollider.center;
+		public Vector3 LureOrigin => CachedTransform.position + sphereCollider.center;
 		
 		[SerializeField] private float attractRadius = 5.0f;
 
