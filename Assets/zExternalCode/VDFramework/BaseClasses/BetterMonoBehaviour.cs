@@ -18,5 +18,20 @@ namespace VDUnityFramework.BaseClasses
 				return cachedTransform;
 			}
 		}
+
+		private Rigidbody cachedRigidBody;
+
+		public Rigidbody CachedRigidBody
+		{
+			get
+			{
+				if (cachedRigidBody == null)
+				{
+					cachedRigidBody = GetComponent<Rigidbody>();
+				}
+
+				return cachedRigidBody;
+			}
+		}
 	}
 }
