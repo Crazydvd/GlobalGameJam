@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 3267199903454265339}
   - component: {fileID: 3267199903454265220}
   - component: {fileID: 3267199903454265221}
+  - component: {fileID: 631547382251577740}
+  - component: {fileID: 1398213966}
   m_Layer: 0
   m_Name: Mesh Generator
   m_TagString: Untagged
@@ -155,3 +157,30 @@ MonoBehaviour:
   - {fileID: 2598498260662955835, guid: 51369ccb37f8de04c8f0b182a0c00b33, type: 3}
   - {fileID: 3553880918793500995, guid: a6f644be0438ea84d8d6803360dba6cc, type: 3}
   - {fileID: 2077135490892043369, guid: 40486d4211188c44db726806ebc8db22, type: 3}
+--- !u!114 &631547382251577740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3267199903454265222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf1c1900eaf40d749a63a31f3a126a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player1: {fileID: 2460813803030779767, guid: 0f3d1724db8c6c145b9037c330dae8a2, type: 3}
+  Player2: {fileID: 2460813803030779767, guid: 4b1755551bf0ee7499612558aeef3421, type: 3}
+--- !u!114 &1398213966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3267199903454265222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2714216c0063a4b90b14b1fe7123fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sheep: {fileID: 3770514243409559072, guid: e569d6e6219485e45b047e54776a5d0f, type: 3}

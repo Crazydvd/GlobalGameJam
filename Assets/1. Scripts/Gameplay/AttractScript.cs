@@ -1,6 +1,4 @@
-﻿//#define DRAW_COLLIDER_LINES
-
-using UnityEngine;
+﻿using UnityEngine;
 using VDUnityFramework.BaseClasses;
 
 namespace Gameplay
@@ -21,20 +19,6 @@ namespace Gameplay
 			sphereCollider.radius = attractRadius;
 			sphereCollider.isTrigger = true;
 		}
-
-#if UNITY_EDITOR && DRAW_COLLIDER_LINES
-		private void Update()
-		{
-			Debug.DrawLine(CachedTransform.position + CachedTransform.forward * attractRadius,
-				CachedTransform.position + CachedTransform.right * attractRadius);
-			Debug.DrawLine(CachedTransform.position + CachedTransform.right * attractRadius,
-				CachedTransform.position + -CachedTransform.forward * attractRadius);
-			Debug.DrawLine(CachedTransform.position + -CachedTransform.forward * attractRadius,
-				CachedTransform.position + -CachedTransform.right * attractRadius);
-			Debug.DrawLine(CachedTransform.position + -CachedTransform.right * attractRadius,
-				CachedTransform.position + CachedTransform.forward * attractRadius);
-		}
-#endif
 
 		private void OnValidate()
 		{

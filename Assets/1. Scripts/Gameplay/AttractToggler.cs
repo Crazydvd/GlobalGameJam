@@ -1,18 +1,22 @@
 ﻿using JoystickData;
-using UnityEngine;
 using VDUnityFramework.BaseClasses;
 
 namespace Gameplay
 {
-	public class FencePlacer : BetterMonoBehaviour
+	public class AttractToggler : BetterMonoBehaviour
 	{
-		[SerializeField] private GameObject FenceCorner;
+		private AttractScript attractScript;
+		
+		private void Awake()
+		{
+			attractScript = GetComponent<AttractScript>();
+		}
 
 		private void Update()
 		{
 			if (JoystickButtonHandler.IsShoulderButtonPressed(GetComponent<JoystickNumber>()))
 			{
-				Instantiate(FenceCorner, CachedTransform.position - CachedTransform.forward, Quaternion.identity);
+				attractScript.enabled ^= true;
 			}
 		}
 	}

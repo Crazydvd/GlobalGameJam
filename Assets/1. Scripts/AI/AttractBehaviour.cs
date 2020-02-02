@@ -29,7 +29,7 @@ namespace AI
 
 		private void FixedUpdate()
 		{
-			if (!attractScript)
+			if (!attractScript || !attractScript.enabled)
 			{
 				return;
 			}
