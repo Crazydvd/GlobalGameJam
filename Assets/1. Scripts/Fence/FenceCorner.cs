@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Events.GameplayEvents;
 using UnityEngine;
@@ -57,7 +56,7 @@ namespace Fence
 				Debug.Log("No available corners found");
 				return;
 			}
-			
+
 			// Set our child to the closest fence corner
 			// Set their parent to us
 			SetChild(closestFenceCorner);
@@ -69,6 +68,7 @@ namespace Fence
 
 				if (child == this)
 				{
+					// TODO: properly calculate the sheep
 					EventManager.Instance.RaiseEvent(new FenceCompletedEvent(5));
 					return;
 				}
@@ -81,19 +81,6 @@ namespace Fence
 		{
 			Child = other;
 			other.Parent = this;
-		}
-
-		private void Update()
-		{
-			if (Parent)
-			{
-				Debug.DrawLine(Parent.CachedTransform.position, CachedTransform.position);
-			}
-
-			if (Child)
-			{
-				Debug.DrawLine(Child.CachedTransform.position, CachedTransform.position);
-			}
 		}
 	}
 }
