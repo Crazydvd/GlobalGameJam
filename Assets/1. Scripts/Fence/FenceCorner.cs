@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Events.GameplayEvents;
 using UnityEngine;
 using VDUnityFramework.BaseClasses;
+using VDUnityFramework.EventSystem;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Fence
@@ -50,25 +52,24 @@ namespace Fence
 			}
 
 			// Check if the closest fence pole actually exists
-			if (closestFenceCorner != null)
-			{
-				// Set our child to the closest fence corner
-				// Set their parent to us
-				closestFenceCorner.Parent = this;
-			}
-			else
+			if (closestFenceCorner == null)
 			{
 				Debug.Log("No available corners found");
+				return;
 			}
+			
+			// Set our child to the closest fence corner
+			// Set their parent to us
+			SetChild(closestFenceCorner);
 
 			FenceCorner child = Child;
-			while (child != null)
+			while (child.Child != null)
 			{
 				child = child.Child;
 
 				if (child == this)
 				{
-					//EventManager.Instance.RaiseEvent<FenceCompletedEvent>();
+					EventManager.Instance.RaiseEvent(new FenceCompletedEvent(5));
 					return;
 				}
 			}
