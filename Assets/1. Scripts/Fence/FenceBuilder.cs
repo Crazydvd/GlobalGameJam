@@ -8,8 +8,8 @@ namespace Fence
 	public class FenceBuilder : BetterMonoBehaviour
 	{
 		[SerializeField] private GameObject fence;
-		
-		private void Start()
+
+		private void Awake()
 		{
 			EventManager.Instance.AddListener<FenceCompletedEvent>(OnFenceCompleted);
 		}
@@ -29,22 +29,31 @@ namespace Fence
 
 		private void BuildFence(FenceCorner corner)
 		{
-			Vector3 delta = corner.Child.CachedTransform.position - corner.CachedTransform.position;
-			float distance = delta.magnitude;
-			
-			for (int i = 0; i < distance; i++)
-			{
-				Instantiate(fence, corner.transform.position + i * 0.5f * delta.normalized, Quaternion.identity);
-			}
-		}		
-		
+			FenceCorner currentCorner = corner;
 
-		///YRotation = vec3.Angle(Vec3.forward, transform.pos - end.pos)
-		/// if (end.pos.x - transform.pos.x > 0.0f)
-		/// {
-		/// 	Yrotation *= -1.0f;
-		/// }
-		///
-		/// plank.transform.localEulerAngles = new Vec3(0, YRotation, 0);
+			do
+			{
+				Vector3 delta = currentCorner.Child.CachedTransform.position - currentCorner.CachedTransform.position;
+				delta.y = 0;
+
+				float distance = delta.magnitude;
+
+				for (int i = 0; i < distance; i++)
+				{
+					Vector3 spawnPosition = (currentCorner.transform.position + (i + 0.5f) * delta.normalized) -
+											new Vector3(0, 0.5f, 0);
+
+					spawnPosition.y = 0;
+
+					Instantiate(fence,
+						spawnPosition,
+						Quaternion.LookRotation(delta));
+				}
+
+				currentCorner.GetComponent<MeshRenderer>().enabled = false;
+
+				currentCorner = currentCorner.Child;
+			} while (currentCorner != null && currentCorner != corner);
+		}
 	}
 }
