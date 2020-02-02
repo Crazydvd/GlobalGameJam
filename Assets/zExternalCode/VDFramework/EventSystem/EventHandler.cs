@@ -18,7 +18,6 @@ namespace VDFramework.EventSystem
 
 		public static bool operator ==(EventHandler handler, Delegate callback)
 		{
-			Debug.Assert(handler != null, nameof(handler) + " != null");
 			return handler.Callback == callback;
 		}
 
