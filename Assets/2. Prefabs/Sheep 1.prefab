@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3770514243409559076}
   - component: {fileID: 3770514243409559079}
   - component: {fileID: 3770514243409559078}
-  - component: {fileID: 3770514243409559077}
+  - component: {fileID: 8568982493759421691}
   m_Layer: 0
   m_Name: Sheep 1
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3770514243409559072}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 6.25, y: 0.58, z: 16.77658}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1036727489490916777}
@@ -71,13 +71,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 959bdf7c16f149529fa65a2e1ca72727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAcceleration: 13
-  MaxVelocity: 7
-  RotateSpeed: 20
+  MaxAcceleration: 15
+  MaxVelocity: 5
+  RotateSpeed: 13
   WanderRate: 0.3
-  WanderOffset: 5
+  WanderOffset: 1
   WanderRadius: 2
---- !u!54 &3770514243409559077
+--- !u!54 &8568982493759421691
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,6 +93,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &5682940075948667071
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4051106544504006586}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.45, y: 1.31, z: 1.18}
+  m_Center: {x: 0, y: 0.78, z: 0}
 --- !u!1001 &3770514243565613024
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -163,17 +176,17 @@ PrefabInstance:
     - target: {fileID: 5552059105657655056, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}
       propertyPath: m_Height
-      value: 1.6
+      value: 1.11
       objectReference: {fileID: 0}
     - target: {fileID: 5552059105657655056, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}
       propertyPath: m_Center.y
-      value: 0.8
+      value: 0.53
       objectReference: {fileID: 0}
     - target: {fileID: 5552059105657655056, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}
       propertyPath: m_Radius
-      value: 0.56
+      value: 0.31
       objectReference: {fileID: 0}
     - target: {fileID: 5552059105657655056, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}
@@ -190,8 +203,15 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5552059105657655056, guid: cd6d7e6da7de59443aee16f04d57039c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd6d7e6da7de59443aee16f04d57039c, type: 3}
+--- !u!1 &4051106544504006586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 895061058969700442, guid: cd6d7e6da7de59443aee16f04d57039c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3770514243565613024}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1036727489490916777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4193058590878759497, guid: cd6d7e6da7de59443aee16f04d57039c,
