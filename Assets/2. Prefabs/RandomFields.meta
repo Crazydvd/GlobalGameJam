@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/2. Prefabs/RandomFields.meta
 guid: 43eabbdba91190d4185dd7582050ba95
 folderAsset: yes
 DefaultImporter:
+=======
+guid: 027829a385589c54593065eb04d17358
+PrefabImporter:
+>>>>>>> f1ef7ee49b50a541a53d68e6cff3f97b7b32a2eb:Assets/2. Prefabs/Canvas.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
