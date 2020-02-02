@@ -4,6 +4,7 @@ using Events.GameplayEvents;
 using UnityEngine;
 using VDUnityFramework.BaseClasses;
 using VDUnityFramework.EventSystem;
+using VDUnityFramework.UnityExtensions;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Fence
@@ -11,12 +12,14 @@ namespace Fence
 	public class FenceCorner : BetterMonoBehaviour
 	{
 		public float ConnectionRadius = 5.0f;
-
+		
 		public FenceCorner Parent { get; private set; }
 		public FenceCorner Child { get; private set; }
 
 		private void Start()
 		{
+			CachedTransform.position = CachedTransform.position.Round();
+			
 			CheckForPossibleConnections();
 		}
 
