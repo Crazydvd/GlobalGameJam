@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEngine;
 using VDUnityFramework.BaseClasses;
 using Vector3 = UnityEngine.Vector3;
@@ -13,6 +12,7 @@ namespace Fence
 		public float ConnectionRadius = 5.0f;
 
 		public FenceCorner Parent { get; private set; }
+		public FenceCorner Child { get; private set; }
 
 		private void Start()
 		{
@@ -52,17 +52,47 @@ namespace Fence
 			// Check if the closest fence pole actually exists
 			if (closestFenceCorner != null)
 			{
-				SetAsChild(closestFenceCorner);
+				// Set our child to the closest fence corner
+				// Set their parent to us
+				closestFenceCorner.Parent = this;
 			}
 			else
 			{
 				Debug.Log("No available corners found");
 			}
+
+			FenceCorner child = Child;
+			while (child != null)
+			{
+				child = child.Child;
+
+				if (child == this)
+				{
+					//EventManager.Instance.RaiseEvent<FenceCompletedEvent>();
+					return;
+				}
+			}
+
+			child.CheckForPossibleConnections();
 		}
 
-		private void SetAsChild([NotNull] FenceCorner other)
+		private void SetChild(FenceCorner other)
 		{
+			Child = other;
 			other.Parent = this;
+		}
+
+		private void Update()
+		{
+			if (Parent)
+			{
+				Debug.DrawLine(Parent.CachedTransform.position, CachedTransform.position);
+			}
+
+			if (Child)
+			{
+				Debug.DrawLine(Child.CachedTransform.position, CachedTransform.position);
+			}
 		}
 	}
 }
