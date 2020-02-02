@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4114016724692616904}
   - component: {fileID: 4921566693720784126}
   - component: {fileID: 1688959529457614855}
-  - component: {fileID: 4258000290373908708}
+  - component: {fileID: -7771582930257100097}
   m_Layer: 0
   m_Name: Sunflower
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102455788880213211}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.91, y: 0.82, z: 0.82}
+  m_LocalPosition: {x: 1.9001, y: 1.0032, z: 0.80985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &4258000290373908708
+--- !u!65 &-7771582930257100097
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,4 +92,4 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.86101127, y: 1.7315683, z: 0.55524063}
-  m_Center: {x: 0, y: -0.018975168, z: -0.014275372}
+  m_Center: {x: 0, y: 0.86658525, z: -0.014275372}

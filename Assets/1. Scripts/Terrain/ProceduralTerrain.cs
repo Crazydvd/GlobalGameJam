@@ -22,7 +22,8 @@ public class ProceduralTerrain : MonoBehaviour
     private Vector3[] vertices;
     private int[] triangles;
     private Color[] colors;
-    
+
+    private MeshCollider meshCollider;
 
     new Renderer renderer;
  
@@ -47,6 +48,9 @@ public class ProceduralTerrain : MonoBehaviour
         {
             mesh.normals = normals;
         }
+
+        meshCollider = gameObject.AddComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
     }
 
     private void OnValidate()
@@ -58,7 +62,7 @@ public class ProceduralTerrain : MonoBehaviour
 
         CreateShape();
         UpdateMesh();
-
+        meshCollider.sharedMesh = mesh;
     }
 
     void CreateShape()

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ed36b7e9539dc664fbad4944299d2577
+guid: 82edea493f2b5224f86d264abc00a639
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_Tow_Truck_P1
-    second: {fileID: 2100000, guid: 373d83784b68ea044871d2da2d720678, type: 2}
+      name: M_Grass
+    second: {fileID: 2100000, guid: b00bf89e453c5144d874a8eb7aa25814, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: e88b8f1ce0c632541b6b0b8a14297f85, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
