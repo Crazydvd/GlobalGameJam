@@ -204,7 +204,7 @@ PrefabInstance:
     - target: {fileID: 512808761549300320, guid: 3f83b1dea5773704196055fc5a9c0c41,
         type: 3}
       propertyPath: m_Name
-      value: Grass 1
+      value: Grass
       objectReference: {fileID: 0}
     - target: {fileID: 512808761549300325, guid: 3f83b1dea5773704196055fc5a9c0c41,
         type: 3}

@@ -297,7 +297,7 @@ PrefabInstance:
     - target: {fileID: 2460813803030779771, guid: 0f3d1724db8c6c145b9037c330dae8a2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.6687675
+      value: 5.7
       objectReference: {fileID: 0}
     - target: {fileID: 2460813803030779771, guid: 0f3d1724db8c6c145b9037c330dae8a2,
         type: 3}
@@ -348,6 +348,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874870524813355425, guid: 0f3d1724db8c6c145b9037c330dae8a2,
+        type: 3}
+      propertyPath: m_Name
+      value: Grass
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f3d1724db8c6c145b9037c330dae8a2, type: 3}
