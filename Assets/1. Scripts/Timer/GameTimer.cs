@@ -1,4 +1,5 @@
 ﻿using System;
+using AI;
 using Events.GameplayEvents;
 using Events.TimerEvents;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace Timer
 			EventManager.Instance.AddListener<TimerStartEvent>(OnTimerStart);
 			EventManager.Instance.AddListener<TimerPauseEvent>(OnTimerPause);
 			EventManager.Instance.AddListener<TimerResumeEvent>(OnTimerResume);
-			EventManager.Instance.AddListener<FenceCompletedEvent>(OnFenceCompleted);
+			EventManager.Instance.AddListener<SheepCapturedEvent>(OnCapturedSheep);
 		}
 
 		private void OnDestroy()
@@ -35,7 +36,7 @@ namespace Timer
 				EventManager.Instance.RemoveListener<TimerStartEvent>(OnTimerStart);
 				EventManager.Instance.RemoveListener<TimerPauseEvent>(OnTimerPause);
 				EventManager.Instance.RemoveListener<TimerResumeEvent>(OnTimerResume);
-				EventManager.Instance.RemoveListener<FenceCompletedEvent>(OnFenceCompleted);
+				EventManager.Instance.RemoveListener<SheepCapturedEvent>(OnCapturedSheep);
 			}
 		}
 
@@ -93,9 +94,9 @@ namespace Timer
 			isTimerPaused = false;
 		}
 
-		private void OnFenceCompleted(FenceCompletedEvent fenceCompletedEvent)
+		private void OnCapturedSheep(SheepCapturedEvent sheepCapturedEvent)
 		{
-			//secondsLeft += ConvertToSeconds(timePerSheep) * fenceCompletedEvent.SheepCollected;
+			secondsLeft += ConvertToSeconds(timePerSheep);
 		}
 	}
 }
