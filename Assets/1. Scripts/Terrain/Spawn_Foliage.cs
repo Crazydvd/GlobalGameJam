@@ -39,7 +39,7 @@ public class Spawn_Foliage : MonoBehaviour
         }
     }
         
-    private void SpawnFoliage()
+    public void SpawnFoliage()
     {
         for (int i = 0; i < mesh.vertexCount; i++)
         {
@@ -55,8 +55,12 @@ public class Spawn_Foliage : MonoBehaviour
         }
     }
 
-    private bool IsAtEdge(Vector3 vertex)
+    public bool IsAtEdge(Vector3 vertex)
     {
+        if (!terrain)
+        {
+            terrain = GetComponent<ProceduralTerrain>();
+        }
         return (vertex.x == 0 || vertex.z == 0 || vertex.x == terrain.xSize - 1 || vertex.z == terrain.zSize - 1);
     }
 }

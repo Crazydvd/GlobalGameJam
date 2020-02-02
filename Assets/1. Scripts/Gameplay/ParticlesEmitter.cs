@@ -6,23 +6,28 @@ using UnityEngine;
 
 public class ParticlesEmitter : MonoBehaviour
 {
-
-    private ParticleSystem Grassparticles;
-    private ParticleSystem Hayparticles;
+    private ParticleSystem[] particles;
 
     void Awake()
     {
-
-        Grassparticles = GameObject.Find("Grass").GetComponent<ParticleSystem>();
-        Hayparticles = GameObject.Find("Hay").GetComponent<ParticleSystem>();
+        particles = GetComponentsInChildren<ParticleSystem>();
     }
 
     private void Update()
     {
-       if( MovementHandler.GetJoystickInput(GetComponent<JoystickNumber>()).magnitude > 0);
+        if (MovementHandler.GetJoystickInput(GetComponent<JoystickNumber>()).magnitude > 0)
         {
-            Grassparticles.gameObject.SetActive(true);       
+            foreach (ParticleSystem particle in particles)
+            {
+                particle.Play();
+            }
         }
-        //TODO Get the input of the action
+        else
+        {
+            foreach (ParticleSystem particle in particles)
+            {
+                particle.Stop();
+            }
+        }
     }
 }
