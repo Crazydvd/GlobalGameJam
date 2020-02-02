@@ -32,8 +32,8 @@ public class ProceduralTerrain : MonoBehaviour
     {
         mesh = new Mesh();
 
-        xSize = Random.Range(15, 50);
-        zSize = Random.Range(15, 50);
+        xSize = Random.Range(25, 50);
+        zSize = Random.Range(25, 50);
         offsetX = Random.Range(0f, 99999f);
         offsetY = Random.Range(0f, 99999f);
 

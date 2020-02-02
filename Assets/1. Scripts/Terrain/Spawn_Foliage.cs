@@ -38,8 +38,7 @@ public class Spawn_Foliage : MonoBehaviour
             }
         }
     }
-
-    //TODO make it less dense
+        
     private void SpawnFoliage()
     {
         for (int i = 0; i < mesh.vertexCount; i++)
