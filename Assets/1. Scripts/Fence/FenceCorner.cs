@@ -18,7 +18,7 @@ namespace Fence
 
 		private void Start()
 		{
-			CachedTransform.position = CachedTransform.position.Round();
+			CachedTransform.position = CachedTransform.position.Ceil();
 			
 			CheckForPossibleConnections();
 		}
