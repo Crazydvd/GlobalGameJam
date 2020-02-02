@@ -9,7 +9,7 @@ public class SceneManagement : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Procedural terrain");
     }
 
     public void Quit()

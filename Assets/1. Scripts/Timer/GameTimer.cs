@@ -1,5 +1,4 @@
 ﻿using System;
-using AI;
 using Events.GameplayEvents;
 using Events.TimerEvents;
 using UnityEngine;
@@ -33,8 +32,7 @@ namespace Timer
 		{
 			OnTimerStart();
 		}
-		
-		
+
 		private void OnDestroy()
 		{
 			if (EventManager.IsInitialized)
