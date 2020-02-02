@@ -2,7 +2,6 @@
 using Events.GameplayEvents;
 using Events.TimerEvents;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VDUnityFramework.BaseClasses;
 using VDUnityFramework.EventSystem;
 
