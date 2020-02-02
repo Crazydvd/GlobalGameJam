@@ -101,7 +101,7 @@ namespace Timer
 
 		private void OnFenceCompleted(FenceCompletedEvent fenceCompletedEvent)
 		{
-			secondsLeft += ConvertToSeconds(timePerSheep) * fenceCompletedEvent.SheepCollected;
+			//secondsLeft += ConvertToSeconds(timePerSheep) * fenceCompletedEvent.SheepCollected;
 		}
 
 		public float GetSecondsLeft()

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Events.GameplayEvents;
 using UnityEngine;
 using VDUnityFramework.BaseClasses;
 using VDUnityFramework.EventSystem;
+using VDUnityFramework.UnityExtensions;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Fence
@@ -11,12 +13,14 @@ namespace Fence
 	public class FenceCorner : BetterMonoBehaviour
 	{
 		public float ConnectionRadius = 5.0f;
-
+		
 		public FenceCorner Parent { get; private set; }
 		public FenceCorner Child { get; private set; }
 
 		private void Start()
 		{
+			CachedTransform.position = CachedTransform.position.Ceil();
+			
 			CheckForPossibleConnections();
 		}
 
@@ -30,7 +34,7 @@ namespace Fence
 				corner =>
 					Vector3.Distance(corner.CachedTransform.position, CachedTransform.position) <= ConnectionRadius);
 
-			// Filter out everyone that already has a parent set 
+			// Filter out everyone that already has a parent set
 			fenceCornersInReach = fenceCornersInReach.Where(corner => corner.Parent == null);
 
 			// Find the closest corner
@@ -38,6 +42,11 @@ namespace Fence
 			float closestDistance = float.PositiveInfinity;
 			foreach (FenceCorner fenceCorner in fenceCornersInReach)
 			{
+				if (fenceCorner == Parent)
+				{
+					continue;
+				}
+				
 				float distanceToCorner =
 					Vector3.Distance(fenceCorner.CachedTransform.position, CachedTransform.position);
 
@@ -53,7 +62,6 @@ namespace Fence
 			// Check if the closest fence pole actually exists
 			if (closestFenceCorner == null)
 			{
-				Debug.Log("No available corners found");
 				return;
 			}
 
@@ -69,7 +77,7 @@ namespace Fence
 				if (child == this)
 				{
 					// TODO: properly calculate the sheep
-					EventManager.Instance.RaiseEvent(new FenceCompletedEvent(5));
+					EventManager.Instance.RaiseEvent(new FenceCompletedEvent(this));
 					return;
 				}
 			}
@@ -81,6 +89,19 @@ namespace Fence
 		{
 			Child = other;
 			other.Parent = this;
+		}
+
+		private void Update()
+		{
+			if (Parent)
+			{
+				Debug.DrawLine(Parent.CachedTransform.position + new Vector3(0, 0.4f, 0), CachedTransform.position, Color.green);
+			}
+
+			if (Child)
+			{
+				Debug.DrawLine(Child.CachedTransform.position - new Vector3(0, 0.4f, 0), CachedTransform.position, Color.red);
+			}
 		}
 	}
 }

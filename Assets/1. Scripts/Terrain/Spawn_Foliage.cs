@@ -34,7 +34,7 @@ public class Spawn_Foliage : MonoBehaviour
             if (IsAtEdge(vertex))
             {
                 // Will spawn a random foliage at every vertex in the mesh.
-                Instantiate(cornerFoliages.GetRandomItem(), vertex - new Vector3(0, 0.5f, 0), Quaternion.identity);
+                Instantiate(cornerFoliages.GetRandomItem(), vertex - new Vector3(0, -0.5f, 0), Quaternion.identity);
             }
         }
     }
@@ -50,7 +50,7 @@ public class Spawn_Foliage : MonoBehaviour
                 if (vertex.y > 1)
                 {
                     // Will spawn a random foliage at every vertex in the mesh.
-                    Instantiate(smallFoliages.GetRandomItem(), vertex - new Vector3(0, 0.5f, 0), Quaternion.identity);
+                    Instantiate(smallFoliages.GetRandomItem(), vertex - new Vector3(0, -0.2f, 0), Quaternion.identity);
                 }
             }
         }

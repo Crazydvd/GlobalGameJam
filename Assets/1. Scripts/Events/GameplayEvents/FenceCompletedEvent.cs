@@ -1,14 +1,15 @@
-﻿using VDFramework.EventSystem;
+﻿using Fence;
+using VDFramework.EventSystem;
 
 namespace Events.GameplayEvents
 {
 	public class FenceCompletedEvent : VDEvent
 	{
-		public readonly uint SheepCollected;
-		
-		public FenceCompletedEvent(uint sheepCollected)
+		public readonly FenceCorner Origin;
+
+		public FenceCompletedEvent(FenceCorner origin)
 		{
-			SheepCollected = sheepCollected;
+			Origin = origin;
 		}
 	}
 }
