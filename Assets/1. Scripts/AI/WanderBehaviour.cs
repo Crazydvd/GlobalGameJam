@@ -10,7 +10,8 @@ public class WanderBehaviour : MonoBehaviour
     private Rigidbody rb;
 
     private float wanderOrientation = 0; 
-    
+    bool smooting = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,24 +38,22 @@ public class WanderBehaviour : MonoBehaviour
         Vector3 targetPosition = transform.position + (GetOrientationVector(sheepOrientation) * sheepBehaviourManager.WanderOffset);
 
         targetPosition = targetPosition + (GetOrientationVector(targetOrientation) * sheepBehaviourManager.WanderRadius);
-
+        
         return Seek(targetPosition);
     }
 
     private void LookWhereYouGoing()
     {
         Vector3 direction = rb.velocity;
-        
+
         direction.Normalize();
 
-        if (direction.magnitude > 0.001)
+        if (direction.sqrMagnitude > 0.001f)
         {
             float targetRotation = -1 * (Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg);
             float newRotation = Mathf.LerpAngle(rb.rotation.eulerAngles.y, targetRotation, Time.deltaTime * sheepBehaviourManager.RotateSpeed);
             rb.rotation = Quaternion.Euler(0,newRotation,0);
-            
         }
-        
     }
     
     private Vector3 Seek(Vector3 targetPosition)
@@ -70,6 +69,8 @@ public class WanderBehaviour : MonoBehaviour
 
     private void Steer(Vector3 linearAcceleration)
     {
+        //Debug.Log(linearAcceleration);
+       // Vector3 testVec = new Vector3(0.3f,0,0.0f);
         rb.velocity += linearAcceleration * Time.deltaTime;
 
         if (rb.velocity.magnitude > sheepBehaviourManager.MaxVelocity)

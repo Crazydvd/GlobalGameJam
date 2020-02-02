@@ -29,6 +29,12 @@ namespace Timer
 			EventManager.Instance.AddListener<SheepCapturedEvent>(OnCapturedSheep);
 		}
 
+		private void Start()
+		{
+			OnTimerStart();
+		}
+		
+		
 		private void OnDestroy()
 		{
 			if (EventManager.IsInitialized)
@@ -97,6 +103,11 @@ namespace Timer
 		private void OnCapturedSheep(SheepCapturedEvent sheepCapturedEvent)
 		{
 			secondsLeft += ConvertToSeconds(timePerSheep);
+		}
+
+		public float GetSecondsLeft()
+		{
+			return secondsLeft;
 		}
 	}
 }
