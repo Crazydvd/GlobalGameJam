@@ -7,13 +7,13 @@ namespace AI
 	public class SheepBehaviourManager : BetterMonoBehaviour
 	{
 		public float MaxAcceleration = 13.0f;
-		public float MaxVelocity = 5.0f;
-		public float RotateSpeed = 13;
+		public float MaxVelocity = 3.0f;
+		public float RotateSpeed = 10;
  
 		public float WanderRate = 0.4f;
 
-		public float WanderOffset = 1.3f; 
-		public float WanderRadius = 2.0f;
+		public float WanderOffset = 4f; 
+		public float WanderRadius = 2f;
 		
 		private WanderBehaviour wanderBehaviour;
 		private AttractBehaviour attractBehaviour;

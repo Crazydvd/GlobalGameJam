@@ -28,6 +28,12 @@ namespace Timer
 			EventManager.Instance.AddListener<FenceCompletedEvent>(OnFenceCompleted);
 		}
 
+		private void Start()
+		{
+			OnTimerStart();
+		}
+		
+		
 		private void OnDestroy()
 		{
 			if (EventManager.IsInitialized)
@@ -96,6 +102,11 @@ namespace Timer
 		private void OnFenceCompleted(FenceCompletedEvent fenceCompletedEvent)
 		{
 			secondsLeft += ConvertToSeconds(timePerSheep) * fenceCompletedEvent.SheepCollected;
+		}
+
+		public float GetSecondsLeft()
+		{
+			return secondsLeft;
 		}
 	}
 }
