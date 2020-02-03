@@ -19,8 +19,6 @@ namespace Fence
 
 		private void Start()
 		{
-			CachedTransform.position = CachedTransform.position.Ceil();
-			
 			CheckForPossibleConnections();
 		}
 
@@ -74,14 +72,16 @@ namespace Fence
 			{
 				child = child.Child;
 
-				if (child == this)
+				if (child != this)
 				{
-					// TODO: properly calculate the sheep
-					EventManager.Instance.RaiseEvent(new FenceCompletedEvent(this));
-					return;
+					continue;
 				}
+
+				EventManager.Instance.RaiseEvent(new FenceCompletedEvent(this));
+				return;
 			}
 
+			// Make the beginning check for connections (to detect the end
 			child.CheckForPossibleConnections();
 		}
 

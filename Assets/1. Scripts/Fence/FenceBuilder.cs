@@ -7,7 +7,7 @@ namespace Fence
 {
 	public class FenceBuilder : BetterMonoBehaviour
 	{
-		[SerializeField] private GameObject fence;
+		[SerializeField] private GameObject fence = null;
 
 		private void Awake()
 		{
@@ -43,14 +43,17 @@ namespace Fence
 					Vector3 spawnPosition = (currentCorner.transform.position + (i + 0.5f) * delta.normalized) -
 											new Vector3(0, 0.5f, 0);
 
-					spawnPosition.y = 0;
+					if (Physics.Raycast(new Ray(spawnPosition + Vector3.up, Vector3.down), out RaycastHit hitInfo))
+					{
+						spawnPosition.y = hitInfo.point.y;
+					}
 
 					Instantiate(fence,
 						spawnPosition,
 						Quaternion.LookRotation(delta));
 				}
 
-				currentCorner.GetComponent<MeshRenderer>().enabled = false;
+				//currentCorner.GetComponent<MeshRenderer>().enabled = false;
 
 				currentCorner = currentCorner.Child;
 			} while (currentCorner != null && currentCorner != corner);
