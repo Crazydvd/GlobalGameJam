@@ -5,21 +5,23 @@ using UnityEngine;
 public class SphereTerrain 
 {
     ShapeGenerator shapeGenerator;
-    Mesh mesh;
-    int resolution;
-    Vector3 localUp;
-    Vector3 axisA;
-    Vector3 axisB;
-
+    private Mesh mesh;
+    private int resolution;
+    private Vector3 localUp;
+    private Vector3 axisA;
+    private Vector3 axisB;
+       
     public SphereTerrain (ShapeGenerator shapeGenerator,Mesh mesh, int resolution, Vector3 localUp)
     {
         this.shapeGenerator = shapeGenerator;
         this.mesh = mesh;
         this.resolution = resolution;
         this.localUp = localUp;
+        
 
         axisA = new Vector3(localUp.y, localUp.z, localUp.x);
         axisB = Vector3.Cross(localUp, axisA);
+       
     }
 
     public void ConstructMesh()

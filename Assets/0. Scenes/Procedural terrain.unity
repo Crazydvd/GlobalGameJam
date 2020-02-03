@@ -588,6 +588,12 @@ PrefabInstance:
       propertyPath: timeUntilFenceDisappear
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 9101894990650352759, guid: d1f3ddb7ec119874aa2692af2df52777,
+        type: 3}
+      propertyPath: fencePrefab
+      value: 
+      objectReference: {fileID: 2900147082736681540, guid: b333a93ef5c10514291d40ee8797ecb0,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 9101894990650352757, guid: d1f3ddb7ec119874aa2692af2df52777, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d1f3ddb7ec119874aa2692af2df52777, type: 3}
@@ -606,7 +612,7 @@ PrefabInstance:
     - target: {fileID: 8888643704826534221, guid: d026b6cc95c4868458bd1d6e0c49cbc4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8888643704826534221, guid: d026b6cc95c4868458bd1d6e0c49cbc4,
         type: 3}

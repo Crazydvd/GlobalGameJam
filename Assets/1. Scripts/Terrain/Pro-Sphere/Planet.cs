@@ -7,6 +7,8 @@ public class Planet : MonoBehaviour
     [Range (2,256)]
     public int resolution = 10;
     public bool autoUpdate = true;
+    public enum FaceRenderMask { All, Top, Bottom, Left, Right, Front, Back };
+    public FaceRenderMask faceRenderMask;
 
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
@@ -22,6 +24,7 @@ public class Planet : MonoBehaviour
     MeshFilter[] meshFilters;
 
     SphereTerrain[] terrainFaces;
+    private MeshCollider meshCollider;
 
     void Initialize ()
     {
@@ -34,6 +37,7 @@ public class Planet : MonoBehaviour
 
         Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
 
+
         for (int i = 0; i < 6; i++)
         {
             if (meshFilters[i] == null)
@@ -44,8 +48,12 @@ public class Planet : MonoBehaviour
                 meshobj.AddComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Standard"));
                 meshFilters[i] = meshobj.AddComponent<MeshFilter>();
                 meshFilters[i].sharedMesh = new Mesh();
+                meshCollider.sharedMesh = meshFilters[i].sharedMesh;
             }
             terrainFaces[i] = new SphereTerrain(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
+            bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
+            meshFilters[i].gameObject.SetActive(renderFace);
+            meshCollider = gameObject.AddComponent<MeshCollider>();
         }
     }
     public void GeneratePlanet()
@@ -72,9 +80,12 @@ public class Planet : MonoBehaviour
     }
     void GenerateMesh()
     {
-        foreach (SphereTerrain face in terrainFaces)
+        for (int i = 0; i < 6; i++)
         {
-            face.ConstructMesh();
+            if (meshFilters[i].gameObject.activeSelf)
+            {
+                terrainFaces[i].ConstructMesh();
+            }
         }
     }
     void GenerateColors()
