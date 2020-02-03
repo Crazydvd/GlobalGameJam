@@ -8,9 +8,9 @@ namespace Gameplay
 {
 	public class FencePlacer : BetterMonoBehaviour
 	{
+		[SerializeField] private float connectionRadius = 5.0f;
+		
 		[SerializeField] private GameObject FenceCorner = null;
-
-		[SerializeField] private float fenceConnectionRadius = 5.0f;
 
 		private uint joystickNumber;
 
@@ -39,7 +39,7 @@ namespace Gameplay
 			FenceCorner corner = Instantiate(FenceCorner, spawnPosition, Quaternion.identity)
 				.GetComponent<FenceCorner>();
 
-			corner.ConnectionRadius = fenceConnectionRadius;
+			corner.ConnectionRadius = connectionRadius;
 		}
 	}
 }
