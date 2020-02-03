@@ -1,4 +1,5 @@
-﻿using JoystickData;
+﻿using Enums;
+using JoystickData;
 using VDUnityFramework.BaseClasses;
 
 namespace Gameplay
@@ -17,7 +18,7 @@ namespace Gameplay
 
 		private void Update()
 		{
-			if (JoystickButtonHandler.Instance.IsRightShoulderButtonPressed(joystickNumber))
+			if (JoystickButtonHandler.Instance.GetButtonDown(joystickNumber, JoystickButton.RightShoulderButton))
 			{
 				attractScript.enabled ^= true;
 			}

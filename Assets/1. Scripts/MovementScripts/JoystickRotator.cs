@@ -21,7 +21,7 @@ namespace MovementScripts
 
 		private void RotateTowardsJoystickDirection()
 		{
-			Vector3 direction = MovementHandler.GetJoystickInput(joystickNumber); 
+			Vector3 direction = MovementHandler.GetJoystickAxes(joystickNumber); 
 			
 			if (direction.magnitude > 0)
 			{

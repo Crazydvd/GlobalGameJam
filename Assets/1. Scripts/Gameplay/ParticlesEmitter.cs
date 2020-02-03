@@ -15,7 +15,7 @@ public class ParticlesEmitter : MonoBehaviour
 
     private void Update()
     {
-        if (MovementHandler.GetJoystickInput(GetComponent<JoystickNumber>()).magnitude > 0)
+        if (MovementHandler.GetJoystickAxes(GetComponent<JoystickNumber>()).magnitude > 0)
         {
             foreach (ParticleSystem particle in particles)
             {

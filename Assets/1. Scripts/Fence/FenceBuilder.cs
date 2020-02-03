@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Events.GameplayEvents;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VDUnityFramework.BaseClasses;
 using VDUnityFramework.EventSystem;
 
@@ -35,7 +34,7 @@ namespace Fence
 		private void BuildFence(FenceCorner origin)
 		{
 			FenceCorner currentCorner = origin;
-
+			
 			do
 			{
 				Vector3 delta = currentCorner.Child.CachedTransform.position - currentCorner.CachedTransform.position;
@@ -55,7 +54,7 @@ namespace Fence
 
 					fences.Add(Instantiate(fencePrefab,
 						spawnPosition,
-						Quaternion.LookRotation(delta)));
+						Quaternion.LookRotation(-delta)));
 				}
 
 				FenceCorner nextCorner = currentCorner.Child;
@@ -64,7 +63,7 @@ namespace Fence
 				
 			} while (currentCorner != null && currentCorner != origin);
 			
-			Invoke(nameof(DestroyFence), timeUntilFenceDisappear);
+			//Invoke(nameof(DestroyFence), timeUntilFenceDisappear);
 		}
 
 		private void DestroyFence()

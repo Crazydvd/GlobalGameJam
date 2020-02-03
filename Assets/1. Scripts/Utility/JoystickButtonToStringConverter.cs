@@ -4,7 +4,7 @@ using Enums;
 
 namespace Utility
 {
-	public static class JoystickButtonManager
+	public static class JoystickButtonToStringConverter
 	{
 		private static readonly Dictionary<JoystickButton, string> stringPerButton = new Dictionary<JoystickButton, string>()
 		{

@@ -28,7 +28,7 @@ namespace MovementScripts
 		private void Update()
 		{
 			if (boundsRestrictor.IsOutOfBounds(CachedTransform.position,
-				MovementHandler.GetClampedJoystickInput(joystickNumber, 1)))
+				MovementHandler.GetClampedJoystickAxes(joystickNumber, 1)))
 			{
 				Vector3 directionToCamera = (mainCamera.transform.position - CachedTransform.position).normalized;
 
@@ -36,7 +36,7 @@ namespace MovementScripts
 				return;
 			}
 
-			characterController.SimpleMove(speed * MovementHandler.GetClampedJoystickInput(joystickNumber, 1));
+			characterController.SimpleMove(speed * MovementHandler.GetClampedJoystickAxes(joystickNumber, 1));
 		}
 	}
 }

@@ -1,30 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Enums;
 using UnityEngine;
+using Utility;
 using VDFramework.Extensions;
 using VDUnityFramework.Singleton;
-using ButtonManager = Utility.JoystickButtonManager;
 
 namespace JoystickData
 {
 	public class JoystickButtonHandler : Singleton<JoystickButtonHandler>
 	{
-		public bool IsRightShoulderButtonPressed(uint joystickNumber)
+		public bool GetButtonDown(uint joystickNumber, JoystickButton button)
 		{
-			return !ButtonDataHandler.IsButtonPressedLastFrame(joystickNumber, JoystickButton.RightShoulderButton)
-				   && IsRightShoulderButtonDown(joystickNumber);
+			return !ButtonDataHandler.IsButtonPressedLastFrame(joystickNumber, button)
+				   && GetButton(joystickNumber, button);
 		}
 
-		public bool IsRightShoulderButtonUp(uint joystickNumber)
+		public bool GetButtonUp(uint joystickNumber, JoystickButton button)
 		{
-			return ButtonDataHandler.IsButtonPressedLastFrame(joystickNumber, JoystickButton.RightShoulderButton)
-				   && !IsRightShoulderButtonDown(joystickNumber);
+			return ButtonDataHandler.IsButtonPressedLastFrame(joystickNumber, button)
+				   && !GetButton(joystickNumber, button);
 		}
 
-		public bool IsRightShoulderButtonDown(uint joystickNumber)
+		public bool GetButton(uint joystickNumber, JoystickButton button)
 		{
 			return Input.GetAxis(
-					   $"{ButtonManager.GetString(JoystickButton.RightShoulderButton)}{joystickNumber}") > 0;
+					   $"{JoystickButtonToStringConverter.GetString(button)}{joystickNumber}") > 0;
 		}
 
 		private void LateUpdate()
@@ -45,7 +46,7 @@ namespace JoystickData
 
 			public static bool IsButtonPressedLastFrame(uint joystickNumber, JoystickButton button)
 			{
-				return EnsureKeyIsPresent(joystickNumber, button);// buttonDataPerJoystick[(int) joystickNumber - 1][button];
+				return EnsureKeyIsPresent(joystickNumber, button);
 			}
 
 			/// <returns>The value of the key</returns>
@@ -98,7 +99,9 @@ namespace JoystickData
 				// Local function
 				bool IsButtonPressed(int joystickIndex, JoystickButton button)
 				{
-					return Input.GetAxis($"{ButtonManager.GetString(button)}{joystickIndex + 1}") > 0;
+					uint joystickNumber = (uint) joystickIndex + 1;
+					
+					return Instance.GetButton(joystickNumber, button);
 				}
 			}
 		}
