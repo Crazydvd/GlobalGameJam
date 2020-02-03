@@ -25,17 +25,18 @@ namespace Utility
 				{
 					return;
 				}
-				
-				foreach (FenceCorner fenceCorner in cornersInReach.Where(corner => corner.Parent == null))
+
+				FenceCorner closest = GetClosestCorner(cornersInReach);
+
+				if (closest)
 				{
-					InGameLineDrawer.DrawLine(fenceCorner.CachedTransform.position,
+					InGameLineDrawer.DrawLine(closest.CachedTransform.position,
 						CachedTransform.position - CachedTransform.forward * 1.5f,
 						Color.green);
 
+					FenceCorner root = closest.Root;
 
-					FenceCorner root = fenceCorner.Root;
-
-					if (cornersInReach.Contains(root))
+					if (DistanceToObject(root) < radius)
 					{
 						InGameLineDrawer.DrawLine(root.CachedTransform.position,
 							CachedTransform.position - CachedTransform.forward * 1.5f,
@@ -62,8 +63,14 @@ namespace Utility
 			float closestDistance = float.PositiveInfinity;
 			foreach (FenceCorner fenceCorner in corners)
 			{
+				if (fenceCorner.Parent != null)
+				{
+					continue;
+				}
+
 				float distanceToCorner =
-					Vector3.Distance(fenceCorner.CachedTransform.position, CachedTransform.position - CachedTransform.forward * 1.5f);
+					Vector3.Distance(fenceCorner.CachedTransform.position,
+						CachedTransform.position - CachedTransform.forward * 1.5f);
 
 				if (!(distanceToCorner < closestDistance))
 				{
