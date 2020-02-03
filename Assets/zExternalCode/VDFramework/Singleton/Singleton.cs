@@ -21,7 +21,7 @@ namespace VDUnityFramework.Singleton
 
 				return instance;
 			}
-			set => instance = value;
+			private set => instance = value;
 		}
 
 		public static T InstanceIfInitialized => IsInitialized ? instance : null;

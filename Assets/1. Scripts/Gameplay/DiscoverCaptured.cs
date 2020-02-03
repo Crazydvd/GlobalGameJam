@@ -11,8 +11,6 @@ namespace Gameplay
 {
 	public class DiscoverCaptured : BetterMonoBehaviour
 	{
-		private int layerMask = 1 << 8;
-
 		private void Awake()
 		{
 			EventManager.Instance.AddListener<FenceCompletedEvent>(OnFenceCompleted);
@@ -34,17 +32,6 @@ namespace Gameplay
 
 				Destroy(gameObject);
 			}
-		}
-
-		private bool RayCast(Vector3 direction)
-		{
-				bool hit = Physics.Raycast(new Ray(CachedTransform.position, direction), int.MaxValue,
-				~layerMask);
-				
-				
-				Debug.DrawLine(CachedTransform.position, direction, Color.yellow);
-
-				return hit;
 		}
 
 		private bool IsTrappedInFence(FenceCorner origin)

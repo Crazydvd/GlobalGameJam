@@ -1,27 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Events.GameplayEvents;
 using UnityEngine;
+using Utility;
 using VDUnityFramework.BaseClasses;
 using VDUnityFramework.EventSystem;
-using VDUnityFramework.UnityExtensions;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Fence
 {
 	public class FenceCorner : BetterMonoBehaviour
 	{
 		public float ConnectionRadius = 5.0f;
-		
+
 		public FenceCorner Parent { get; private set; }
 		public FenceCorner Child { get; private set; }
 
+		public FenceCorner Root
+		{
+			get
+			{
+				FenceCorner origin = this;
+				
+				while (origin.Child != null && origin.Child != this)
+				{
+					origin = origin.Child;
+				}
+
+				return origin;
+			}
+		}
+
 		private void Start()
 		{
-			CachedTransform.position = CachedTransform.position.Ceil();
-			
 			CheckForPossibleConnections();
+		}
+		
+		private void OnRenderObject()
+		{
+			if (Child)
+			{
+				InGameLineDrawer.DrawLine(Child.CachedTransform.position, CachedTransform.position, new Color(0.5f, 0.4f, 0));
+			}
 		}
 
 		private void CheckForPossibleConnections()
@@ -46,7 +65,7 @@ namespace Fence
 				{
 					continue;
 				}
-				
+
 				float distanceToCorner =
 					Vector3.Distance(fenceCorner.CachedTransform.position, CachedTransform.position);
 
@@ -74,15 +93,19 @@ namespace Fence
 			{
 				child = child.Child;
 
-				if (child == this)
+				if (child != this)
 				{
-					// TODO: properly calculate the sheep
-					EventManager.Instance.RaiseEvent(new FenceCompletedEvent(this));
-					return;
+					continue;
 				}
+
+				EventManager.Instance.RaiseEvent(new FenceCompletedEvent(this));
+				return;
 			}
 
+			// Make the beginning check for connections (to detect the end)
 			child.CheckForPossibleConnections();
+
+			EventManager.Instance.RaiseEvent(new FenceCornerPlacedEvent(this));
 		}
 
 		private void SetChild(FenceCorner other)
@@ -91,17 +114,10 @@ namespace Fence
 			other.Parent = this;
 		}
 
-		private void Update()
+		private void OnDestroy()
 		{
-			if (Parent)
-			{
-				Debug.DrawLine(Parent.CachedTransform.position + new Vector3(0, 0.4f, 0), CachedTransform.position, Color.green);
-			}
-
-			if (Child)
-			{
-				Debug.DrawLine(Child.CachedTransform.position - new Vector3(0, 0.4f, 0), CachedTransform.position, Color.red);
-			}
+			Parent = null;
+			Child = null;
 		}
 	}
 }

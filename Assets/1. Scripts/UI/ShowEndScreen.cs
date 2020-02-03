@@ -7,8 +7,8 @@ namespace UI
 {
 	public class ShowEndScreen : BetterMonoBehaviour
 	{
-		[SerializeField] private GameObject endScreen;
-		[SerializeField] private GameObject HUD;
+		[SerializeField] private GameObject endScreen = null;
+		[SerializeField] private GameObject HUD = null;
 		
 		private void Awake()
 		{

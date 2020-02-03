@@ -1,23 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Timer;
-using UnityEngine.UI; 
+﻿using Timer;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class DisplayTime : MonoBehaviour
+namespace UI
 {
-    public Text displayTime;
-    public GameTimer gameTime; 
-    
-    // Start is called before the first frame update
-    void Start()
+    [RequireComponent(typeof(GameTimer))]
+    public class DisplayTime : MonoBehaviour
     {
-        
-    }
+        public Text displayTime;
 
-    // Update is called once per frame
-    void Update()
-    {
-        displayTime.text = Mathf.RoundToInt(gameTime.GetSecondsLeft()).ToString();
+        private GameTimer timer;
+    
+        private void Awake()
+        {
+            timer = GetComponent<GameTimer>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            displayTime.text = Mathf.RoundToInt(timer.GetSecondsLeft()).ToString();
+        }
     }
 }
