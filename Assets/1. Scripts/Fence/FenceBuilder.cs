@@ -27,9 +27,9 @@ namespace Fence
 			BuildFence(fenceCompletedEvent.Origin);
 		}
 
-		private void BuildFence(FenceCorner corner)
+		private void BuildFence(FenceCorner origin)
 		{
-			FenceCorner currentCorner = corner;
+			FenceCorner currentCorner = origin;
 
 			do
 			{
@@ -53,10 +53,11 @@ namespace Fence
 						Quaternion.LookRotation(delta));
 				}
 
-				//currentCorner.GetComponent<MeshRenderer>().enabled = false;
-
-				currentCorner = currentCorner.Child;
-			} while (currentCorner != null && currentCorner != corner);
+				FenceCorner nextCorner = currentCorner.Child;
+				Destroy(currentCorner.gameObject);
+				currentCorner = nextCorner;
+				
+			} while (currentCorner != null && currentCorner != origin);
 		}
 	}
 }

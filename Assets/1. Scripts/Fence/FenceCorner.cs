@@ -5,8 +5,6 @@ using Events.GameplayEvents;
 using UnityEngine;
 using VDUnityFramework.BaseClasses;
 using VDUnityFramework.EventSystem;
-using VDUnityFramework.UnityExtensions;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Fence
 {
@@ -102,6 +100,12 @@ namespace Fence
 			{
 				Debug.DrawLine(Child.CachedTransform.position - new Vector3(0, 0.4f, 0), CachedTransform.position, Color.red);
 			}
+		}
+
+		private void OnDestroy()
+		{
+			Parent = null;
+			Child = null;
 		}
 	}
 }
