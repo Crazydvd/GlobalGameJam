@@ -1,5 +1,7 @@
-﻿using Events.GameplayEvents;
+﻿using System.Collections.Generic;
+using Events.GameplayEvents;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VDUnityFramework.BaseClasses;
 using VDUnityFramework.EventSystem;
 
@@ -7,7 +9,10 @@ namespace Fence
 {
 	public class FenceBuilder : BetterMonoBehaviour
 	{
-		[SerializeField] private GameObject fence = null;
+		[SerializeField] private GameObject fencePrefab = null;
+		[SerializeField] private float timeUntilFenceDisappear = 5.0f;
+		
+		private readonly List<GameObject> fences = new List<GameObject>();
 
 		private void Awake()
 		{
@@ -48,9 +53,9 @@ namespace Fence
 						spawnPosition.y = hitInfo.point.y;
 					}
 
-					Instantiate(fence,
+					fences.Add(Instantiate(fencePrefab,
 						spawnPosition,
-						Quaternion.LookRotation(delta));
+						Quaternion.LookRotation(delta)));
 				}
 
 				FenceCorner nextCorner = currentCorner.Child;
@@ -58,6 +63,18 @@ namespace Fence
 				currentCorner = nextCorner;
 				
 			} while (currentCorner != null && currentCorner != origin);
+			
+			Invoke(nameof(DestroyFence), timeUntilFenceDisappear);
+		}
+
+		private void DestroyFence()
+		{
+			foreach (GameObject fence in fences)
+			{
+				Destroy(fence);
+			}
+			
+			fences.Clear();
 		}
 	}
 }
