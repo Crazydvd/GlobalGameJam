@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Events.GameplayEvents;
 using Fence;
 using UnityEngine;
 using VDUnityFramework.BaseClasses;
-using VDUnityFramework.EventSystem;
 
 namespace Utility
 {
@@ -30,20 +28,23 @@ namespace Utility
 
 				if (closest)
 				{
-					InGameLineDrawer.DrawLine(closest.CachedTransform.position,
-						CachedTransform.position - CachedTransform.forward * 1.5f,
-						Color.green);
+					DrawLine(closest, Color.green);
 
 					FenceCorner root = closest.Root;
 
 					if (DistanceToObject(root) < radius)
 					{
-						InGameLineDrawer.DrawLine(root.CachedTransform.position,
-							CachedTransform.position - CachedTransform.forward * 1.5f,
-							Color.red);
+						DrawLine(root, Color.red);
 					}
 				}
 			}
+		}
+
+		private void DrawLine(BetterMonoBehaviour begin, Vector4 color)
+		{
+			InGameLineDrawer.DrawLine(begin.CachedTransform.position,
+				CachedTransform.position - CachedTransform.forward * 1.5f,
+				color);
 		}
 
 		private float DistanceToObject(BetterMonoBehaviour behaviour)
@@ -83,5 +84,6 @@ namespace Utility
 
 			return closestFenceCorner;
 		}
+		
 	}
 }

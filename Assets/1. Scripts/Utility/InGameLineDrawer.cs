@@ -5,7 +5,7 @@ namespace Utility
 {
 	public static class InGameLineDrawer
 	{
-		public static void DrawLine(Vector3 begin, Vector3 end, Color color)
+		public static void DrawLine(Vector3 begin, Vector3 end, Vector4 color)
 		{
 			GL.Begin(GL.LINES);
 			
