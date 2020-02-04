@@ -24,10 +24,11 @@ public class Planet : MonoBehaviour
     MeshFilter[] meshFilters;
 
     SphereTerrain[] terrainFaces;
-    private MeshCollider meshCollider;
-
+    MeshCollider meshCollider;
+      
     void Initialize ()
     {
+       
         shapeGenerator = new ShapeGenerator(shapeSettings);
         if  (meshFilters == null || meshFilters.Length == 0)
         {
@@ -36,7 +37,6 @@ public class Planet : MonoBehaviour
         terrainFaces = new SphereTerrain[6];
 
         Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
-
 
         for (int i = 0; i < 6; i++)
         {
@@ -48,12 +48,13 @@ public class Planet : MonoBehaviour
                 meshobj.AddComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Standard"));
                 meshFilters[i] = meshobj.AddComponent<MeshFilter>();
                 meshFilters[i].sharedMesh = new Mesh();
-                meshCollider.sharedMesh = meshFilters[i].sharedMesh;
+               // meshCollider = terrainFaces[i].meshCollider;
+
             }
-            terrainFaces[i] = new SphereTerrain(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
+            terrainFaces[i] = new SphereTerrain(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i], meshCollider);
             bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
             meshFilters[i].gameObject.SetActive(renderFace);
-            meshCollider = gameObject.AddComponent<MeshCollider>();
+          
         }
     }
     public void GeneratePlanet()

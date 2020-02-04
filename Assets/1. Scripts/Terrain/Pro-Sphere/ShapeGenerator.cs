@@ -30,6 +30,24 @@ public class ShapeGenerator {
                 elevation = firstLayerValue;
             }
         }
+        /*Find a way to create a inversed mask of the float firstLayerValue.
+         * See if you can use Mathf.InverseLerp */
+        //if(noiseFilters.Length == 0)
+        //{
+        //    firstLayerValue = noiseFilters[0].Evaluate(pointOnUnitSphere);
+        //    if (settings.noiseLayers[0].enabled)
+        //    {
+        //        elevation -= firstLayerValue;
+        //    }
+        //}
+        //for (int i = 0; i < noiseFilters.Length; i++)
+        //{
+        //    if (settings.noiseLayers[i].enabled)
+        //    {
+        //        float mask = (settings.noiseLayers[i].useInversedFirstLayerAsMask) ? firstLayerValue : 0;
+        //        elevation -= noiseFilters[i].Evaluate(pointOnUnitSphere) * mask;
+        //    }
+        //}
         for (int i = 1; i < noiseFilters.Length; i++)
         {
             if (settings.noiseLayers[i].enabled)
