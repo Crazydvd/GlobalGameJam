@@ -22,7 +22,7 @@ public class RidgidNoiseFilter : INoiseFilter
 
         for (int i = 0; i < settings.numLayers; i++)
         {
-            // 1-(|sin(x)|) * square { take the absolute wave of the amplitude inverse it and return sharp edge } 
+            // 1-(|sin(x)|)^2 { take the absolute value of the amplitude, inverse it and return sharp edge } 
             float v = 1 - Mathf.Abs(noise.Evaluate(point * frequency + settings.centre));
             v *= v;
             v *= weight;

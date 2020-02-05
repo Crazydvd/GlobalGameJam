@@ -10,7 +10,7 @@ namespace MovementScripts
 
 		[SerializeField] private string tagToSearchFor = "Player";
 
-		[Header("Will search for the tag if empty.")] [SerializeField]
+		[Header("Will search for the tag if empty."), SerializeField]
 		private GameObject[] objects = new GameObject[0];
 
 		private ICameraMover cameraMover;
@@ -25,9 +25,14 @@ namespace MovementScripts
 			cameraMover = GetComponent<ICameraMover>();
 
 			mainCamera = Camera.main;
+			if (!mainCamera)
+			{
+				throw new System.Exception("There is no object with tag 'maincamera'.");
+			}
+
 			tanFOV = Mathf.Tan(Mathf.Deg2Rad * mainCamera.fieldOfView / 2.0f);
 
-			aspectRatio = Screen.height / (float) Screen.width;
+			aspectRatio = Screen.height / (float)Screen.width;
 		}
 
 		private void Start()
@@ -66,7 +71,7 @@ namespace MovementScripts
 				}
 			}
 
-			return new[] {highestZPosition, lowestZPosition};
+			return new[] { highestZPosition, lowestZPosition };
 		}
 
 		private void ZoomCamera(Vector3[] maxMinPos)

@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(Planet))]
 public class PlanetEditor : Editor
 {
-    Planet planet;
-    Editor shapeEditor;
-    Editor colorEditor;
+    private Planet planet;
+    private Editor shapeEditor;
+    private Editor colorEditor;
+
+    public bool shapeSettingsfoldout;
+    public bool coloreSettingsfoldout;
 
     public override void OnInspectorGUI()
     {
@@ -25,8 +26,8 @@ public class PlanetEditor : Editor
         {
             planet.GeneratePlanet();
         }
-        DrawSettingsEditor(planet.shapeSettings, planet.OnShapeSettingsUpdated, ref planet.shapeSettingsfoldout, ref shapeEditor);
-        DrawSettingsEditor(planet.colorSettings, planet.OnColorSettingsUpdated, ref planet.coloreSettingsfoldout, ref colorEditor);
+        DrawSettingsEditor(planet.shapeSettings, planet.OnShapeSettingsUpdated, ref shapeSettingsfoldout, ref shapeEditor);
+        DrawSettingsEditor(planet.colorSettings, planet.OnColorSettingsUpdated, ref coloreSettingsfoldout, ref colorEditor);
     }
 
     private void DrawSettingsEditor(Object settings, System.Action onSettingsUpdated, ref bool foldout, ref Editor editor)
@@ -40,18 +41,16 @@ public class PlanetEditor : Editor
                 {
                     CreateCachedEditor(settings, null, ref editor);
                     editor.OnInspectorGUI();
-            
+
                     if (check.changed)
                     {
-                        if (onSettingsUpdated != null)
-                        {
-                            onSettingsUpdated();
-                        }
+                        onSettingsUpdated?.Invoke();
                     }
                 }
             }
         }
     }
+
     private void OnEnable()
     {
         planet = (Planet)target;

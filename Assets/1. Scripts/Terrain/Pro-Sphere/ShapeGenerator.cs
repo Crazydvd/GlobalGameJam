@@ -1,61 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
-public class ShapeGenerator {
+public class ShapeGenerator
+{
+	private ShapeSettings settings;
+	private INoiseFilter[] noiseFilters;
 
-    ShapeSettings settings;
-    INoiseFilter[] noiseFilters;
+	public ShapeGenerator(ShapeSettings settings)
+	{
+		this.settings = settings;
+		noiseFilters = new INoiseFilter[settings.noiseLayers.Length];
 
-    public ShapeGenerator(ShapeSettings settings)
-    {
-        this.settings = settings;
-        noiseFilters = new INoiseFilter[settings.noiseLayers.Length];
-        for (int i = 0; i < noiseFilters.Length; i++)
-        {
-            noiseFilters[i] = NoiseFilterFactory.CreateNoiseFilter(settings.noiseLayers[i].noiseSettings);
-        }
-    }
+		for (int i = 0; i < noiseFilters.Length; i++)
+		{
+			noiseFilters[i] = NoiseFilterFactory.CreateNoiseFilter(settings.noiseLayers[i].noiseSettings);
+		}
+	}
 
-    public Vector3 CalculatePointOnPlanet(Vector3 pointOnUnitSphere)
-    {
-        float firstLayerValue = 0;
-        float elevation = 0;
-        if(noiseFilters.Length > 0)
-        {
-            firstLayerValue = noiseFilters[0].Evaluate(pointOnUnitSphere);
-            if (settings.noiseLayers[0].enabled)
-            {
-                elevation = firstLayerValue;
-            }
-        }
-        /*Find a way to create a inversed mask of the float firstLayerValue.
+	public Vector3 CalculatePointOnPlanet(Vector3 pointOnUnitSphere)
+	{
+		float firstLayerValue = 0;
+		float elevation = 0;
+		if (noiseFilters.Length > 0)
+		{
+			firstLayerValue = noiseFilters[0].Evaluate(pointOnUnitSphere);
+			if (settings.noiseLayers[0].enabled)
+			{
+				elevation = firstLayerValue;
+			}
+		}
+
+		/*Find a way to create a inversed mask of the float firstLayerValue.
          * See if you can use Mathf.InverseLerp */
-        //if(noiseFilters.Length == 0)
-        //{
-        //    firstLayerValue = noiseFilters[0].Evaluate(pointOnUnitSphere);
-        //    if (settings.noiseLayers[0].enabled)
-        //    {
-        //        elevation -= firstLayerValue;
-        //    }
-        //}
-        //for (int i = 0; i < noiseFilters.Length; i++)
-        //{
-        //    if (settings.noiseLayers[i].enabled)
-        //    {
-        //        float mask = (settings.noiseLayers[i].useInversedFirstLayerAsMask) ? firstLayerValue : 0;
-        //        elevation -= noiseFilters[i].Evaluate(pointOnUnitSphere) * mask;
-        //    }
-        //}
-        for (int i = 1; i < noiseFilters.Length; i++)
-        {
-            if (settings.noiseLayers[i].enabled)
-            {
-                float mask = (settings.noiseLayers[i].useFirstLayerAsMask) ? firstLayerValue : 1;
-                elevation += noiseFilters[i].Evaluate(pointOnUnitSphere) * mask;
-            }
-        }
-        return pointOnUnitSphere * settings.planetRadius * (1 + elevation);
-    }
+		//if (noiseFilters.Length > 0)
+		//{
+		//	firstLayerValue = noiseFilters[0].Evaluate(pointOnUnitSphere);
+		//	if (settings.noiseLayers[0].enabled)
+		//	{
+		//		elevation -= firstLayerValue;
+		//	}
+		//}
+		//for (int i = 0; i < noiseFilters.Length; i++)
+		//{
+		//	if (settings.noiseLayers[i].enabled)
+		//	{
+		//		float mask = (settings.noiseLayers[i].useInversedFirstLayerAsMask) ? firstLayerValue : 0;
+		//		elevation -= noiseFilters[i].Evaluate(pointOnUnitSphere) * mask;
+		//	}
+		//}
+
+		for (int i = 1; i < noiseFilters.Length; i++)
+		{
+			if (settings.noiseLayers[i].enabled)
+			{
+				float mask = (settings.noiseLayers[i].useFirstLayerAsMask) ? firstLayerValue : 1;
+				elevation += noiseFilters[i].Evaluate(pointOnUnitSphere) * mask;
+			}
+		}
+		return pointOnUnitSphere * settings.planetRadius * (1 + elevation);
+	}
 }

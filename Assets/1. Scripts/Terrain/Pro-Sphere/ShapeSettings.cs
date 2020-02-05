@@ -11,8 +11,12 @@ public class ShapeSettings : ScriptableObject
     [System.Serializable]
     public class NoiseLayer
     {
-        public bool enabled = true;
-        public bool useFirstLayerAsMask;
+		/// <summary>
+		/// Multiply the value with the first layer value
+		/// </summary>
+		public bool useFirstLayerAsMask;
+
+		public bool enabled = true;
         public bool useInversedFirstLayerAsMask;
         public NoiseSettings noiseSettings;
     }

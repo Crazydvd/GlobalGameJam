@@ -1,62 +1,53 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using VDUnityFramework.BaseClasses;
 
-public class Planet : MonoBehaviour
+public class Planet : BetterMonoBehaviour
 {
-    [Range (2,256)]
+	public enum FaceRenderMask { All, Top, Bottom, Left, Right, Front, Back };
+	public FaceRenderMask faceRenderMask;
+
+	[Range(2, 256)]
     public int resolution = 10;
     public bool autoUpdate = true;
-    public enum FaceRenderMask { All, Top, Bottom, Left, Right, Front, Back };
-    public FaceRenderMask faceRenderMask;
 
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
 
+    private ShapeGenerator shapeGenerator;
+
+    [SerializeField] private Material cubeFaceMaterial;
+
     [HideInInspector]
-    public bool shapeSettingsfoldout;
-    [HideInInspector]
-    public bool coloreSettingsfoldout;
+    private MeshFilter[] meshFilters;
 
-    ShapeGenerator shapeGenerator;
-
-    [SerializeField, HideInInspector]
-    MeshFilter[] meshFilters;
-
-    SphereTerrain[] terrainFaces;
-    MeshCollider meshCollider;
-      
-    void Initialize ()
+    private void Initialize()
     {
-       
         shapeGenerator = new ShapeGenerator(shapeSettings);
-        if  (meshFilters == null || meshFilters.Length == 0)
+        if (meshFilters == null || meshFilters.Length == 0)
         {
             meshFilters = new MeshFilter[6];
         }
-        terrainFaces = new SphereTerrain[6];
-
-        Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
 
         for (int i = 0; i < 6; i++)
         {
             if (meshFilters[i] == null)
             {
-                GameObject meshobj = new GameObject("mesh");
-                meshobj.transform.parent = transform;
+                FaceRenderMask thisRenderMask = (FaceRenderMask) i + 1;
+                GameObject CubeFace = new GameObject($"CubeFace {thisRenderMask}");
+                CubeFace.transform.parent = CachedTransform;
 
-                meshobj.AddComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Standard"));
-                meshFilters[i] = meshobj.AddComponent<MeshFilter>();
+                CubeFace.AddComponent<MeshRenderer>().sharedMaterial = cubeFaceMaterial;
+				CubeFace.AddComponent<MeshCollider>();
+
+				meshFilters[i] = CubeFace.AddComponent<MeshFilter>();
                 meshFilters[i].sharedMesh = new Mesh();
-               // meshCollider = terrainFaces[i].meshCollider;
-
             }
-            terrainFaces[i] = new SphereTerrain(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i], meshCollider);
-            bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
-            meshFilters[i].gameObject.SetActive(renderFace);
-          
+
+            bool shouldRenderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
+            meshFilters[i].gameObject.SetActive(shouldRenderFace);
         }
     }
+
     public void GeneratePlanet()
     {
         Initialize();
@@ -79,21 +70,31 @@ public class Planet : MonoBehaviour
             GenerateColors();
         }
     }
-    void GenerateMesh()
+
+    private void GenerateMesh()
     {
-        for (int i = 0; i < 6; i++)
+		Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
+
+		for (int i = 0; i < 6; i++)
         {
             if (meshFilters[i].gameObject.activeSelf)
             {
-                terrainFaces[i].ConstructMesh();
+                meshFilters[i].GetComponent<MeshCollider>().sharedMesh = SphereTerrain.ConstructMesh(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
             }
         }
     }
-    void GenerateColors()
+
+    private void GenerateColors()
     {
-        foreach (MeshFilter m in meshFilters)
-        {
-            m.GetComponent<MeshRenderer>().sharedMaterial.color = colorSettings.ColorOfPlanet;
-        }
+		if (meshFilters[0] != null)
+		{
+			meshFilters[0].GetComponent<MeshRenderer>().sharedMaterial.color = colorSettings.ColorOfPlanet;
+		}
+
+		//TODO: add back later
+        //foreach (MeshFilter meshFilter in meshFilters)
+        //{
+        //    meshFilter.GetComponent<MeshRenderer>().sharedMaterial.color = colorSettings.ColorOfPlanet;
+        //}
     }
 }

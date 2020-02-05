@@ -1,37 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SphereTerrain
+public static class SphereTerrain
 {
-    ShapeGenerator shapeGenerator;
-    Planet planet;
-    Mesh mesh;
-    int resolution;
-    Vector3 localUp;
-    Vector3 axisA;
-    Vector3 axisB;
-    public MeshCollider meshCollider;
-
-    public SphereTerrain(ShapeGenerator shapeGenerator, Mesh mesh, int resolution, Vector3 localUp, MeshCollider meshCollider)
+    public static Mesh ConstructMesh(ShapeGenerator shapeGenerator, Mesh mesh, int resolution, Vector3 localUp)
     {
-        this.shapeGenerator = shapeGenerator;
-        this.mesh = mesh;
-        this.resolution = resolution;
-        this.localUp = localUp;
-        this.meshCollider = meshCollider;
+		//Swap local axis x=y, y=z, z=x
+		Vector3 axisA = new Vector3(localUp.y, localUp.z, localUp.x);
+		Vector3 axisB = Vector3.Cross(localUp, axisA);
 
-        //Swap local axis x=y, y=z, z=x
-        axisA = new Vector3(localUp.y, localUp.z, localUp.x);
-        axisB = Vector3.Cross(localUp, axisA);
-    }
-
-    public void ConstructMesh()
-    {
-        //number of vertex matrix = resolution * scquared
-        Vector3[] vertices = new Vector3[resolution * resolution];
-        //the faces = (resolution - 1) * scquared 
-        //the triangles = (resolution - 1) * scquared * 2
+		//number of vertices = resolution * squared
+		Vector3[] vertices = new Vector3[resolution * resolution];
+        //the faces = (resolution - 1) * squared 
+        //the triangles = (resolution - 1) * squared * 2
         int[] triangles = new int[(resolution - 1) * (resolution - 1) * 6];
         int triIndex = 0;
 
@@ -47,7 +27,7 @@ public class SphereTerrain
                 // Normalize cube into sphere
                 Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
                 vertices[i] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
-                
+
                 //Calculate the row of triangles 
                 if (x != resolution - 1 && y != resolution - 1)
                 {
@@ -62,16 +42,12 @@ public class SphereTerrain
                 }
             }
         }
-        Vector3[] normals = mesh.normals;
-        for (var i = 0; i <= normals.Length; i++)
-        {
-            mesh.normals = normals;
-        }
-                
-      ///  meshCollider.sharedMesh = mesh;
+
         mesh.Clear();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+
+		return mesh;
     }
 }

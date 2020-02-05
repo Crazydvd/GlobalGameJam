@@ -15,19 +15,19 @@ public class NoiseSettings
     [System.Serializable]
     public class SimpleNoiseSettings
     {
-    public float strength = 1;
-    [Range(1, 8)]
-    public int numLayers = 1;
-    public float baseRoughness = 1;
-    public float roughness = 2;
-    public float persistance = .5f;
-    public Vector3 centre;
-    public float minValue;
+        public float strength = 1;
+        [Range(1, 8)]
+        public int numLayers = 1;
+        public float baseRoughness = 1;
+        public float roughness = 2;
+        public float persistance = .5f;
+        public Vector3 centre;
+        public float minValue;
     }
 
     [System.Serializable]
     public class RidgidNoiseSettings : SimpleNoiseSettings
-    { 
+    {
         public float weightMultiplier = .8f;
     }
 }

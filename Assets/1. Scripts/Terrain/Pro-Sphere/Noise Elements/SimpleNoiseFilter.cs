@@ -12,20 +12,21 @@ public class SimpleNoiseFilter : INoiseFilter
     {
         this.settings = settings;
     }
-    public float Evaluate(Vector3 point)
-    {
-        // Noise value is -1 to +1 this squishes it to 0 to 1
-        float noiseValue = 0;
-        float frequency = settings.baseRoughness;
-        float amplitude = 1;
-        for (int i = 0; i < settings.numLayers; i++)
-        {
-            float v = noise.Evaluate(point * frequency + settings.centre);
-            noiseValue += (v + 1) * .5f * amplitude;
-            frequency *= settings.roughness;
-            amplitude *= settings.persistance;
-        }
-        noiseValue = Mathf.Max(0, noiseValue - settings.minValue);
-        return noiseValue * settings.strength;
-    }
+
+	public float Evaluate(Vector3 point)
+	{
+		// Noise value is -1 to +1 this squishes it to 0 to 1
+		float noiseValue = 0;
+		float frequency = settings.baseRoughness;
+		float amplitude = 1;
+		for (int i = 0; i < settings.numLayers; i++)
+		{
+			float v = noise.Evaluate(point * frequency + settings.centre);
+			noiseValue += (v + 1) * .5f * amplitude;
+			frequency *= settings.roughness;
+			amplitude *= settings.persistance;
+		}
+		noiseValue = Mathf.Max(0, noiseValue - settings.minValue);
+		return noiseValue * settings.strength;
+	}
 }

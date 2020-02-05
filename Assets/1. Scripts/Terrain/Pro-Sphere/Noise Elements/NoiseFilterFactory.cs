@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public static class NoiseFilterFactory
-{ 
+﻿public static class NoiseFilterFactory
+{
     public static INoiseFilter CreateNoiseFilter(NoiseSettings settings)
     {
         switch (settings.filterType)
@@ -12,7 +8,8 @@ public static class NoiseFilterFactory
                 return new SimpleNoiseFilter(settings.simpleNoiseSettings);
             case NoiseSettings.FilterType.Ridgid:
                 return new RidgidNoiseFilter(settings.ridgidNoiseSettings);
+            default:
+                throw new System.NotImplementedException($"The enum value of {settings.filterType} does not exist");
         }
-        return null;
     }
 }
