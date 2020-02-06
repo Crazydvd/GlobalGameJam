@@ -4,13 +4,14 @@ using VDUnityFramework.BaseClasses;
 
 namespace MovementScripts
 {
+	[RequireComponent(typeof(Camera))]
 	public class ZoomCameraToFitAll : BetterMonoBehaviour
 	{
 		[SerializeField] private Vector2 minMaxDistance = new Vector2(15.0f, 30.0f);
 
 		[SerializeField] private string tagToSearchFor = "Player";
 
-		[Header("Will search for the tag if empty."), SerializeField]
+		[SerializeField, Header("Will search for the tag if empty.")]
 		private GameObject[] objects = new GameObject[0];
 
 		private ICameraMover cameraMover;
@@ -18,19 +19,14 @@ namespace MovementScripts
 		private float aspectRatio;
 		private float tanFOV;
 
-		private Camera mainCamera;
+		private Camera cameraComponent;
 
 		private void Awake()
 		{
+			cameraComponent = GetComponent<Camera>();
 			cameraMover = GetComponent<ICameraMover>();
 
-			mainCamera = Camera.main;
-			if (!mainCamera)
-			{
-				throw new System.Exception("There is no object with tag 'maincamera'.");
-			}
-
-			tanFOV = Mathf.Tan(Mathf.Deg2Rad * mainCamera.fieldOfView / 2.0f);
+			tanFOV = Mathf.Tan(Mathf.Deg2Rad * cameraComponent.fieldOfView / 2.0f);
 
 			aspectRatio = Screen.height / (float)Screen.width;
 		}
