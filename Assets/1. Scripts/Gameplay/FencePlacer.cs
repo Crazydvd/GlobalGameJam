@@ -9,7 +9,7 @@ namespace Gameplay
 	public class FencePlacer : BetterMonoBehaviour
 	{
 		[SerializeField] private float connectionRadius = 5.0f;
-		
+
 		[SerializeField] private GameObject FenceCorner = null;
 
 		private uint joystickNumber;
@@ -20,7 +20,7 @@ namespace Gameplay
 		}
 
 		private void Update()
-		{	
+		{
 			if (JoystickButtonHandler.Instance.GetButtonDown(joystickNumber, JoystickButton.RightShoulderButton))
 			{
 				SpawnFenceCorner();
