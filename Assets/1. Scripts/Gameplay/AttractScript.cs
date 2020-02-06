@@ -3,26 +3,34 @@ using VDUnityFramework.BaseClasses;
 
 namespace Gameplay
 {
-	[RequireComponent(typeof(SphereCollider))]
-	[ExecuteInEditMode]
 	public class AttractScript : BetterMonoBehaviour
 	{
-		public Vector3 LureOrigin => CachedTransform.position + sphereCollider.center;
+		public Vector3 LureOrigin => sheepatTractor.transform.position;
+
+		public float AttractRadius => attractRadius;
+
+		[SerializeField] private GameObject sheepatTractor;
+
+		private ForceField forceFieldRadius;
 
 		[SerializeField] private float attractRadius = 5.0f;
 
-		private SphereCollider sphereCollider;
-
 		private void Awake()
 		{
-			sphereCollider = gameObject.GetComponent<SphereCollider>();
-			sphereCollider.radius = attractRadius;
-			sphereCollider.isTrigger = true;
+			GetComponentInChildren<ForceField>().radius = attractRadius * 2;
+		}
+
+		private void Update()
+		{
+			Debug.DrawLine(LureOrigin + Vector3.forward * attractRadius, LureOrigin + Vector3.right * attractRadius);
+			Debug.DrawLine(LureOrigin + Vector3.right * attractRadius, LureOrigin + Vector3.back * attractRadius);
+			Debug.DrawLine(LureOrigin + Vector3.back * attractRadius, LureOrigin + Vector3.left * attractRadius);
+			Debug.DrawLine(LureOrigin + Vector3.left * attractRadius, LureOrigin + Vector3.forward * attractRadius);
 		}
 
 		private void OnValidate()
 		{
-			GetComponent<SphereCollider>().radius = attractRadius;
+			GetComponentInChildren<ForceField>().radius = attractRadius * 2;
 		}
 	}
 }

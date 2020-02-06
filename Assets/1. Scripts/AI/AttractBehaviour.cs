@@ -8,8 +8,6 @@ namespace AI
 {
 	public class AttractBehaviour : BetterMonoBehaviour
 	{
-		private AttractScript attractScript;
-
 		private SheepBehaviourManager sheepBehaviourManager;
 
 		private float wanderOrientation = 0;
@@ -22,21 +20,8 @@ namespace AI
 			sheepBehaviourManager = GetComponent<SheepBehaviourManager>();
 		}
 
-		private void OnTriggerEnter(Collider other)
-		{
-			if (other.CompareTag("Player"))
-			{
-				attractScript = other.GetComponent<AttractScript>();
-			}
-		}
-
 		private void FixedUpdate()
-		{
-			if (!attractScript || !attractScript.enabled)
-			{
-				return;
-			}
-			
+		{	
 			Vector3 accelleration = GetSteerOrientation();
 
 			Steer(accelleration);
@@ -77,7 +62,7 @@ namespace AI
 
 			float targetOrientation = wanderOrientation + sheepOrientation; //get new orientation to rotate to 
 
-			Vector3 targetPosition = attractScript.LureOrigin;
+			Vector3 targetPosition = sheepBehaviourManager.LureOrigin;
 
 			targetPosition = targetPosition + (GetOrientationVector(targetOrientation) * sheepBehaviourManager.WanderRadius);
 

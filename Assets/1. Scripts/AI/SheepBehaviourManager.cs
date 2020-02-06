@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using Gameplay;
+using System;
+using UnityEngine;
 using VDUnityFramework.BaseClasses;
+using VDUnityFramework.EventSystem;
 
 namespace AI
 {
@@ -17,11 +20,25 @@ namespace AI
 		
 		private WanderBehaviour wanderBehaviour;
 		private AttractBehaviour attractBehaviour;
+
+		private AttractScript attractScript;
+
+		public Vector3 LureOrigin => attractScript.LureOrigin;
 		
 		private void Awake()
 		{
 			wanderBehaviour = GetComponent<WanderBehaviour>();
 			attractBehaviour = GetComponent<AttractBehaviour>();
+
+			EventManager.Instance.AddListener<ToggleAttractEvent>(OnToggleAttract);
+		}
+
+		private void OnDestroy()
+		{
+			if (EventManager.IsInitialized)
+			{
+				EventManager.Instance.RemoveListener<ToggleAttractEvent>(OnToggleAttract);
+			}
 		}
 
 		private void ActivateWander()
@@ -36,20 +53,27 @@ namespace AI
 			attractBehaviour.enabled = true;
 		}
 
-		private void OnTriggerEnter(Collider other)
+		private void OnToggleAttract(ToggleAttractEvent toggleAttractEvent)
 		{
-			if (other.CompareTag("Player"))
+			if (!attractScript)
+			{
+				attractScript = toggleAttractEvent.AttractScript;
+			}
+
+			//TODO: store AttractScript or something and continueously check if we're in range
+			if (toggleAttractEvent.ToggleOn && IsWithinAttractRange(attractScript))
 			{
 				ActivateAttract();
 			}
-		}
-		
-		private void OnTriggerExit(Collider other)
-		{
-			if (other.CompareTag("Player"))
+			else
 			{
 				ActivateWander();
 			}
+		}
+
+		private bool IsWithinAttractRange(AttractScript attractScript)
+		{
+			return Vector3.Distance(CachedTransform.position, attractScript.LureOrigin) <= attractScript.AttractRadius;
 		}
 	}
 }

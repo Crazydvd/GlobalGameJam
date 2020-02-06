@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1509,7 +1509,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 8.02e-42, y: 1.04e-43, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 7.79e-43, y: -7.2270164, z: 7.78e-43, w: 1.05e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -3883,7 +3883,7 @@ PrefabInstance:
     - target: {fileID: 2460813803030779767, guid: 0f3d1724db8c6c145b9037c330dae8a2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2460813803030779771, guid: 0f3d1724db8c6c145b9037c330dae8a2,
         type: 3}
@@ -4875,6 +4875,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 292654523, guid: 4b1755551bf0ee7499612558aeef3421, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 332716983963593813, guid: 4b1755551bf0ee7499612558aeef3421,
         type: 3}
       propertyPath: m_Icon
@@ -4955,7 +4959,7 @@ PrefabInstance:
     - target: {fileID: 2460813803030779774, guid: 4b1755551bf0ee7499612558aeef3421,
         type: 3}
       propertyPath: Number
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6944739952533971643, guid: 4b1755551bf0ee7499612558aeef3421,
         type: 3}
