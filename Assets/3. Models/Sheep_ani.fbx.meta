@@ -9,7 +9,12 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Walk
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sheep_Mat
+    second: {fileID: 2100000, guid: 7dc09bdc0e418494d91bb40d0549611a, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

@@ -20,7 +20,7 @@ MonoBehaviour:
     noiseSettings:
       filterType: 0
       simpleNoiseSettings:
-        strength: 0.06
+        strength: 0.08
         numLayers: 5
         baseRoughness: 0.85
         roughness: 2
