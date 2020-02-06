@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Interfaces;
 using UnityEngine;
 using VDUnityFramework.BaseClasses;
@@ -10,12 +9,12 @@ namespace MovementScripts
 	{
 		[SerializeField] private string tagToSearchFor = "Player";
 
-		[Header("Will search for the tag if empty.")]
-		[SerializeField] private GameObject[] objects = new GameObject[0];
+		[Header("Will search for the tag if empty.")] [SerializeField]
+		private GameObject[] objects = new GameObject[0];
 
-		
 		[SerializeField] private Vector3 offset;
-		// ReSharper disable once ConvertToAutoProperty
+
+		// ReSharper disable once ConvertToAutoPropertyWhenPossible
 		public Vector3 Offset
 		{
 			get => offset;
@@ -37,6 +36,11 @@ namespace MovementScripts
 
 		private Vector3 FindAveragePosition()
 		{
+			if (objects.Length == 0)
+			{
+				return CachedTransform.position;
+			}
+
 			return objects.Aggregate(Vector3.zero, (current, gameobject) => current + gameobject.transform.position) /
 				   objects.Length;
 		}

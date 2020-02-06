@@ -14,8 +14,11 @@ namespace AI
 
 		private float wanderOrientation = 0;
 
+		private new Rigidbody rigidbody;
+
 		private void Awake()
 		{
+			rigidbody = GetComponent<Rigidbody>();
 			sheepBehaviourManager = GetComponent<SheepBehaviourManager>();
 		}
 
@@ -42,15 +45,15 @@ namespace AI
 		
 		private void LookWhereYouGoing()
 		{
-			Vector3 direction = CachedRigidBody.velocity;
+			Vector3 direction = rigidbody.velocity;
         
 			direction.Normalize();
 
 			if (direction.magnitude > 0.001)
 			{
 				float targetRotation = -1 * (Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg);
-				float newRotation = Mathf.LerpAngle(CachedRigidBody.rotation.eulerAngles.y, targetRotation, Time.deltaTime * sheepBehaviourManager.RotateSpeed);
-				CachedRigidBody.rotation = Quaternion.Euler(0,newRotation,0);
+				float newRotation = Mathf.LerpAngle(rigidbody.rotation.eulerAngles.y, targetRotation, Time.deltaTime * sheepBehaviourManager.RotateSpeed);
+				rigidbody.rotation = Quaternion.Euler(0,newRotation,0);
             
 			}
         
@@ -58,11 +61,11 @@ namespace AI
 		
 		private void Steer(Vector3 linearAcceleration)
 		{
-			CachedRigidBody.velocity += linearAcceleration * Time.deltaTime;
+			rigidbody.velocity += linearAcceleration * Time.deltaTime;
 
-			if (CachedRigidBody.velocity.magnitude > sheepBehaviourManager.MaxVelocity)
+			if (rigidbody.velocity.magnitude > sheepBehaviourManager.MaxVelocity)
 			{
-				CachedRigidBody.velocity = CachedRigidBody.velocity.normalized * sheepBehaviourManager.MaxVelocity;
+				rigidbody.velocity = rigidbody.velocity.normalized * sheepBehaviourManager.MaxVelocity;
 			}
 		}
 		
@@ -100,7 +103,7 @@ namespace AI
 
 		private float OrientationInRadians()
 		{
-			return CachedRigidBody.rotation.eulerAngles.y * Mathf.Deg2Rad;
+			return rigidbody.rotation.eulerAngles.y * Mathf.Deg2Rad;
 		}
 
 		private float GetRandomNumber()
