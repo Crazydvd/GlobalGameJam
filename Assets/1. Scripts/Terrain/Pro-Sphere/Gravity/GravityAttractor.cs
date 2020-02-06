@@ -14,8 +14,7 @@ public class GravityAttractor : MonoBehaviour
         //the body's current direction
         Vector3 bodyUp = body.up;
 
-        body.rotation = Quaternion.FromToRotation(bodyUp, targetDir) * body.rotation;
         body.GetComponent<Rigidbody>().AddForce(targetDir * gravity);
-
+        body.rotation = Quaternion.FromToRotation(bodyUp, targetDir) * body.rotation;
     }
 }
