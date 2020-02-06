@@ -1,4 +1,6 @@
-﻿namespace Enums
+﻿using UnityEngine;
+
+namespace Enums
 {
 	public enum JoystickButton
 	{

@@ -14,9 +14,11 @@ namespace JoystickData
 		public static Vector3 GetJoystickAxes(uint joystickNumber)
 		{
 			float horizontalAxis =
-				Input.GetAxisRaw($"{JoystickButtonToStringConverter.GetString(JoystickButton.HorizontalAxis)}{joystickNumber}");
-			float verticalAxis = 
-				Input.GetAxisRaw($"{JoystickButtonToStringConverter.GetString(JoystickButton.VerticalAxis)}{joystickNumber}");
+				Input.GetAxisRaw(
+					$"{JoystickButtonToStringConverter.GetString(JoystickButton.HorizontalAxis)}{joystickNumber}");
+			float verticalAxis =
+				Input.GetAxisRaw(
+					$"{JoystickButtonToStringConverter.GetString(JoystickButton.VerticalAxis)}{joystickNumber}");
 
 			return new Vector3(horizontalAxis, 0.0f, verticalAxis);
 		}

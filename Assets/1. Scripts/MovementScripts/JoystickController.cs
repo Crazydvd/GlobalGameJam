@@ -5,7 +5,7 @@ using VDUnityFramework.UnityExtensions;
 
 namespace MovementScripts
 {
-	[RequireComponent(typeof(JoystickNumber))]
+	[RequireComponent(typeof(JoystickNumber), typeof(CharacterController))]
 	public class JoystickController : BetterMonoBehaviour
 	{
 		[SerializeField] private float speed = 10.0f;
@@ -21,7 +21,7 @@ namespace MovementScripts
 			mainCamera = Camera.main;
 
 			joystickNumber = gameObject.GetComponent<JoystickNumber>();
-			characterController = gameObject.EnsureComponent<CharacterController>();
+			characterController = gameObject.GetComponent<CharacterController>();
 			boundsRestrictor = gameObject.EnsureComponent<ScreenBoundsRestrictor>();
 		}
 
@@ -32,11 +32,11 @@ namespace MovementScripts
 			{
 				Vector3 directionToCamera = (mainCamera.transform.position - CachedTransform.position).normalized;
 
-				characterController.SimpleMove(speed * directionToCamera);
+				characterController.Move(speed * directionToCamera);
 				return;
 			}
 
-			characterController.SimpleMove(speed * MovementHandler.GetClampedJoystickAxes(joystickNumber, 1));
+			characterController.Move(speed * Time.deltaTime * MovementHandler.GetClampedJoystickAxes(joystickNumber, 1));
 		}
 	}
 }
