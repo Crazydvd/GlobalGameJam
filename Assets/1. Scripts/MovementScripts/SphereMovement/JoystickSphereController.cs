@@ -19,12 +19,9 @@ namespace MovementScripts.SphereMovement
 			rigidBody = GetComponent<Rigidbody>();
 		}
 
-		private void FixedUpdate()
+		private void Update()
 		{
-			if (JoystickInput.GetButtonDown(joystickNumber, JoystickButton.RightShoulderButton))
-			{
-				
-			}
+			
 		}
 	}
 }

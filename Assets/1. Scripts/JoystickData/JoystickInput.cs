@@ -41,13 +41,13 @@ namespace JoystickData
 
 		public static bool GetButtonDown(uint joystickNumber, JoystickButton button)
 		{
-			return !ButtonDataHandler.IsButtonPressedLastFrame(joystickNumber, button)
+			return !ButtonDataHandler.Instance.IsButtonPressedLastFrame(joystickNumber, button)
 				   && GetButton(joystickNumber, button);
 		}
 
 		public static bool GetButtonUp(uint joystickNumber, JoystickButton button)
 		{
-			return ButtonDataHandler.IsButtonPressedLastFrame(joystickNumber, button)
+			return ButtonDataHandler.Instance.IsButtonPressedLastFrame(joystickNumber, button)
 				   && !GetButton(joystickNumber, button);
 		}
 
@@ -62,12 +62,15 @@ namespace JoystickData
 		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 		private class ButtonDataHandler : Singleton<ButtonDataHandler>
 		{
+			// Stores the buttonData per Joystick for the previous frame
 			private static readonly List<Dictionary<JoystickButton, bool>> buttonDataPerJoystick =
 				new List<Dictionary<JoystickButton, bool>>();
 
 			public static int JoystickCount => buttonDataPerJoystick.Count;
 
-			public static bool IsButtonPressedLastFrame(uint joystickNumber, JoystickButton button)
+			// ReSharper disable once MemberCanBeMadeStatic.Local
+			//Justification: Needed a non-static to be able to create an singleton instance
+			public bool IsButtonPressedLastFrame(uint joystickNumber, JoystickButton button)
 			{
 				return EnsureKeyIsPresent(joystickNumber, button);
 			}
