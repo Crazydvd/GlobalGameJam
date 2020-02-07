@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Enums;
 using UnityEngine;
 using VDFramework.Extensions;
@@ -69,7 +68,7 @@ namespace JoystickData
 			public static int JoystickCount => buttonDataPerJoystick.Count;
 
 			// ReSharper disable once MemberCanBeMadeStatic.Local
-			//Justification: Needed a non-static to be able to create an singleton instance
+			//Justification: Needed a non-static to be able to create a singleton instance
 			public bool IsButtonPressedLastFrame(uint joystickNumber, JoystickButton button)
 			{
 				return EnsureKeyIsPresent(joystickNumber, button);
