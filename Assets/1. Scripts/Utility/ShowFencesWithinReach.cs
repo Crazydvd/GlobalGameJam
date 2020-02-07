@@ -10,7 +10,10 @@ namespace Utility
 	{
 		[SerializeField] private float radius = 5.0f;
 
-		private void OnRenderObject()
+        private Fence.FenceCorner availableConnection;
+
+
+        private void OnRenderObject()
 		{
 			IEnumerable<FenceCorner> allFenceCorners = FindObjectsOfType<FenceCorner>().ToList();
 
@@ -42,11 +45,10 @@ namespace Utility
 
 		private void DrawLine(BetterMonoBehaviour begin, Vector4 color)
 		{
-			InGameLineDrawer.DrawLine(begin.CachedTransform.position,
-				CachedTransform.position - CachedTransform.forward * 1.5f,
-				color);
-		}
-
+			//LineGenerator.DrawLine(begin.CachedTransform.position,CachedTransform.position - CachedTransform.forward * 1.5f, color);
+            LineGenerator.LineRenderer(availableConnection.lineRenderer,begin.CachedTransform.position, CachedTransform.position - CachedTransform.forward * 1.5f, color);
+        }
+      
 		private float DistanceToObject(BetterMonoBehaviour behaviour)
 		{
 			if (behaviour == null)

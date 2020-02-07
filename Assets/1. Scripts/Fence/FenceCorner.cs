@@ -14,6 +14,7 @@ namespace Fence
 
 		public FenceCorner Parent { get; private set; }
 		public FenceCorner Child { get; private set; }
+        public LineRenderer lineRenderer;
 
 		public FenceCorner Root
 		{
@@ -33,17 +34,27 @@ namespace Fence
 		private void Start()
 		{
 			CheckForPossibleConnections();
+            lineRenderer =  GetComponent<LineRenderer>();
 		}
-		
-		private void OnRenderObject()
+		void UpdateVisaliser (Vector3[] cornerPoints)
+        {
+            lineRenderer.positionCount = cornerPoints.Length;
+            lineRenderer.SetPositions(cornerPoints);
+        }
+		private void Update()
 		{
+            if (!lineRenderer)
+            {
+                return;
+            }
 			if (Child)
 			{
-				InGameLineDrawer.DrawLine(Child.CachedTransform.position, CachedTransform.position, new Color(0.5f, 0.4f, 0));
-			}
+                 LineGenerator.DrawLine(Child.CachedTransform.position, CachedTransform.position, new Color(0.5f, 0.4f, 0));
+                 LineGenerator.LineRenderer(lineRenderer, Child.CachedTransform.position, CachedTransform.position, lineRenderer.endColor);
+            }
 		}
-
-		private void CheckForPossibleConnections()
+       
+        private void CheckForPossibleConnections()
 		{
 			// Get all FenceCorners
 			FenceCorner[] allFenceCorners = FindObjectsOfType<FenceCorner>();
