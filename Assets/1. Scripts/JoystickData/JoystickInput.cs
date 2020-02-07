@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Enums;
 using UnityEngine;
 using VDFramework.Extensions;
@@ -6,36 +7,60 @@ using VDUnityFramework.Singleton;
 
 namespace JoystickData
 {
-	public class JoystickButtonHandler : Singleton<JoystickButtonHandler>
+	public static class JoystickInput
 	{
-		public bool GetButtonDown(uint joystickNumber, JoystickButton button)
+		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+		//					JoystickAxis
+		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+		
+		/// <summary>
+		/// Returns a vector3 containing the joystick axis values
+		/// </summary>
+		/// <param name="joystickNumber">The number of the joystick to get input from</param>
+		/// <returns>A vector3(HorizontalAxis, 0, VerticalAxis)</returns>
+		public static Vector3 GetJoystickAxes(uint joystickNumber)
+		{
+			float horizontalAxis =
+				Input.GetAxisRaw(
+					$"{JoystickButtonToStringConverter.GetString(JoystickButton.HorizontalAxis)}{joystickNumber}");
+			float verticalAxis =
+				Input.GetAxisRaw(
+					$"{JoystickButtonToStringConverter.GetString(JoystickButton.VerticalAxis)}{joystickNumber}");
+
+			return new Vector3(horizontalAxis, 0.0f, verticalAxis);
+		}
+
+		public static Vector3 GetClampedJoystickAxes(uint joystickNumber, float maxLength)
+		{
+			return Vector3.ClampMagnitude(GetJoystickAxes(joystickNumber), maxLength);
+		}
+		
+		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+		//					JoystickButtons
+		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+
+		public static bool GetButtonDown(uint joystickNumber, JoystickButton button)
 		{
 			return !ButtonDataHandler.IsButtonPressedLastFrame(joystickNumber, button)
 				   && GetButton(joystickNumber, button);
 		}
 
-		public bool GetButtonUp(uint joystickNumber, JoystickButton button)
+		public static bool GetButtonUp(uint joystickNumber, JoystickButton button)
 		{
 			return ButtonDataHandler.IsButtonPressedLastFrame(joystickNumber, button)
 				   && !GetButton(joystickNumber, button);
 		}
 
-		public bool GetButton(uint joystickNumber, JoystickButton button)
+		public static bool GetButton(uint joystickNumber, JoystickButton button)
 		{
 			return Input.GetAxis(
 					   $"{JoystickButtonToStringConverter.GetString(button)}{joystickNumber}") > 0;
 		}
 
-		private void LateUpdate()
-		{
-			ButtonDataHandler.UpdateData();
-		}
-
-
-		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
-		// 						ButtonDataHandler
-		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
-		private static class ButtonDataHandler
+		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+		//					ButtonDataHandler
+		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+		private class ButtonDataHandler : Singleton<ButtonDataHandler>
 		{
 			private static readonly List<Dictionary<JoystickButton, bool>> buttonDataPerJoystick =
 				new List<Dictionary<JoystickButton, bool>>();
@@ -99,8 +124,13 @@ namespace JoystickData
 				{
 					uint joystickNumber = (uint) joystickIndex + 1;
 					
-					return Instance.GetButton(joystickNumber, button);
+					return GetButton(joystickNumber, button);
 				}
+			}
+
+			private void LateUpdate()
+			{
+				UpdateData();
 			}
 		}
 	}

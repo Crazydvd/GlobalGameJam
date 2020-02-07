@@ -21,7 +21,7 @@ namespace Gameplay
 
 		private void Update()
 		{
-			if (JoystickButtonHandler.Instance.GetButtonDown(joystickNumber, JoystickButton.RightShoulderButton))
+			if (JoystickInput.GetButtonDown(joystickNumber, JoystickButton.RightShoulderButton))
 			{
 				attractEnabled = !attractEnabled;
 
