@@ -1,26 +1,55 @@
-﻿using UnityEngine;
+﻿using Gameplay;
+using UnityEngine;
+using VDUnityFramework.BaseClasses;
+using VDUnityFramework.UnityExtensions;
 
 namespace CustomPhysics
 {
-	public class FouxGravity : MonoBehaviour
+	public class FouxGravity : BetterMonoBehaviour
 	{
-		public GravityAttractor attractor;
-
 		private Rigidbody rigidBody;
+
+		private GravityAttractor[] gravityAttractors;
 
 		// Start is called before the first frame update
 		void Start()
 		{
-			rigidBody = GetComponent<Rigidbody>();
-
+			gravityAttractors = FindObjectsOfType<GravityAttractor>();
+			
+			rigidBody = gameObject.EnsureComponent<Rigidbody>();
 			rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-			rigidBody.GetComponent<Rigidbody>().useGravity = false;
+			rigidBody.useGravity = false;
+		}
+
+		private GravityAttractor FindClosestAttractor()
+		{
+			if (gravityAttractors.Length == 1)
+			{
+				return gravityAttractors[0];
+			}
+			
+			GravityAttractor closest = null;
+			float closestDistance = float.PositiveInfinity;
+			
+			foreach (GravityAttractor gravityAttractor in gravityAttractors)
+			{
+				float distance = Vector3.Distance(CachedTransform.position, gravityAttractor.CachedTransform.position);
+				if ((distance >= closestDistance))
+				{
+					continue;
+				}
+
+				closestDistance = distance;
+				closest = gravityAttractor;
+			}
+
+			return closest;
 		}
 
 		// Update is called once per frame
 		void FixedUpdate()
 		{
-			attractor.Attract(transform);
+			FindClosestAttractor().Attract(rigidBody);
 		}
 	}
 }

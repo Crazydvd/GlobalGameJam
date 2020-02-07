@@ -17,7 +17,7 @@ namespace JoystickData
 		/// </summary>
 		/// <param name="joystickNumber">The number of the joystick to get input from</param>
 		/// <returns>A vector3(HorizontalAxis, 0, VerticalAxis)</returns>
-		public static Vector3 GetJoystickAxes(uint joystickNumber)
+		public static Vector3 GetAxes(uint joystickNumber)
 		{
 			float horizontalAxis =
 				Input.GetAxisRaw(
@@ -29,9 +29,9 @@ namespace JoystickData
 			return new Vector3(horizontalAxis, 0.0f, verticalAxis);
 		}
 
-		public static Vector3 GetClampedJoystickAxes(uint joystickNumber, float maxLength)
+		public static Vector3 GetClampedAxes(uint joystickNumber, float maxLength)
 		{
-			return Vector3.ClampMagnitude(GetJoystickAxes(joystickNumber), maxLength);
+			return Vector3.ClampMagnitude(GetAxes(joystickNumber), maxLength);
 		}
 		
 		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//

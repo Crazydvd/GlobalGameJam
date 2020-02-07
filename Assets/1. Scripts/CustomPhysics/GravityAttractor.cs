@@ -1,20 +1,21 @@
 ﻿using UnityEngine;
+using VDUnityFramework.BaseClasses;
 
 namespace CustomPhysics
 {
-    public class GravityAttractor : MonoBehaviour
+    public class GravityAttractor : BetterMonoBehaviour
     {
-        public float gravity = -10f;
+        [SerializeField] private float gravity = -9.807f;
 
-        public void Attract (Transform body)
+        public void Attract (Rigidbody body)
         {
-            //direction we want to face (center of the object/planet)
-            Vector3 targetDir = (body.position - transform.position).normalized;
+            // direction from center to body
+            Vector3 targetDir = (body.position - CachedTransform.position).normalized;
 
-            //the body's current direction
-            Vector3 bodyUp = body.up;
+            //the body's current local up direction
+            Vector3 bodyUp = body.transform.up;
 
-            body.GetComponent<Rigidbody>().AddForce(targetDir * gravity);
+            body.AddForce(targetDir * gravity);
             body.rotation = Quaternion.FromToRotation(bodyUp, targetDir) * body.rotation;
         }
     }

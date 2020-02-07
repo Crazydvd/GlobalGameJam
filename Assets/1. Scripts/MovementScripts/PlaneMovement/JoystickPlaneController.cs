@@ -27,7 +27,7 @@ namespace MovementScripts.PlaneMovement
 
 		private void Update()
 		{
-			Vector3 movement = JoystickInput.GetClampedJoystickAxes(joystickNumber, 1);
+			Vector3 movement = JoystickInput.GetClampedAxes(joystickNumber, 1);
 			
 			if (boundsRestrictor.IsOutOfBounds(CachedTransform.position, movement))
 			{

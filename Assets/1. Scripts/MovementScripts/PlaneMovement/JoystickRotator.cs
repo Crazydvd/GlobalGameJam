@@ -20,7 +20,7 @@ namespace MovementScripts.PlaneMovement
 
 		private void RotateTowardsJoystickDirection()
 		{
-			Vector3 direction = JoystickInput.GetJoystickAxes(joystickNumber);
+			Vector3 direction = JoystickInput.GetAxes(joystickNumber);
 
 			if (direction.magnitude > 0)
 			{
