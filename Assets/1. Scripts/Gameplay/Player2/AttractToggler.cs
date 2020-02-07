@@ -9,7 +9,7 @@ namespace Gameplay
 	{
 		private uint joystickNumber;
 
-		private bool attractEnabled = false;
+		private bool attractEnabled;
 
 		private AttractScript attractScript;
 				

@@ -3,13 +3,12 @@ using VDUnityFramework.BaseClasses;
 
 namespace CustomPhysics
 {
-	[RequireComponent(typeof(CharacterController))]
+	[RequireComponent(typeof(Rigidbody))]
 	public class PlanetGravity : BetterMonoBehaviour
 	{
 		[SerializeField] private float gravity = -9.81f;
 
-		// CharacterController because our movement is unrealistic.
-		private CharacterController characterController;
+		private Rigidbody rigidBody;
 		private Vector3 directionFromCenter;
 
 		private Planet planet;
@@ -17,7 +16,7 @@ namespace CustomPhysics
 		private void Awake()
 		{
 			planet = FindObjectOfType<Planet>();
-			characterController = GetComponent<CharacterController>();
+			rigidBody = GetComponent<Rigidbody>();
 
 			if (planet == null)
 			{
@@ -35,14 +34,9 @@ namespace CustomPhysics
 			directionFromCenter = (CachedTransform.position - planet.CachedTransform.position)
 				.normalized;
 				
-			characterController.Move(Time.deltaTime * gravity * directionFromCenter);
+			rigidBody.AddForce(Time.deltaTime * gravity * directionFromCenter);
 			
 			Debug.DrawLine(CachedTransform.position, planet.CachedTransform.position);
-		}
-
-		private static float SquaredDeltaTime()
-		{
-			return Time.deltaTime * Time.deltaTime;
 		}
 	}
 }
