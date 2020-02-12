@@ -6,8 +6,13 @@ using VDUnityFramework.BaseClasses;
 
 public class FoliageGenerator : BetterMonoBehaviour
 {
-	// Only spawn foliage at specific height;
-	// Have function that takes the mesh, grabs its vertices, loop over them, check height, if height matches / falls within range → spawn foliage
+    public GameObject[] smallFoliages;
 
-	//Maybe static?
+    private ShapeGenerator shapeGenerator;
+
+    
+    // Only spawn foliage at specific height;
+    // Have function that takes the mesh, grabs its vertices, loop over them, check height, if height matches / falls within range → spawn foliage
+
+    //Maybe static?
 }
