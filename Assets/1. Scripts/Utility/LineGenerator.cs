@@ -1,59 +1,51 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using VDUnityFramework.BaseClasses;
+using VDUnityFramework.UnityExtensions;
 
 namespace Utility
 {
-	public static class LineGenerator
+	public class LineGenerator : BetterMonoBehaviour
 	{
-       // private LineRenderer f_lineRenderer = null;
-       // private Fence.FenceCorner availableConnection;
+		private LineRenderer lineRenderer;
 
-
-        public static void LineRenderer(LineRenderer f_lineRenderer, Vector3 start, Vector3 end, Vector4 color)
-        {
-            if (f_lineRenderer != null)
-            {
-                
-                //f_lineRenderer = availableConnection.gameObject.GetComponent<LineRenderer>();
-                f_lineRenderer.useWorldSpace = true;
-                //f_lineRenderer.positionCount = GameObject.
-                f_lineRenderer.startWidth = 20.1f;
-                f_lineRenderer.endWidth = 20.1f;
-                
-               // f_lineRenderer.material = new Material(Shader.Find("Universal Rendering Pipeline/Simple Lit"));
-                f_lineRenderer.startColor = Color.blue; 
-                f_lineRenderer.endColor = Color.clear;
-            }
-        }
-
-
-		public static void DrawLine(Vector3 begin, Vector3 end, Vector4 color)
+		private void Awake()
 		{
-			GL.Begin(GL.LINES);
-			
-			GL.Color(color);
-			GL.Vertex3(begin.x, begin.y, begin.z);
-			
-			GL.Color(color);
-			GL.Vertex3(end.x, end.y, end.z);
-			
-			GL.End();
+			lineRenderer = gameObject.EnsureComponent<LineRenderer>();
 		}
 
-		public static void DrawLines(IEnumerable<Vector3> vertices, Vector4 color)
+		public void DrawLineBetween(Vector3 start, Vector3 end)
 		{
-			GL.Begin(GL.LINES);
+			lineRenderer.positionCount = 2;
+			
+			lineRenderer.SetPosition(0, start);
+			lineRenderer.SetPosition(1, end);
+		}
 
-			foreach (Vector3 vertex in vertices)
+		public void DrawLineBetween(Vector3 start, Vector3 end, Material lineMaterial)
+		{
+			lineRenderer.material = lineMaterial;
+			DrawLineBetween(start, end);
+		}
+
+		public void AddVertexToEnd(Vector3 position)
+		{
+			int index = lineRenderer.positionCount;
+
+			lineRenderer.positionCount = index + 1;
+			
+			lineRenderer.SetPosition(index, position);
+		}
+
+		public void DeleteLast()
+		{
+			if (lineRenderer.positionCount == 1)
 			{
-				GL.Color(color);
-				GL.Vertex3(vertex.x, vertex.y, vertex.z);
+				lineRenderer.positionCount = 0;
 			}
 			
-			GL.End();
+			lineRenderer.positionCount -= 1;
 		}
-
-
 	}
 }

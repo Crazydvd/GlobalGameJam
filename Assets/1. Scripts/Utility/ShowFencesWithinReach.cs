@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Fence;
 using UnityEngine;
@@ -9,12 +10,20 @@ namespace Utility
 	public class ShowFencesWithinReach : BetterMonoBehaviour
 	{
 		[SerializeField] private float radius = 5.0f;
+		//TODO: take reference of empty gameobject spawn point for fences
 
-        private Fence.FenceCorner availableConnection;
+		private LineGenerator lastLine;
 
-
-        private void OnRenderObject()
+		[SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+		private void Update()
 		{
+			if (lastLine)
+			{
+				lastLine.DeleteLast();
+				lastLine = null;
+			}
+			
+			//TODO: split into methods
 			IEnumerable<FenceCorner> allFenceCorners = FindObjectsOfType<FenceCorner>().ToList();
 
 			if (allFenceCorners.Any())
@@ -22,6 +31,7 @@ namespace Utility
 				IEnumerable<FenceCorner> cornersInReach =
 					allFenceCorners.Where(corner => DistanceToObject(corner) <= radius);
 
+				
 				if (!cornersInReach.Any())
 				{
 					return;
@@ -31,22 +41,22 @@ namespace Utility
 
 				if (closest)
 				{
-					DrawLine(closest, Color.green);
+					DrawLineToUsFrom(closest);
 
 					FenceCorner root = closest.Root;
 
 					if (DistanceToObject(root) < radius)
 					{
-						DrawLine(root, Color.red);
+						DrawLineToUsFrom(root);
 					}
 				}
 			}
 		}
 
-		private void DrawLine(BetterMonoBehaviour begin, Vector4 color)
+		private void DrawLineToUsFrom(FenceCorner fenceCorner)
 		{
-			//LineGenerator.DrawLine(begin.CachedTransform.position,CachedTransform.position - CachedTransform.forward * 1.5f, color);
-            LineGenerator.LineRenderer(availableConnection.lineRenderer,begin.CachedTransform.position, CachedTransform.position - CachedTransform.forward * 1.5f, color);
+			lastLine = fenceCorner.GetComponent<LineGenerator>();
+			lastLine.AddVertexToEnd(CachedTransform.position - CachedTransform.forward * 1.5f);
         }
       
 		private float DistanceToObject(BetterMonoBehaviour behaviour)
