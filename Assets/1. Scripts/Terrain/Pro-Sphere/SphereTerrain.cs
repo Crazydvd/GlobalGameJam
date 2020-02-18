@@ -14,6 +14,7 @@ public static class SphereTerrain
         //the triangles = (resolution - 1) * squared * 2
         int[] triangles = new int[(resolution - 1) * (resolution - 1) * 6];
         int triIndex = 0;
+        Vector2[] uv = mesh.uv;
 
         for (int y = 0; y < resolution; y++)
         {
@@ -47,6 +48,7 @@ public static class SphereTerrain
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+        mesh.uv = uv;
 
 		return mesh;
     }

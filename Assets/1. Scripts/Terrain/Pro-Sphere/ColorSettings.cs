@@ -5,5 +5,24 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class ColorSettings : ScriptableObject
 {
-    public Color ColorOfPlanet;
+    
+    public Material planetMaterial;
+    public BiomeColourSettings biomeColourSettings;
+
+    [System.Serializable]
+    public class BiomeColourSettings
+    {
+        public Biome[] biomes;
+
+        [System.Serializable]
+        public class Biome
+        {
+            public Gradient gradient;
+            public Color tint;
+            [Range (0,1)]
+            public float startHeight;
+            [Range(0,1)]
+            public float tintPercent;
+        }
+    }
 }
