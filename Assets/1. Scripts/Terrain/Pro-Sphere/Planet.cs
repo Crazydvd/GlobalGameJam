@@ -13,16 +13,16 @@ public class Planet : BetterMonoBehaviour
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
 
-    private ShapeGenerator shapeGenerator;
-
-    [SerializeField] private Material cubeFaceMaterial;
-
+    private ShapeGenerator shapeGenerator = new ShapeGenerator();
+    private MinMaxGenerator colorGenerator = new MinMaxGenerator();
+       
     [HideInInspector]
     private MeshFilter[] meshFilters;
 
     private void Initialize()
     {
-        shapeGenerator = new ShapeGenerator(shapeSettings);
+        shapeGenerator.UpdateSettings(shapeSettings);
+        colorGenerator.UpdateSettings(colorSettings);
         if (meshFilters == null || meshFilters.Length == 0)
         {
             meshFilters = new MeshFilter[6];
@@ -36,7 +36,7 @@ public class Planet : BetterMonoBehaviour
                 GameObject CubeFace = new GameObject($"CubeFace {thisRenderMask}");
                 CubeFace.transform.parent = CachedTransform;
 
-                CubeFace.AddComponent<MeshRenderer>().sharedMaterial = cubeFaceMaterial;
+                CubeFace.AddComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
 				CubeFace.AddComponent<MeshCollider>();
 
 				meshFilters[i] = CubeFace.AddComponent<MeshFilter>();
@@ -74,6 +74,7 @@ public class Planet : BetterMonoBehaviour
     private void GenerateMesh()
     {
 		Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
+        colorGenerator.UpdateElevation(shapeGenerator.elevationMinMax);
 
 		for (int i = 0; i < 6; i++)
         {
@@ -86,15 +87,16 @@ public class Planet : BetterMonoBehaviour
 
     private void GenerateColors()
     {
-		if (meshFilters[0] != null)
-		{
-			meshFilters[0].GetComponent<MeshRenderer>().sharedMaterial.color = colorSettings.ColorOfPlanet;
-		}
-
-		//TODO: add back later
-        //foreach (MeshFilter meshFilter in meshFilters)
-        //{
-        //    meshFilter.GetComponent<MeshRenderer>().sharedMaterial.color = colorSettings.ColorOfPlanet;
-        //}
+        Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
+        colorGenerator.UpdateColors();
+        for (int i = 0; i < 6; i++)
+        {
+            if (meshFilters[i].gameObject.activeSelf)
+            {
+                UVGenerator.UpdateUVs(colorGenerator,meshFilters[i].sharedMesh,resolution,directions[i]);
+            }
+        }
+		      
     }
+   
 }
