@@ -1,6 +1,6 @@
 ﻿using JoystickData;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
+using VDFramework;
 
 namespace MovementScripts.PlaneMovement
 {

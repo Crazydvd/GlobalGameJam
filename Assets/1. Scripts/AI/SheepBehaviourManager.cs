@@ -1,8 +1,8 @@
 ﻿using Gameplay;
-using System;
+using Gameplay.Player2;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.EventSystem;
+using VDFramework;
+using VDFramework.EventSystem;
 
 namespace AI
 {

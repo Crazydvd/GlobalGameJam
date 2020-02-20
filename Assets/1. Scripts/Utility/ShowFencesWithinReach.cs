@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Fence;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
+using VDFramework;
 
 namespace Utility
 {
@@ -14,7 +13,6 @@ namespace Utility
 
 		private LineGenerator lastLine;
 
-		[SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
 		private void Update()
 		{
 			if (lastLine)
@@ -85,7 +83,7 @@ namespace Utility
 					Vector3.Distance(fenceCorner.CachedTransform.position,
 						CachedTransform.position - CachedTransform.forward * 1.5f);
 
-				if (!(distanceToCorner < closestDistance))
+				if ((distanceToCorner >= closestDistance))
 				{
 					continue;
 				}

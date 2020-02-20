@@ -17,10 +17,15 @@ namespace JoystickData
 		{
 			if (!stringPerButton.TryGetValue(buttonName, out string button))
 			{
-				throw new InvalidEnumArgumentException("The enum is not in the dictionary");
+				throw new InvalidEnumArgumentException($"There is no button assigned for {buttonName}");
 			}
 			
 			return button;
-		} 
+		}
+
+		public static string GetString(JoystickButton buttonName, uint joystickNumber)
+		{
+			return $"{GetString(buttonName)}{joystickNumber}";
+		}
 	}
 }

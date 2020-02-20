@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Interfaces;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
+using VDFramework;
 
 namespace MovementScripts.PlaneMovement
 {
@@ -41,8 +41,8 @@ namespace MovementScripts.PlaneMovement
 				return CachedTransform.position;
 			}
 
-			return objects.Aggregate(Vector3.zero, (current, gameobject) => current + gameobject.transform.position) /
-				   objects.Length;
+			return objects.Aggregate(Vector3.zero, 
+					   (current, gameobject) => current + gameobject.transform.position) / objects.Length;
 		}
 	}
 }

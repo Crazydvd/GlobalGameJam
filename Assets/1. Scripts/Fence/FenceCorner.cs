@@ -3,9 +3,9 @@ using System.Linq;
 using Events.GameplayEvents;
 using UnityEngine;
 using Utility;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.EventSystem;
-using VDUnityFramework.UnityExtensions;
+using VDFramework;
+using VDFramework.EventSystem;
+using VDFramework.UnityExtensions;
 
 namespace Fence
 {

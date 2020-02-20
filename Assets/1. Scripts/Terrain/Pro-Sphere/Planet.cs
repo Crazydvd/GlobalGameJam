@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using VDUnityFramework.BaseClasses;
+﻿using Terrain.Generators;
+using UnityEngine;
+using VDFramework;
 
 public class Planet : BetterMonoBehaviour
 {

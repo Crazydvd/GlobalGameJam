@@ -1,7 +1,7 @@
 ﻿using Events.TimerEvents;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.EventSystem;
+using VDFramework;
+using VDFramework.EventSystem;
 
 namespace UI
 {

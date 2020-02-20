@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using VDUnityFramework.BaseClasses;
+using VDFramework;
 
 namespace MovementScripts.PlaneMovement
 {
 	public class ScreenBoundsRestrictor : BetterMonoBehaviour
 	{
-		[Header("RightX, LeftX, TopY, BottomY")] [SerializeField]
+		[Header("RightX, LeftX, TopY, BottomY"), SerializeField]
 		private Vector4 margin = new Vector4(30, 30, 60, 5);
 
 		private Camera mainCamera;

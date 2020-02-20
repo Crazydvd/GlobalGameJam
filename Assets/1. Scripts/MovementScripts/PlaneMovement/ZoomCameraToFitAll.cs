@@ -1,6 +1,7 @@
-﻿using Interfaces;
+﻿using System.Collections.Generic;
+using Interfaces;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
+using VDFramework;
 
 namespace MovementScripts.PlaneMovement
 {
@@ -70,7 +71,7 @@ namespace MovementScripts.PlaneMovement
 			return new[] { highestZPosition, lowestZPosition };
 		}
 
-		private void ZoomCamera(Vector3[] maxMinPos)
+		private void ZoomCamera(IReadOnlyList<Vector3> maxMinPos)
 		{
 			float distanceBetweenPlayers = (maxMinPos[0] - maxMinPos[1]).magnitude;
 

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.UnityExtensions;
+﻿using UnityEngine;
+using VDFramework;
+using VDFramework.UnityExtensions;
 
 namespace Utility
 {
@@ -12,7 +10,7 @@ namespace Utility
 
 		private void Awake()
 		{
-			lineRenderer = gameObject.EnsureComponent<LineRenderer>();
+			lineRenderer = this.EnsureComponent<LineRenderer>();
 		}
 
 		public void DrawLineBetween(Vector3 start, Vector3 end)

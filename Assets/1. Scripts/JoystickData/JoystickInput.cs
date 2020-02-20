@@ -2,7 +2,8 @@
 using Enums;
 using UnityEngine;
 using VDFramework.Extensions;
-using VDUnityFramework.Singleton;
+using VDFramework.Singleton;
+using StringConverter = JoystickData.JoystickButtonToStringConverter;
 
 namespace JoystickData
 {
@@ -11,7 +12,7 @@ namespace JoystickData
 		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 		//					JoystickAxis
 		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
-		
+
 		/// <summary>
 		/// Returns a vector3 containing the joystick axis values
 		/// </summary>
@@ -21,10 +22,10 @@ namespace JoystickData
 		{
 			float horizontalAxis =
 				Input.GetAxisRaw(
-					$"{JoystickButtonToStringConverter.GetString(JoystickButton.HorizontalAxis)}{joystickNumber}");
+					StringConverter.GetString(JoystickButton.HorizontalAxis, joystickNumber));
 			float verticalAxis =
 				Input.GetAxisRaw(
-					$"{JoystickButtonToStringConverter.GetString(JoystickButton.VerticalAxis)}{joystickNumber}");
+					StringConverter.GetString(JoystickButton.VerticalAxis, joystickNumber));
 
 			return new Vector3(horizontalAxis, 0.0f, verticalAxis);
 		}
@@ -33,7 +34,7 @@ namespace JoystickData
 		{
 			return Vector3.ClampMagnitude(GetAxes(joystickNumber), maxLength);
 		}
-		
+
 		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 		//					JoystickButtons
 		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
@@ -53,7 +54,7 @@ namespace JoystickData
 		public static bool GetButton(uint joystickNumber, JoystickButton button)
 		{
 			return Input.GetAxis(
-					   $"{JoystickButtonToStringConverter.GetString(button)}{joystickNumber}") > 0;
+					   StringConverter.GetString(button, joystickNumber)) > 0;
 		}
 
 		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
@@ -125,7 +126,7 @@ namespace JoystickData
 				bool IsButtonPressed(int joystickIndex, JoystickButton button)
 				{
 					uint joystickNumber = (uint) joystickIndex + 1;
-					
+
 					return GetButton(joystickNumber, button);
 				}
 			}
