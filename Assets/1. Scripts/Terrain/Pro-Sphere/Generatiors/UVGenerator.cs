@@ -5,7 +5,7 @@ using UnityEngine;
 public static class UVGenerator 
 {
     //TODO Make this static class accessable as peripheral to SphereTerrain.cs
-    public static void UpdateUVs(MinMaxGenerator colorGenerator, Mesh mesh, int resolution, Vector3 localUp)
+    public static void UpdateUVs(ColourGenerator colorGenerator, Mesh mesh, int resolution, Vector3 localUp)
     {
         //Swap local axis x=y, y=z, z=x
         Vector3 axisA = new Vector3(localUp.y, localUp.z, localUp.x);

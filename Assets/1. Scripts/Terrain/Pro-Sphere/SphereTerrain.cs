@@ -2,54 +2,61 @@
 
 public static class SphereTerrain
 {
-    public static Mesh ConstructMesh(ShapeGenerator shapeGenerator, Mesh mesh, int resolution, Vector3 localUp)
-    {
+	public static Mesh ConstructMesh(ShapeGenerator shapeGenerator, ColourGenerator colourGenerator, Mesh mesh, int resolution, Vector3 localY)
+	{
 		//Swap local axis x=y, y=z, z=x
-		Vector3 axisA = new Vector3(localUp.y, localUp.z, localUp.x);
-		Vector3 axisB = Vector3.Cross(localUp, axisA);
+		Vector3 localX = new Vector3(localY.y, localY.z, localY.x);
+		Vector3 localZ = Vector3.Cross(localY, localX);
 
 		//number of vertices = resolution * squared
 		Vector3[] vertices = new Vector3[resolution * resolution];
-        //the faces = (resolution - 1) * squared 
-        //the triangles = (resolution - 1) * squared * 2
-        int[] triangles = new int[(resolution - 1) * (resolution - 1) * 6];
-        int triIndex = 0;
-        Vector2[] uv = mesh.uv;
+		//the faces = (resolution - 1) * squared 
+		//the triangles = (resolution - 1) * squared * 2
+		int[] triangles = new int[(resolution - 1) * (resolution - 1) * 6];
+		int triIndex = 0;
 
-        for (int y = 0; y < resolution; y++)
-        {
-            for (int x = 0; x < resolution; x++)
-            {
-                //Number of itterations for X loop + the total amount of Y loops * row of vertices (resolution)
-                int i = x + y * resolution;
-                Vector2 percent = new Vector2(x, y) / (resolution - 1);
-                Vector3 pointOnUnitCube = localUp + (percent.x - .5f) * 2 * axisA + (percent.y - .5f) * 2 * axisB;
+		//number of UVs = resolution * resolution
+		Vector2[] uv = new Vector2[resolution * resolution];
 
-                // Normalize cube into sphere
-                Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
-                vertices[i] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
 
-                //Calculate the row of triangles 
-                if (x != resolution - 1 && y != resolution - 1)
-                {
-                    triangles[triIndex] = i;
-                    triangles[triIndex + 1] = i + resolution + 1;
-                    triangles[triIndex + 2] = i + resolution;
+		for (int y = 0; y < resolution; y++)
+		{
+			for (int x = 0; x < resolution; x++)
+			{
+				//Number of itterations for X loop + the total amount of Y loops * row of vertices (resolution)
+				int i = x + y * resolution;
+				Vector2 percent = new Vector2(x, y) / (resolution - 1);
+				Vector3 pointOnUnitCube = localY + (percent.x - .5f) * 2 * localX + (percent.y - .5f) * 2 * localZ;
 
-                    triangles[triIndex + 3] = i;
-                    triangles[triIndex + 4] = i + 1;
-                    triangles[triIndex + 5] = i + resolution + 1;
-                    triIndex += 6;
-                }
-            }
-        }
+				// Normalize cube into sphere
+				Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
+				vertices[i] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
 
-        mesh.Clear();
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.RecalculateNormals();
-        mesh.uv = uv;
+				uv[i] = new Vector2(colourGenerator.BiomePercentFromPoint(pointOnUnitSphere), 0);
+
+
+				//Calculate the row of triangles 
+				if (x != resolution - 1 && y != resolution - 1)
+				{
+					triangles[triIndex] = i;
+					triangles[triIndex + 1] = i + resolution + 1;
+					triangles[triIndex + 2] = i + resolution;
+
+					triangles[triIndex + 3] = i;
+					triangles[triIndex + 4] = i + 1;
+					triangles[triIndex + 5] = i + resolution + 1;
+					triIndex += 6;
+				}
+			}
+		}
+
+		mesh.Clear();
+		mesh.vertices = vertices;
+		mesh.triangles = triangles;
+		mesh.RecalculateNormals();
+		mesh.uv = uv;
+		//UVGenerator.UpdateUVs(colourGenerator, mesh, resolution, localY);
 
 		return mesh;
-    }
+	}
 }

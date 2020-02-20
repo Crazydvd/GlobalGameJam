@@ -5,11 +5,10 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class ColorSettings : ScriptableObject
 {
-    
-    public Material planetMaterial;
-    public BiomeColourSettings biomeColourSettings;
+	public Material planetMaterial;
+	public BiomeColourSettings biomeColourSettings;
 
-    [System.Serializable]
+	[System.Serializable]
     public class BiomeColourSettings
     {
         public Biome[] biomes;
