@@ -1,35 +1,35 @@
-﻿using System;
-using UnityEngine;
-using VDUnityFramework.EventSystem;
+﻿using UnityEngine;
+using VDFramework.EventSystem;
 
-public class ForceField : MonoBehaviour
+namespace Gameplay.Player2
 {
-	MeshRenderer sphereMesh;
-	public float radius
+	public class ForceField : MonoBehaviour
 	{
-		get => transform.localScale.x;
-		set
+		private MeshRenderer sphereMesh;
+		
+		public float Radius
 		{
-			transform.localScale = new Vector3(value, value, value);
+			get => transform.localScale.x;
+			set => transform.localScale = new Vector3(value, value, value);
 		}
-	}
 
-	private void Awake()
-	{
-		EventManager.Instance.AddListener<ToggleAttractEvent>(OnToggleAttract);
-		sphereMesh = GetComponent<MeshRenderer>();
-	}
-
-	private void OnDestroy()
-	{
-		if (EventManager.IsInitialized)
+		private void Awake()
 		{
-			EventManager.Instance.RemoveListener<ToggleAttractEvent>(OnToggleAttract);
+			EventManager.Instance.AddListener<ToggleAttractEvent>(OnToggleAttract);
+			sphereMesh = GetComponent<MeshRenderer>();
 		}
-	}
 
-	private void OnToggleAttract(ToggleAttractEvent ToggleAE)
-	{
-		sphereMesh.enabled = ToggleAE.ToggleOn;
+		private void OnDestroy()
+		{
+			if (EventManager.IsInitialized)
+			{
+				EventManager.Instance.RemoveListener<ToggleAttractEvent>(OnToggleAttract);
+			}
+		}
+
+		private void OnToggleAttract(ToggleAttractEvent toggleAttractEvent)
+		{
+			sphereMesh.enabled = toggleAttractEvent.ToggleOn;
+		}
 	}
 }

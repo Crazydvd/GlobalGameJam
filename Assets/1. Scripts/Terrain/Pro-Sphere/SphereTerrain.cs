@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Terrain.Generators;
+using UnityEngine;
 
 public static class SphereTerrain
 {

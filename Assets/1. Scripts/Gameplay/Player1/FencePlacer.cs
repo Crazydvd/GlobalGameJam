@@ -2,9 +2,9 @@
 using Fence;
 using JoystickData;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
+using VDFramework;
 
-namespace Gameplay
+namespace Gameplay.Player1
 {
 	public class FencePlacer : BetterMonoBehaviour
 	{

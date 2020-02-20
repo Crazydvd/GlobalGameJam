@@ -1,8 +1,5 @@
-﻿using System;
-using Gameplay;
-using UnityEngine;
-using VDUnityFramework.BaseClasses;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
+using VDFramework;
 
 namespace AI
 {

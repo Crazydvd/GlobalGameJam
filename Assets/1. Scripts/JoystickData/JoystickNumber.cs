@@ -1,4 +1,4 @@
-﻿using VDUnityFramework.BaseClasses;
+﻿using VDFramework;
 
 namespace JoystickData
 {

@@ -1,9 +1,6 @@
-﻿using System;
-using Enums;
-using JoystickData;
+﻿using JoystickData;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using VDUnityFramework.BaseClasses;
+using VDFramework;
 
 namespace MovementScripts.SphereMovement
 {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Events.GameplayEvents;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.EventSystem;
+using VDFramework;
+using VDFramework.EventSystem;
 
 namespace Fence
 {

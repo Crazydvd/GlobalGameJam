@@ -1,7 +1,7 @@
 ﻿using Gameplay;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.UnityExtensions;
+using VDFramework;
+using VDFramework.UnityExtensions;
 
 namespace CustomPhysics
 {

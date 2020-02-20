@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using VDUnityFramework.BaseClasses;
+using VDFramework;
 
-namespace Gameplay
+namespace Gameplay.Player2
 {
 	public class AttractScript : BetterMonoBehaviour
 	{
@@ -17,20 +17,25 @@ namespace Gameplay
 
 		private void Awake()
 		{
-			GetComponentInChildren<ForceField>().radius = attractRadius * 2;
+			GetComponentInChildren<ForceField>().Radius = attractRadius * 2;
 		}
 
 		private void Update()
 		{
-			Debug.DrawLine(LureOrigin + Vector3.forward * attractRadius, LureOrigin + Vector3.right * attractRadius);
-			Debug.DrawLine(LureOrigin + Vector3.right * attractRadius, LureOrigin + Vector3.back * attractRadius);
-			Debug.DrawLine(LureOrigin + Vector3.back * attractRadius, LureOrigin + Vector3.left * attractRadius);
-			Debug.DrawLine(LureOrigin + Vector3.left * attractRadius, LureOrigin + Vector3.forward * attractRadius);
+			DrawLine(Vector3.forward, Vector3.right);
+			DrawLine(Vector3.right, Vector3.back);
+			DrawLine(Vector3.back, Vector3.left);
+			DrawLine(Vector3.left, Vector3.forward);
 		}
 
 		private void OnValidate()
 		{
-			GetComponentInChildren<ForceField>().radius = attractRadius * 2;
+			GetComponentInChildren<ForceField>().Radius = attractRadius * 2;
+		}
+
+		private void DrawLine(Vector3 localStart, Vector3 localEnd)
+		{
+			Debug.DrawLine(LureOrigin + localStart * attractRadius, LureOrigin + localEnd * attractRadius);
 		}
 	}
 }

@@ -1,9 +1,9 @@
 ﻿using Enums;
 using JoystickData;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.EventSystem;
+using VDFramework;
+using VDFramework.EventSystem;
 
-namespace Gameplay
+namespace Gameplay.Player2
 {
 	public class AttractToggler : BetterMonoBehaviour
 	{

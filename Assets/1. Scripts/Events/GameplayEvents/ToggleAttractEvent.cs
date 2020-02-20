@@ -1,5 +1,6 @@
 ﻿using VDFramework.EventSystem;
 using Gameplay;
+using Gameplay.Player2;
 
 public class ToggleAttractEvent : VDEvent
 {

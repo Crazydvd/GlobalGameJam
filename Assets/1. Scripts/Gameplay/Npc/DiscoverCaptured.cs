@@ -2,12 +2,12 @@
 using System.Linq;
 using Events.GameplayEvents;
 using Fence;
-using UnityEngine;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.EventSystem;
 using Internet;
+using UnityEngine;
+using VDFramework;
+using VDFramework.EventSystem;
 
-namespace Gameplay
+namespace Gameplay.Npc
 {
 	public class DiscoverCaptured : BetterMonoBehaviour
 	{

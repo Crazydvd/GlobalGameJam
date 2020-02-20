@@ -3,8 +3,9 @@ using System.Linq;
 using Events.GameplayEvents;
 using UnityEngine;
 using Utility;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.EventSystem;
+using VDFramework;
+using VDFramework.EventSystem;
+using VDFramework.UnityExtensions;
 
 namespace Fence
 {
@@ -14,8 +15,6 @@ namespace Fence
 
 		public FenceCorner Parent { get; private set; }
 		public FenceCorner Child { get; private set; }
-        public LineRenderer lineRenderer;
-
 		public FenceCorner Root
 		{
 			get
@@ -31,26 +30,25 @@ namespace Fence
 			}
 		}
 
+		private LineGenerator lineGenerator;
+		
 		private void Start()
 		{
 			CheckForPossibleConnections();
-            lineRenderer =  GetComponent<LineRenderer>();
+			
+			lineGenerator = gameObject.EnsureComponent<LineGenerator>();
 		}
-		void UpdateVisaliser (Vector3[] cornerPoints)
-        {
-            lineRenderer.positionCount = cornerPoints.Length;
-            lineRenderer.SetPositions(cornerPoints);
-        }
+		
 		private void Update()
 		{
-            if (!lineRenderer)
+            if (!lineGenerator)
             {
                 return;
             }
+			
 			if (Child)
 			{
-                 LineGenerator.DrawLine(Child.CachedTransform.position, CachedTransform.position, new Color(0.5f, 0.4f, 0));
-                 LineGenerator.LineRenderer(lineRenderer, Child.CachedTransform.position, CachedTransform.position, lineRenderer.endColor);
+				lineGenerator.DrawLineBetween(Child.CachedTransform.position, CachedTransform.position);
             }
 		}
        

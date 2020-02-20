@@ -2,17 +2,17 @@
 using Events.GameplayEvents;
 using Events.TimerEvents;
 using UnityEngine;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.EventSystem;
+using VDFramework;
+using VDFramework.EventSystem;
 
 namespace Timer
 {
 	public class GameTimer : BetterMonoBehaviour
 	{
-		[Header("Start value of the timer in hh:mm:ss")] [SerializeField]
+		[Header("Start value of the timer in hh:mm:ss"), SerializeField]
 		private string timerStartValue = "00:05:00";
 
-		[Header("Increase in time per sheep collected hh:mm:ss")] [SerializeField]
+		[Header("Increase in time per sheep collected hh:mm:ss"), SerializeField]
 		private string timePerSheep = "00:00:05";
 
 		private float secondsLeft;
