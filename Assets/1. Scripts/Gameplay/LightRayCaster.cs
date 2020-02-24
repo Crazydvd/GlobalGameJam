@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using VDUnityFramework.Singleton;
+using VDFramework.Singleton;
 
 public class LightRayCaster : Singleton<LightRayCaster>
 {
@@ -13,7 +13,7 @@ public class LightRayCaster : Singleton<LightRayCaster>
 			return hit.collider.gameObject == objectToCheck;
 		}
 
-		Debug.Break();
+		//Debug.Break();
 
 		return true;
     }

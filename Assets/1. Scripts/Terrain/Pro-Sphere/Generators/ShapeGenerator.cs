@@ -6,7 +6,7 @@ namespace Terrain.Generators
 	{
 		private ShapeSettings settings;
 		private INoiseFilter[] noiseFilters;
-		public MinMaxGenerator elevationMinMax;
+		public MinMax elevationMinMax;
 
 		public void UpdateSettings (ShapeSettings settings)
 		{
@@ -17,10 +17,10 @@ namespace Terrain.Generators
 			{
 				noiseFilters[i] = NoiseFilterFactory.CreateNoiseFilter(settings.noiseLayers[i].noiseSettings);
 			}
-			elevationMinMax = new MinMaxGenerator();
+			elevationMinMax = new MinMax();
 		}
 
-		public Vector3 CalculatePointOnPlanet(Vector3 pointOnUnitSphere)
+		public float CalculateUnscaledElevation(Vector3 pointOnUnitSphere)
 		{
 			float firstLayerValue = 0;
 			float elevation = 0;
@@ -44,9 +44,15 @@ namespace Terrain.Generators
 					elevation += noiseFilters[i].Evaluate(pointOnUnitSphere) * mask;
 				}
 			}
-			elevation = settings.planetRadius * (1 + elevation);
 			elevationMinMax.AddValue(elevation);
-			return pointOnUnitSphere * elevation;
+			return elevation;
 		}
+
+        public float GetScaledElevation (float unscaledElevation)
+        {
+            float elevation = Mathf.Max(0, unscaledElevation);
+            elevation = settings.planetRadius * (1 + elevation);
+            return elevation;
+        }
 	}
 }

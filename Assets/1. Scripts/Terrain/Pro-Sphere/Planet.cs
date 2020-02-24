@@ -18,7 +18,9 @@ public class Planet : BetterMonoBehaviour
 	private ColourGenerator colourGenerator = new ColourGenerator();
        
     [HideInInspector]
-    private MeshFilter[] cubefaces;
+    private MeshFilter[] meshFilters;
+    [HideInInspector]
+    private TerrainFaceMesh[] terrainFaces;
 
 	private void Start()
 	{
@@ -30,14 +32,17 @@ public class Planet : BetterMonoBehaviour
 		shapeGenerator.UpdateSettings(shapeSettings);
         colourGenerator.UpdateSettings(colorSettings);
 	
-		if (cubefaces == null || cubefaces.Length == 0)
+		if (meshFilters == null || meshFilters.Length == 0)
         {
-            cubefaces = new MeshFilter[6];
+            meshFilters = new MeshFilter[6];
         }
+        terrainFaces = new TerrainFaceMesh[6];
+
+        Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
 
         for (int i = 0; i < 6; i++)
         {
-            if (cubefaces[i] == null)
+            if (meshFilters[i] == null)
             {
                 FaceRenderMask thisRenderMask = (FaceRenderMask) i + 1;
                 GameObject CubeFace = new GameObject($"CubeFace {thisRenderMask}");
@@ -46,12 +51,13 @@ public class Planet : BetterMonoBehaviour
 				CubeFace.AddComponent<MeshRenderer>();
 				CubeFace.AddComponent<MeshCollider>();
 
-				cubefaces[i] = CubeFace.AddComponent<MeshFilter>();
-                cubefaces[i].sharedMesh = new Mesh();
+				meshFilters[i] = CubeFace.AddComponent<MeshFilter>();
+                meshFilters[i].sharedMesh = new Mesh();
             }
-			cubefaces[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
+			meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
+            terrainFaces[i] = new TerrainFaceMesh(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
 			bool shouldRenderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
-            cubefaces[i].gameObject.SetActive(shouldRenderFace);
+            meshFilters[i].gameObject.SetActive(shouldRenderFace);
         }
     }
 
@@ -80,14 +86,14 @@ public class Planet : BetterMonoBehaviour
 
     private void GenerateMesh()
     {
-		Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
-
-		for (int i = 0; i < 6; i++)
+        Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
+        for (int i = 0; i < 6; i++)
         {
-            if (cubefaces[i].gameObject.activeSelf)
+            if (meshFilters[i].gameObject.activeSelf)
             {
-				// Generate terrain for every face
-                cubefaces[i].GetComponent<MeshCollider>().sharedMesh = SphereTerrain.ConstructMesh(shapeGenerator,colourGenerator, cubefaces[i].sharedMesh, resolution, directions[i]);
+                // Generate terrain for every face 
+                meshFilters[i].GetComponent<MeshCollider>().sharedMesh = SphereTerrain.ConstructMesh(shapeGenerator, colourGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
+                terrainFaces[i].ConstructMesh();
             }
         }
         colourGenerator.UpdateElevation(shapeGenerator.elevationMinMax);
@@ -95,13 +101,13 @@ public class Planet : BetterMonoBehaviour
 
     private void GenerateColors()
     {
-        Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
+        
         colourGenerator.UpdateColors();
         for (int i = 0; i < 6; i++)
         {
-            if (cubefaces[i].gameObject.activeSelf)
+            if (meshFilters[i].gameObject.activeSelf)
             {
-				//UVGenerator.UpdateUVs(colourGenerator, cubefaces[i].sharedMesh, resolution, directions[i]);
+                terrainFaces[i].UpdateUVs(colourGenerator);
             }
         }     
 		

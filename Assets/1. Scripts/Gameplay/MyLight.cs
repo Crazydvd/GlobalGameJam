@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using VDUnityFramework.BaseClasses;
-using VDUnityFramework.UnityExtensions;
+using VDFramework;
+using VDFramework.UnityExtensions;
 
 public class MyLight : BetterMonoBehaviour
 {
