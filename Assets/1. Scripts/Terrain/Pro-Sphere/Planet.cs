@@ -93,7 +93,7 @@ public class Planet : BetterMonoBehaviour
             {
                 // Generate terrain for every face 
                 meshFilters[i].GetComponent<MeshCollider>().sharedMesh = SphereTerrain.ConstructMesh(shapeGenerator, colourGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
-                terrainFaces[i].ConstructMesh();
+               // terrainFaces[i].ConstructMesh();
             }
         }
         colourGenerator.UpdateElevation(shapeGenerator.elevationMinMax);
