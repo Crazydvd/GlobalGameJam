@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using VDUnityFramework.Singleton;
+using VDFramework.Singleton;
 
 public class LightRayCaster : Singleton<LightRayCaster>
 {
-   public bool IsLit(GameObject objectToCheck)
-    {
+	public bool IsLit(GameObject objectToCheck)
+	{
 		Ray ray = new Ray(transform.position, objectToCheck.transform.position);
 		Debug.DrawLine(transform.position, objectToCheck.transform.position);
 
@@ -16,5 +16,5 @@ public class LightRayCaster : Singleton<LightRayCaster>
 		Debug.Break();
 
 		return true;
-    }
+	}
 }

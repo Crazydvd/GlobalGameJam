@@ -11,16 +11,30 @@ namespace Fence
 {
 	public class FenceCorner : BetterMonoBehaviour
 	{
-		public float ConnectionRadius = 5.0f;
-
 		public FenceCorner Parent { get; private set; }
 		public FenceCorner Child { get; private set; }
+
+		public FenceCorner End
+		{
+			get
+			{
+				FenceCorner end = this;
+
+				while (end.Parent != null && end.Parent != this)
+				{
+					end = end.Parent;
+				}
+
+				return end;
+			}
+		}
+
 		public FenceCorner Root
 		{
 			get
 			{
 				FenceCorner origin = this;
-				
+
 				while (origin.Child != null && origin.Child != this)
 				{
 					origin = origin.Child;
@@ -30,29 +44,18 @@ namespace Fence
 			}
 		}
 
+		public float ConnectionRadius = 5.0f;
+
 		private LineGenerator lineGenerator;
-		
+
 		private void Start()
 		{
-			CheckForPossibleConnections();
-			
 			lineGenerator = gameObject.EnsureComponent<LineGenerator>();
+
+			CheckForPossibleConnections();
 		}
-		
-		private void Update()
-		{
-            if (!lineGenerator)
-            {
-                return;
-            }
-			
-			if (Child)
-			{
-				lineGenerator.DrawLineBetween(Child.CachedTransform.position, CachedTransform.position);
-            }
-		}
-       
-        private void CheckForPossibleConnections()
+
+		private void CheckForPossibleConnections()
 		{
 			// Get all FenceCorners
 			FenceCorner[] allFenceCorners = FindObjectsOfType<FenceCorner>();
@@ -97,22 +100,14 @@ namespace Fence
 			// Set their parent to us
 			SetChild(closestFenceCorner);
 
-			FenceCorner child = Child;
-			while (child.Child != null)
+			if (Root == this)
 			{
-				child = child.Child;
-
-				if (child != this)
-				{
-					continue;
-				}
-
 				EventManager.Instance.RaiseEvent(new FenceCompletedEvent(this));
 				return;
 			}
 
 			// Make the beginning check for connections (to detect the end)
-			child.CheckForPossibleConnections();
+			Root.CheckForPossibleConnections();
 
 			EventManager.Instance.RaiseEvent(new FenceCornerPlacedEvent(this));
 		}
@@ -121,6 +116,10 @@ namespace Fence
 		{
 			Child = other;
 			other.Parent = this;
+
+			lineGenerator.RemoveLine();
+			lineGenerator.AddVertexToEnd(Child.transform);
+			lineGenerator.AddSelf();
 		}
 
 		private void OnDestroy()
