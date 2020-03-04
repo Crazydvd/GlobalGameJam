@@ -1,10 +1,7 @@
-﻿using UnityEngine;
-using VDFramework;
+﻿using VDFramework;
 
 namespace Utility
 {
-	[SerializeField ]
-	
 	public class ShowFencesWithinReach : BetterMonoBehaviour
 	{
 		

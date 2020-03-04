@@ -25,7 +25,7 @@ namespace Fence
 					end = end.Parent;
 				}
 
-				return end;
+				return end.Parent == this ? this : end;
 			}
 		}
 
@@ -40,7 +40,7 @@ namespace Fence
 					origin = origin.Child;
 				}
 
-				return origin;
+				return origin.Child == this ? this : origin;
 			}
 		}
 
