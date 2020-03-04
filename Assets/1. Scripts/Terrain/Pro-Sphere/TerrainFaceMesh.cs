@@ -3,25 +3,25 @@ using UnityEngine;
 
 public class TerrainFaceMesh
 {
-    ShapeGenerator shapeGenerator;
-    int resolution;
-    Vector3 localY;
-    Vector3 localX;
-    Vector3 localZ;
-    Mesh mesh;
+	ShapeGenerator shapeGenerator;
+	int resolution;
+	Vector3 localY;
+	Vector3 localX;
+	Vector3 localZ;
+	Mesh mesh;
 
-    public TerrainFaceMesh(ShapeGenerator shapeGenerator, Mesh mesh, int resolution,Vector3 localY)
-    {
-        this.shapeGenerator = shapeGenerator;
-        this.resolution = resolution;
-        this.localY = localY;
-        this.mesh = mesh;
-       
-        //Swap local axis x=y, y=z, z=x
-        Vector3 localX = new Vector3(localY.y, localY.z, localY.x);
-		Vector3 localZ = Vector3.Cross(localY, localX);
-    }
-    public Mesh ConstructMesh()
+	public TerrainFaceMesh(ShapeGenerator shapeGenerator, Mesh mesh, int resolution, Vector3 localY)
+	{
+		this.shapeGenerator = shapeGenerator;
+		this.resolution = resolution;
+		this.localY = localY;
+		this.mesh = mesh;
+
+		//Swap local axis x=y, y=z, z=x
+		localX = new Vector3(localY.y, localY.z, localY.x);
+		localZ = Vector3.Cross(localY, localX);
+	}
+	public Mesh ConstructMesh()
 	{
 		//number of vertices = resolution * squared
 		Vector3[] vertices = new Vector3[resolution * resolution];
@@ -30,8 +30,8 @@ public class TerrainFaceMesh
 		int[] triangles = new int[(resolution - 1) * (resolution - 1) * 6];
 		int triIndex = 0;
 
-        Vector2[] uv = (mesh.uv.Length == vertices.Length) ? mesh.uv : new Vector2[vertices.Length];
-                       		
+		Vector2[] uv = (mesh.uv.Length == vertices.Length) ? mesh.uv : new Vector2[vertices.Length];
+
 		for (int y = 0; y < resolution; y++)
 		{
 			for (int x = 0; x < resolution; x++)
@@ -43,10 +43,10 @@ public class TerrainFaceMesh
 
 				// Normalize cube into sphere
 				Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
-                float unscaledElevation = shapeGenerator.CalculateUnscaledElevation(pointOnUnitSphere);
-                vertices[i] = pointOnUnitSphere * shapeGenerator.GetScaledElevation(unscaledElevation);
-                uv[i].y = unscaledElevation;
-                				
+				float unscaledElevation = shapeGenerator.CalculateUnscaledElevation(pointOnUnitSphere);
+				vertices[i] = pointOnUnitSphere * shapeGenerator.GetScaledElevation(unscaledElevation);
+				uv[i].y = unscaledElevation;
+
 				//Calculate the row of triangles 
 				if (x != resolution - 1 && y != resolution - 1)
 				{
@@ -66,30 +66,36 @@ public class TerrainFaceMesh
 		mesh.vertices = vertices;
 		mesh.triangles = triangles;
 		mesh.RecalculateNormals();
-        mesh.uv = uv;
+		mesh.uv = uv;
 
-       return mesh;
+		return mesh;
 	}
 
-    public void UpdateUVs(ColourGenerator colourGenerator)
-    {
-        //number of UVs = resolution * resolution
-        Vector2[] uv = mesh.uv;
-        for (int y = 0; y < resolution; y++)
-        {
-            for (int x = 0; x < resolution; x++)
-            {
-                //Number of itterations for X loop + the total amount of Y loops * row of vertices (resolution)
-                int i = x + y * resolution;
-                Vector2 percent = new Vector2(x, y) / (resolution - 1);
-                Vector3 pointOnUnitCube = localY + (percent.x - .5f) * 2 * localX + (percent.y - .5f) * 2 * localZ;
-                // Normalize cube into sphere
-                Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
+	public void UpdateUVs(ColourGenerator colourGenerator)
+	{
+		//number of UVs = resolution * resolution
+		Vector2[] uv = mesh.uv;
 
-                uv[i].x = colourGenerator.BiomePercentFromPoint(pointOnUnitSphere);
+		if (uv.Length == 0)
+		{
+			bool a = true;
+		}
 
-            }
-        }
-        mesh.uv = uv;
-    }
+		for (int y = 0; y < resolution; y++)
+		{
+			for (int x = 0; x < resolution; x++)
+			{
+				//Number of itterations for X loop + the total amount of Y loops * row of vertices (resolution)
+				int i = x + y * resolution;
+				Vector2 percent = new Vector2(x, y) / (resolution - 1);
+				Vector3 pointOnUnitCube = localY + (percent.x - .5f) * 2 * localX + (percent.y - .5f) * 2 * localZ;
+				// Normalize cube into sphere
+				Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
+
+				//TODO: figure out why the array has length 0 (keep in mind, this is not always the case)
+				uv[i].x = colourGenerator.BiomePercentFromPoint(pointOnUnitSphere);
+			}
+		}
+		mesh.uv = uv;
+	}
 }

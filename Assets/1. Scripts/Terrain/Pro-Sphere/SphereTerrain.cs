@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class SphereTerrain
 {
-	public static Mesh ConstructMesh(ShapeGenerator shapeGenerator, ColourGenerator colourGenerator, Mesh mesh, int resolution, Vector3 localY)
+	public static Mesh ConstructMesh(ShapeGenerator shapeGenerator, Mesh mesh, int resolution, Vector3 localY)
 	{
 		//Swap local axis x=y, y=z, z=x
 		Vector3 localX = new Vector3(localY.y, localY.z, localY.x);
