@@ -8,9 +8,11 @@ namespace MovementScripts.PlaneMovement
 	[RequireComponent(typeof(Camera))]
 	public class ZoomCameraToFitAll : BetterMonoBehaviour
 	{
-		[SerializeField] private Vector2 minMaxDistance = new Vector2(15.0f, 30.0f);
+		[SerializeField]
+		private Vector2 minMaxDistance = new Vector2(15.0f, 30.0f);
 
-		[SerializeField] private string tagToSearchFor = "Player";
+		[SerializeField]
+		private string tagToSearchFor = "Player";
 
 		[SerializeField, Header("Will search for the tag if empty.")]
 		private GameObject[] objects = new GameObject[0];
@@ -29,7 +31,7 @@ namespace MovementScripts.PlaneMovement
 
 			tanFOV = Mathf.Tan(Mathf.Deg2Rad * cameraComponent.fieldOfView / 2.0f);
 
-			aspectRatio = Screen.height / (float)Screen.width;
+			aspectRatio = Screen.height / (float) Screen.width;
 		}
 
 		private void Start()
@@ -68,7 +70,7 @@ namespace MovementScripts.PlaneMovement
 				}
 			}
 
-			return new[] { highestZPosition, lowestZPosition };
+			return new[] {highestZPosition, lowestZPosition};
 		}
 
 		private void ZoomCamera(IReadOnlyList<Vector3> maxMinPos)

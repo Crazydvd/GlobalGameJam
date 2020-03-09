@@ -14,7 +14,7 @@ namespace JoystickData
 		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 
 		/// <summary>
-		/// Returns a vector3 containing the joystick axis values
+		/// Returns a vector3 containing the joystick axis values (in the X-Z plane)
 		/// </summary>
 		/// <param name="joystickNumber">The number of the joystick to get input from</param>
 		/// <returns>A vector3(HorizontalAxis, 0, VerticalAxis)</returns>
