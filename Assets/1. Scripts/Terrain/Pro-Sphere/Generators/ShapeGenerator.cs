@@ -6,9 +6,9 @@ namespace Terrain.Generators
 	{
 		private ShapeSettings settings;
 		private INoiseFilter[] noiseFilters;
-		public MinMax ElevationMinMax;
+		public MinMax elevationMinMax;
 
-		public void UpdateSettings(ShapeSettings settings)
+		public void UpdateSettings (ShapeSettings settings)
 		{
 			this.settings = settings;
 			noiseFilters = new INoiseFilter[settings.noiseLayers.Length];
@@ -17,11 +17,10 @@ namespace Terrain.Generators
 			{
 				noiseFilters[i] = NoiseFilterFactory.CreateNoiseFilter(settings.noiseLayers[i].noiseSettings);
 			}
-
-			ElevationMinMax = new MinMax();
+			elevationMinMax = new MinMax();
 		}
 
-		public Vector3 CalculatePointOnPlanet(Vector3 pointOnUnitSphere)
+		public float CalculateUnscaledElevation(Vector3 pointOnUnitSphere)
 		{
 			float firstLayerValue = 0;
 			float elevation = 0;
@@ -36,7 +35,7 @@ namespace Terrain.Generators
 
 			/*Find a way to create a inversed mask of the float firstLayerValue. for underwater distortion
          * See if you can use Mathf.InverseLerp */
-
+		
 			for (int i = 1; i < noiseFilters.Length; i++)
 			{
 				if (settings.noiseLayers[i].enabled)
@@ -45,10 +44,15 @@ namespace Terrain.Generators
 					elevation += noiseFilters[i].Evaluate(pointOnUnitSphere) * mask;
 				}
 			}
-
-			elevation = settings.planetRadius * (1 + elevation);
-			ElevationMinMax.AddValue(elevation);
-			return pointOnUnitSphere * elevation;
+			elevationMinMax.AddValue(elevation);
+			return elevation;
 		}
+
+        public float GetScaledElevation (float unscaledElevation)
+        {
+            float elevation = Mathf.Max(0, unscaledElevation);
+            elevation = settings.planetRadius * (1 + elevation);
+            return elevation;
+        }
 	}
 }

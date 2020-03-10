@@ -1,6 +1,7 @@
 ﻿using Terrain.Generators;
 using UnityEngine;
 using VDFramework;
+using VDFramework.UnityExtensions;
 
 public class Planet : BetterMonoBehaviour
 {
@@ -8,102 +9,109 @@ public class Planet : BetterMonoBehaviour
 	public FaceRenderMask faceRenderMask;
 
 	[Range(2, 256)]
-    public int resolution = 10;
-    public bool autoUpdate = true;
+	public int resolution = 10;
+	public bool autoUpdate = true;
 
-    public ShapeSettings shapeSettings;
-    public ColorSettings colorSettings;
+	public ShapeSettings shapeSettings;
+	public ColorSettings colorSettings;
 
 	private ShapeGenerator shapeGenerator = new ShapeGenerator();
 	private ColourGenerator colourGenerator = new ColourGenerator();
-       
-    [HideInInspector]
-    private MeshFilter[] cubefaces;
 
-	private void Start()
-	{
-		GeneratePlanet();
-	}
+	[SerializeField]
+	private MeshFilter[] meshFilters;
+	[HideInInspector]
+	private TerrainFaceMesh[] terrainFaces;
 
 	private void Initialize()
-    {
+	{
 		shapeGenerator.UpdateSettings(shapeSettings);
-        colourGenerator.UpdateSettings(colorSettings);
-	
-		if (cubefaces == null || cubefaces.Length == 0)
-        {
-            cubefaces = new MeshFilter[6];
-        }
+		colourGenerator.UpdateSettings(colorSettings);
 
-        for (int i = 0; i < 6; i++)
-        {
-            if (cubefaces[i] == null)
-            {
-                FaceRenderMask thisRenderMask = (FaceRenderMask) i + 1;
-                GameObject CubeFace = new GameObject($"CubeFace {thisRenderMask}");
-                CubeFace.transform.parent = CachedTransform;
+		if (meshFilters == null || meshFilters.Length < 6)
+		{
+			meshFilters = new MeshFilter[6];
+		}
+		terrainFaces = new TerrainFaceMesh[6];
+
+		Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
+
+		for (int i = 0; i < 6; i++)
+		{
+			if (meshFilters[i] == null)
+			{
+				FaceRenderMask thisRenderMask = (FaceRenderMask)i + 1;
+				GameObject CubeFace = new GameObject($"CubeFace {thisRenderMask}");
+				CubeFace.transform.parent = CachedTransform;
 
 				CubeFace.AddComponent<MeshRenderer>();
 				CubeFace.AddComponent<MeshCollider>();
 
-				cubefaces[i] = CubeFace.AddComponent<MeshFilter>();
-                cubefaces[i].sharedMesh = new Mesh();
-            }
-			cubefaces[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
+				meshFilters[i] = CubeFace.AddComponent<MeshFilter>();
+				meshFilters[i].sharedMesh = new Mesh();
+			}
+
+			meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
+			terrainFaces[i] = new TerrainFaceMesh(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
 			bool shouldRenderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
-            cubefaces[i].gameObject.SetActive(shouldRenderFace);
-        }
-    }
+			meshFilters[i].gameObject.SetActive(shouldRenderFace);
+		}
+	}
 
-    public void GeneratePlanet()
-    {
-        Initialize();
-        GenerateMesh();
-        GenerateColors();
-    }
-    public void OnShapeSettingsUpdated()
-    {
-        if (autoUpdate)
-        {
-            Initialize();
-            GenerateMesh();
-        }
-    }
-    public void OnColorSettingsUpdated()
-    {
-        if (autoUpdate)
-        {
-            Initialize();
-            GenerateColors();
-        }
-    }
+	public void GeneratePlanet()
+	{
+		Initialize();
+		GenerateMesh();
+		GenerateColors();
+	}
+	public void OnShapeSettingsUpdated()
+	{
+		if (autoUpdate)
+		{
+			Initialize();
+			GenerateMesh();
+		}
+	}
+	public void OnColorSettingsUpdated()
+	{
+		if (autoUpdate)
+		{
+			Initialize();
+			GenerateColors();
+		}
+	}
 
-    private void GenerateMesh()
-    {
+	private void GenerateMesh()
+	{
 		Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
-
 		for (int i = 0; i < 6; i++)
-        {
-            if (cubefaces[i].gameObject.activeSelf)
-            {
-				// Generate terrain for every face
-                cubefaces[i].GetComponent<MeshCollider>().sharedMesh = SphereTerrain.ConstructMesh(shapeGenerator,colourGenerator, cubefaces[i].sharedMesh, resolution, directions[i]);
-            }
-        }
-        colourGenerator.UpdateElevation(shapeGenerator.elevationMinMax);
-    }
+		{
+			MeshFilter filter = meshFilters[i];
 
-    private void GenerateColors()
-    {
-        Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
-        colourGenerator.UpdateColors();
-        for (int i = 0; i < 6; i++)
-        {
-            if (cubefaces[i].gameObject.activeSelf)
-            {
-				//UVGenerator.UpdateUVs(colourGenerator, cubefaces[i].sharedMesh, resolution, directions[i]);
-            }
-        }     
-		
-    }
+			if (filter.gameObject.activeSelf)
+			{
+				// Generate terrain for every face 
+				//meshFilters[i].GetComponent<MeshCollider>().sharedMesh = SphereTerrain.ConstructMesh(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
+				filter.sharedMesh = terrainFaces[i].ConstructMesh();
+
+				filter.EnsureComponent<MeshCollider>().sharedMesh = filter.sharedMesh;
+
+				//TODO: cache it beforehand, this is ineffective
+				// meshFilters[i].GetComponent<MeshCollider>().sharedMesh = meshFilters[i].mesh;
+			}
+		}
+		colourGenerator.UpdateElevation(shapeGenerator.elevationMinMax);
+	}
+
+	private void GenerateColors()
+	{
+		colourGenerator.UpdateColors();
+		for (int i = 0; i < 6; i++)
+		{
+			if (meshFilters[i].gameObject.activeSelf)
+			{
+				terrainFaces[i].UpdateUVs(colourGenerator);
+			}
+		}
+	}
 }

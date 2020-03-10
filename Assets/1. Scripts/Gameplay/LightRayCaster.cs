@@ -13,7 +13,7 @@ public class LightRayCaster : Singleton<LightRayCaster>
 			return hit.collider.gameObject == objectToCheck;
 		}
 
-		Debug.Break();
+		//Debug.Break();
 
 		return true;
 	}
