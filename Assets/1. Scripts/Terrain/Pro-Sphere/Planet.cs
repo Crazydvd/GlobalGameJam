@@ -48,9 +48,9 @@ public class Planet : BetterMonoBehaviour
 				CubeFace.AddComponent<MeshCollider>();
 
 				meshFilters[i] = CubeFace.AddComponent<MeshFilter>();
+				meshFilters[i].sharedMesh = new Mesh();
 			}
 
-			meshFilters[i].sharedMesh = new Mesh();
 			meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
 			terrainFaces[i] = new TerrainFaceMesh(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
 			bool shouldRenderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;

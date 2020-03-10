@@ -76,11 +76,6 @@ public class TerrainFaceMesh
 		//number of UVs = resolution * resolution
 		Vector2[] uv = mesh.uv;
 
-		if (uv.Length == 0)
-		{
-			bool a = true;
-		}
-
 		for (int y = 0; y < resolution; y++)
 		{
 			for (int x = 0; x < resolution; x++)

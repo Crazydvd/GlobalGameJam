@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ToonCelTerrain
-  m_Shader: {fileID: -6465566751694194690, guid: 46618e128870bfd419ad4f9e54119ee9,
+  m_Shader: {fileID: -6465566751694194690, guid: 22600de4aebe0c146acfc09f3c3a179c,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -28,6 +28,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: c9657541d53c8e54cbe8e0fc9c2a650b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_5DBF39F1_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -39,9 +43,15 @@ Material:
     m_Floats:
     - Vector1_973F3577: 0.43
     - Vector1_BD03BEB5: 0.3
+    - Vector1_DCFD4B42: 0.471
     - Vector1_E0095F30: 0.25
+    - Vector1_E37239A1: 0.364
     - Vector1_E6DE7217: 0.65
+    - Vector1_F2A620E3: 0.641
+    - Vector1_FDE65196: 0.401
     m_Colors:
     - Color_7CF1DFC6: {r: 0.5938057, g: 0.9056604, b: 0.7143506, a: 0}
+    - Color_9B70740C: {r: 0.26415092, g: 0.22552508, b: 0.22552508, a: 0}
     - Color_A3D88145: {r: 0.1525899, g: 0.23437713, b: 0.254717, a: 0}
-    - _elevationMinMax: {r: -0.10138014, g: 0.14038289, b: 0, a: 0}
+    - Color_D3861D07: {r: 0.380429, g: 0.7830189, b: 0.7205508, a: 0}
+    - _elevationMinMax: {r: -0.055582635, g: 0.07451444, b: 0, a: 0}
