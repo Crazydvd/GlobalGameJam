@@ -1,14 +1,16 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using VDFramework.Extensions;
+using Terrain.Generators;
 
 public class SheepSpawn : MonoBehaviour
 {
     public GameObject sheep;
 
     Spawn_Foliage foliage;
+	ShapeGenerator shapeGenerator;
 
     Mesh mesh;
     
@@ -18,8 +20,10 @@ public class SheepSpawn : MonoBehaviour
         foliage = GetComponent<Spawn_Foliage>();
 
         mesh = GetComponent<MeshFilter>().mesh;
+		
 
-        Crusher();
+
+		Crusher();
    
     }
        

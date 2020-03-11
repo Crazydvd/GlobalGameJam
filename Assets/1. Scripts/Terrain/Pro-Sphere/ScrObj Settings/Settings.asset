@@ -24,7 +24,7 @@ MonoBehaviour:
         numLayers: 5
         baseRoughness: 0.85
         roughness: 2.2
-        persistance: 0.5
+        persistance: 0.47
         centre: {x: -1.41, y: -2.75, z: 0}
         minValue: 0.85
       ridgidNoiseSettings:
