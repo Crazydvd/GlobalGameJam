@@ -20,9 +20,10 @@ public class SheepSpawn : MonoBehaviour
 
 		//TODO: instead of doing this logic for everything that you want to spawn
 		// just do it once in planet (AFTER GENERATION)
-		foreach (MeshFilter meshFilter in meshFilters)
+		meshFilters = GetComponentsInChildren<MeshFilter>();
+		for (int i = 0; i < meshFilters.Length; i++)
 		{
-			meshFilter = planet.SpawnOnSurface(meshFilters);
+		planet.SpawnOnSurface(meshFilters);
 
 		}
 
