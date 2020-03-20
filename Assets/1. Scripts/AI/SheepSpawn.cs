@@ -1,58 +1,64 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using VDFramework.Extensions;
 using Terrain.Generators;
+using UnityEngine;
+using VDFramework.Extensions;
 
 public class SheepSpawn : MonoBehaviour
 {
-    public GameObject sheep;
+	public GameObject sheep;
+	private Spawn_Foliage foliage;
+	private Planet planet;
+	private ShapeGenerator shapeGenerator;
+	private MeshFilter[] meshFilters;
 
-    Spawn_Foliage foliage;
-	ShapeGenerator shapeGenerator;
+	// Start is called before the first frame update
+	private void Start()
+	{
+		planet = GetComponent<Planet>();
+		foliage = GetComponent<Spawn_Foliage>();
+		shapeGenerator = planet.ShapeGenerator;
 
-    Mesh mesh;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        foliage = GetComponent<Spawn_Foliage>();
+		//TODO: instead of doing this logic for everything that you want to spawn
+		// just do it once in planet (AFTER GENERATION)
+		foreach (MeshFilter meshFilter in meshFilters)
+		{
+			meshFilter = planet.SpawnOnSurface(meshFilters);
 
-        mesh = GetComponent<MeshFilter>().mesh;
-		
-
+		}
 
 		Crusher();
-   
-    }
-       
-    void Crusher()
-    {
-        List<Vector3> filteredList = new List<Vector3>();
+	}
 
-        for (int i = 0; i < mesh.vertexCount; i++)
-        {
-            Vector3 vertex = mesh.vertices[i];
-            if (!foliage.IsAtEdge(vertex))
-            {
-                if (vertex.y < 1)
-                {
-                    // Will spawn a random foliage at every vertex in the mesh.
-                    //Instantiate(sheep, transform.position, Quaternion.identity);
-                    filteredList.Add(vertex);
-                }
-            }
-        }
+	private void Crusher()
+	{
+		List<Vector3> filteredList = new List<Vector3>();
+		foreach (MeshFilter meshFilter in meshFilters)
+		{
+			Mesh mesh = meshFilter.sharedMesh;
 
-        int amountOfSheep = 12;
+			for (int i = 0; i < mesh.vertexCount; i++)
+			{
+				Vector3 vertex = mesh.vertices[i];
+				//if (!foliage.IsAtEdge(vertex))
+				{						
+					if (shapeGenerator.CalculateUnscaledElevation(vertex) > 0f)
+					{
+						// Will spawn a random foliage at every vertex in the mesh.
+						//Instantiate(sheep, transform.position, Quaternion.identity);
+						filteredList.Add(vertex);
+					}
+				}
+			}
+		}
 
-        for (int i = 0; i < amountOfSheep; i++)
-        {
-            Instantiate(sheep, filteredList.GetRandomItem(), Quaternion.identity);
-        }
-    }
+		int amountOfSheep = 12;
+
+		for (int i = 0; i < amountOfSheep; i++)
+		{
+			Instantiate(sheep, filteredList.GetRandomItem(), Quaternion.identity);
+		}
+	}
 
 
-    //TODO: spawn dead sheep
+	//TODO: spawn dead sheep
 }

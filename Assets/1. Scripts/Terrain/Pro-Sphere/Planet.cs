@@ -1,4 +1,4 @@
-﻿using Terrain.Generators;
+using Terrain.Generators;
 using UnityEngine;
 using VDFramework;
 using VDFramework.UnityExtensions;
@@ -18,10 +18,18 @@ public class Planet : BetterMonoBehaviour
 	private ShapeGenerator shapeGenerator = new ShapeGenerator();
 	private ColourGenerator colourGenerator = new ColourGenerator();
 
+	public ShapeGenerator ShapeGenerator => shapeGenerator;
+	public ColourGenerator ColourGenerator => colourGenerator;
+
 	[SerializeField]
 	private MeshFilter[] meshFilters;
 	[HideInInspector]
 	private TerrainFaceMesh[] terrainFaces;
+
+	private void Awake()
+	{
+		GeneratePlanet();
+	}
 
 	private void Initialize()
 	{
@@ -55,7 +63,7 @@ public class Planet : BetterMonoBehaviour
 			terrainFaces[i] = new TerrainFaceMesh(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
 			bool shouldRenderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
 			meshFilters[i].gameObject.SetActive(shouldRenderFace);
-		}
+		}		
 	}
 
 	public void GeneratePlanet()
@@ -80,10 +88,24 @@ public class Planet : BetterMonoBehaviour
 			GenerateColors();
 		}
 	}
+	public void SpawnOnSurface(MeshFilter[] array)
+	{
+		array = GetComponentsInChildren<MeshFilter>();
+		for (int i = 0, j = 0; i < array.Length; i++)
+		{
+			MeshFilter meshFilter = array[i];
+			if (meshFilter.CompareTag("Water"))
+			{
+				continue;
+			}
+			meshFilters[j] = meshFilter;
+
+			++j;
+		}
+	}
 
 	private void GenerateMesh()
 	{
-		Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
 		for (int i = 0; i < 6; i++)
 		{
 			MeshFilter filter = meshFilters[i];
