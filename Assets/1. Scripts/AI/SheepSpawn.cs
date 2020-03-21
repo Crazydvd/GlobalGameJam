@@ -18,14 +18,8 @@ public class SheepSpawn : MonoBehaviour
 		foliage = GetComponent<Spawn_Foliage>();
 		shapeGenerator = planet.ShapeGenerator;
 
-		//TODO: instead of doing this logic for everything that you want to spawn
-		// just do it once in planet (AFTER GENERATION)
-		meshFilters = GetComponentsInChildren<MeshFilter>();
-		for (int i = 0; i < meshFilters.Length; i++)
-		{
-		planet.SpawnOnSurface(meshFilters);
-
-		}
+		meshFilters = planet.CubeMeshes;
+		
 
 		Crusher();
 	}
@@ -39,16 +33,13 @@ public class SheepSpawn : MonoBehaviour
 
 			for (int i = 0; i < mesh.vertexCount; i++)
 			{
-				Vector3 vertex = mesh.vertices[i];
-				//if (!foliage.IsAtEdge(vertex))
-				{						
+				Vector3 vertex = mesh.vertices[i];		
 					if (shapeGenerator.CalculateUnscaledElevation(vertex) > 0f)
 					{
 						// Will spawn a random foliage at every vertex in the mesh.
 						//Instantiate(sheep, transform.position, Quaternion.identity);
 						filteredList.Add(vertex);
 					}
-				}
 			}
 		}
 

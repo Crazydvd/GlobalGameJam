@@ -21,7 +21,9 @@ public class Planet : BetterMonoBehaviour
 	public ShapeGenerator ShapeGenerator => shapeGenerator;
 	public ColourGenerator ColourGenerator => colourGenerator;
 
-	[SerializeField]
+	public MeshFilter[] CubeMeshes => meshFilters;
+
+	[HideInInspector]
 	private MeshFilter[] meshFilters;
 	[HideInInspector]
 	private TerrainFaceMesh[] terrainFaces;
@@ -29,6 +31,7 @@ public class Planet : BetterMonoBehaviour
 	private void Awake()
 	{
 		GeneratePlanet();
+		FilterMeshes();
 	}
 
 	private void Initialize()
@@ -88,9 +91,9 @@ public class Planet : BetterMonoBehaviour
 			GenerateColors();
 		}
 	}
-	public void SpawnOnSurface(MeshFilter[] array)
+	private void FilterMeshes()
 	{
-		array = GetComponentsInChildren<MeshFilter>();
+		MeshFilter[] array = GetComponentsInChildren<MeshFilter>();
 		for (int i = 0, j = 0; i < array.Length; i++)
 		{
 			MeshFilter meshFilter = array[i];

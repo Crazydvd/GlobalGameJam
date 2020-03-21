@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 385045464}
   - component: {fileID: 385045466}
   - component: {fileID: 385045467}
+  - component: {fileID: 385045468}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Planet
@@ -351,13 +352,6 @@ MonoBehaviour:
   autoUpdate: 1
   shapeSettings: {fileID: 11400000, guid: 334d0198867ee1545a1a260872d607c1, type: 2}
   colorSettings: {fileID: 11400000, guid: 7ce563f4251d11b478a6192af7120a2c, type: 2}
-  meshFilters:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &385045465
 Transform:
   m_ObjectHideFlags: 0
@@ -399,6 +393,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sheep: {fileID: 3770514243409559072, guid: e569d6e6219485e45b047e54776a5d0f, type: 3}
+--- !u!114 &385045468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385045463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cdbe74f8274f5e4897fdd7d904ea4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smallFoliages:
+  - {fileID: 6248908413562093153, guid: c54f1be0d0c2c144189ec4ea8691c1cf, type: 3}
+  - {fileID: 1102455788880213211, guid: 1293d2a99a8d0bd40952679ba66c5c29, type: 3}
+  - {fileID: 2598498260662955835, guid: 51369ccb37f8de04c8f0b182a0c00b33, type: 3}
+  bigFoliages:
+  - {fileID: 2077135490892043369, guid: 40486d4211188c44db726806ebc8db22, type: 3}
+  - {fileID: 6640932586759839796, guid: 1fe48dfbb6c9a264ab59cca81e69f353, type: 3}
+  - {fileID: 5730715109894851720, guid: a81b652bdad455d439f322bf595c441f, type: 3}
+  amountOfSmallFoliage: 1000
+  amountOfBigFoliage: 500
 --- !u!1001 &506514742
 PrefabInstance:
   m_ObjectHideFlags: 0
