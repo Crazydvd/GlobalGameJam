@@ -1,4 +1,4 @@
-﻿using Gameplay;
+using Gameplay;
 using Gameplay.Player2;
 using UnityEngine;
 using VDFramework;
@@ -11,7 +11,7 @@ namespace AI
 	{
 		public float MaxAcceleration = 13.0f;
 		public float MaxVelocity = 3.0f;
-		public float RotateSpeed = 10;
+		public float RotateSpeed = 0;
  
 		public float WanderRate = 0.4f;
 
