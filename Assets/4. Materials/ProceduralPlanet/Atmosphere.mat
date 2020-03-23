@@ -8,19 +8,27 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Atmosphere
-  m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 25a13b9b047d6bf40842d1b7359d822b,
+    type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3050
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses:
   - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_2DE6CB21:
+        m_Texture: {fileID: 2800000, guid: 8f2ff1c16f2db204a85277bda469410f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BackTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -41,11 +49,23 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DownTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FrontTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _HeightMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LeftTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -69,15 +89,48 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RightTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Tex:
+        m_Texture: {fileID: 8900000, guid: 8f2ff1c16f2db204a85277bda469410f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_BE9A3C7A_Out_0:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _UpTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texture:
+        m_Texture: {fileID: 2800000, guid: 8f2ff1c16f2db204a85277bda469410f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_2F7337B2: 1
+    - Vector1_4752482D: 1
+    - Vector1_517058DD: 0.05
+    - Vector1_8229CD18: 0
+    - Vector1_973F3577: 0
+    - Vector1_AC5A94C6: 0.005
+    - Vector1_BD03BEB5: 0
+    - Vector1_BD931EAA: 0
+    - Vector1_D2090D28: 0.2
+    - Vector1_DCFD4B42: 0.3
+    - Vector1_DF9A180C: 0.365
+    - Vector1_E0095F30: 0
+    - Vector1_E37239A1: 0.4
+    - Vector1_E59E9DCD: 0.03
+    - Vector1_E6DE7217: 1
+    - Vector1_F2A620E3: 0.5
+    - Vector1_FDE65196: 0.4
     - _AlphaClip: 0
     - _AtmosphereThickness: 1
     - _Blend: 0
@@ -86,7 +139,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
-    - _Exposure: 1
+    - _Exposure: 2.85
     - _ExtendVertices: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -103,7 +156,7 @@ Material:
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 0
-    - _Rotation: 0
+    - _Rotation: 43
     - _SampleGI: 0
     - _Shininess: 0
     - _Smoothness: 0.306
@@ -123,6 +176,12 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
+    - Color_7CF1DFC6: {r: 0, g: 0, b: 0, a: 0}
+    - Color_98D86DEE: {r: 0.1254902, g: 0.1254902, b: 0.1254902, a: 0}
+    - Color_9B70740C: {r: 0.14048594, g: 0.22942998, b: 0.38679248, a: 1}
+    - Color_A3D88145: {r: 0, g: 0, b: 0, a: 0.62352943}
+    - Color_D3861D07: {r: 0.4009434, g: 0.8366208, b: 1, a: 1}
+    - Color_E011A254: {r: 0.1764706, g: 0.68235296, b: 0.7764706, a: 1}
     - _BaseColor: {r: 0.3247597, g: 0.57388866, b: 0.7735849, a: 0.7019608}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.15704049, g: 0.3004253, b: 0.4984329, a: 1}
@@ -133,6 +192,7 @@ Material:
     - _SpecColor: {r: 5.278032, g: 5.278032, b: 5.278032, a: 0.853}
     - _Speed: {r: 1, g: 0, b: 0, a: 0}
     - _Tint: {r: 0.091625154, g: 0.45337155, b: 0.6698113, a: 0.49019608}
+    - _elevationMinMax: {r: 0, g: 1, b: 0, a: 0}
 --- !u!114 &6051007609671595226
 MonoBehaviour:
   m_ObjectHideFlags: 11

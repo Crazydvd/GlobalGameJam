@@ -1,19 +1,19 @@
-﻿using UnityEngine;
+using UnityEngine;
 using VDFramework.Singleton;
 
 public class LightRayCaster : Singleton<LightRayCaster>
 {
 	public bool IsLit(GameObject objectToCheck)
 	{
-		Ray ray = new Ray(transform.position, objectToCheck.transform.position);
-		Debug.DrawLine(transform.position, objectToCheck.transform.position);
+		Ray ray = new Ray(CachedTransform.position, objectToCheck.transform.position - CachedTransform.position);
+		Debug.DrawLine(CachedTransform.position, objectToCheck.transform.position);
 
 		if (Physics.Raycast(ray, out RaycastHit hit))
 		{
 			return hit.collider.gameObject == objectToCheck;
 		}
 
-		Debug.Break();
+		//Debug.Break();
 
 		return true;
 	}

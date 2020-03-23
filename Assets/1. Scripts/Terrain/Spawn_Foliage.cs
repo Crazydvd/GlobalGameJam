@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VDFramework.Extensions;
@@ -9,6 +9,7 @@ public class Spawn_Foliage : MonoBehaviour
     public GameObject[] cornerFoliages;
     public GameObject[] smallFoliages;
     private Mesh mesh;
+	private Planet planet;
 
     ProceduralTerrain terrain;
 

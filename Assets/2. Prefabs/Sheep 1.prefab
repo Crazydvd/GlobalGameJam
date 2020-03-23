@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3770514243409559073}
-  - component: {fileID: 3770514243409559076}
-  - component: {fileID: 3770514243409559079}
-  - component: {fileID: 3770514243409559078}
   - component: {fileID: 8568982493759421691}
   - component: {fileID: 4285550902490060423}
+  - component: {fileID: 2156539136404021873}
+  - component: {fileID: 3099501794075331896}
+  - component: {fileID: 8533830172294257520}
   m_Layer: 0
   m_Name: Sheep 1
   m_TagString: Untagged
@@ -28,56 +28,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3770514243409559072}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1036727489490916777}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &3770514243409559076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3770514243409559072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9fc450680e7864e97324a237e18851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3770514243409559079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3770514243409559072}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c41924b2e5394b19bb8d6f7ad2054d71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3770514243409559078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3770514243409559072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 959bdf7c16f149529fa65a2e1ca72727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxAcceleration: 15
-  MaxVelocity: 5
-  RotateSpeed: 13
-  WanderRate: 0.3
-  WanderOffset: 1
-  WanderRadius: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &8568982493759421691
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -89,10 +47,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 32
   m_CollisionDetection: 0
 --- !u!114 &4285550902490060423
 MonoBehaviour:
@@ -106,6 +64,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27be422fe65ef1b4ea4fc75b028a9255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2156539136404021873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3770514243409559072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0d5712ab619f849a339012b04d4ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3099501794075331896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3770514243409559072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc3ed41840153c4891047fc9181fece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  rotSpeed: 100
+--- !u!114 &8533830172294257520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3770514243409559072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6eda92817fc34046aa11476f6c2a4b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxAcceleration: 13
+  MaxVelocity: 3
+  RotateSpeed: 5
+  WanderRate: 0.4
+  WanderOffset: 4
+  WanderRadius: 2
 --- !u!65 &5682940075948667071
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -194,7 +196,7 @@ PrefabInstance:
     - target: {fileID: 4193058590878759497, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4193058590878759497, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}
@@ -204,7 +206,7 @@ PrefabInstance:
     - target: {fileID: 4193058590878759497, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4193058590878759497, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}
@@ -219,7 +221,7 @@ PrefabInstance:
     - target: {fileID: 4193058590878759497, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4193058590878759497, guid: cd6d7e6da7de59443aee16f04d57039c,
         type: 3}

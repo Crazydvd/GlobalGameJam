@@ -23,6 +23,7 @@ public class MyLight : BetterMonoBehaviour
 		IsLit = gameObject.EnsureComponent<IsLit>();
 
 		CheckForLightSource();
+       // shouldCheckEveryFrame = true;
 	}
 
 	private void LateUpdate()
