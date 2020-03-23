@@ -10,7 +10,7 @@ namespace Gameplay.Player2
 
 		public float AttractRadius => attractRadius;
 
-		[FormerlySerializedAs("sheepatTractor"), SerializeField]
+		[SerializeField]
 		private GameObject sheepAttractor;
 
 		private ForceField forceFieldRadius;
