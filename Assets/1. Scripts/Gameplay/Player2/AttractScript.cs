@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using VDFramework;
 
 namespace Gameplay.Player2
 {
 	public class AttractScript : BetterMonoBehaviour
 	{
-		public Vector3 LureOrigin => sheepatTractor.transform.position;
+		public Vector3 LureOrigin => sheepAttractor.transform.position;
 
 		public float AttractRadius => attractRadius;
 
-		[SerializeField]
-		private GameObject sheepatTractor;
+		[FormerlySerializedAs("sheepatTractor"), SerializeField]
+		private GameObject sheepAttractor;
 
 		private ForceField forceFieldRadius;
 

@@ -5,7 +5,7 @@ namespace AI
 {
 	public class AttractBehaviour : BetterMonoBehaviour
 	{
-		private SheepBehaviourManager sheepBehaviourManager;
+		private BehaviourManager sheepBehaviourManager;
 
 		private float wanderOrientation = 0;
 
@@ -14,7 +14,7 @@ namespace AI
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
-			sheepBehaviourManager = GetComponent<SheepBehaviourManager>();
+			sheepBehaviourManager = GetComponent<BehaviourManager>();
 		}
 
 		private void FixedUpdate()
