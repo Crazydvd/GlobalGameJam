@@ -9,11 +9,13 @@ namespace Gameplay.Player2
 
 		public float AttractRadius => attractRadius;
 
-		[SerializeField] private GameObject sheepatTractor;
+		[SerializeField]
+		private GameObject sheepatTractor;
 
 		private ForceField forceFieldRadius;
 
-		[SerializeField] private float attractRadius = 5.0f;
+		[SerializeField]
+		private float attractRadius = 5.0f;
 
 		private void Awake()
 		{

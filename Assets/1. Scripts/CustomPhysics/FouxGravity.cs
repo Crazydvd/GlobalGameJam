@@ -12,13 +12,19 @@ namespace CustomPhysics
 		private GravityAttractor[] gravityAttractors;
 
 		// Start is called before the first frame update
-		void Start()
+		private void Start()
 		{
 			gravityAttractors = FindObjectsOfType<GravityAttractor>();
-			
+
 			rigidBody = gameObject.EnsureComponent<Rigidbody>();
 			rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
 			rigidBody.useGravity = false;
+		}
+		
+		// Update is called once per frame
+		private void FixedUpdate()
+		{
+			FindClosestAttractor().Attract(rigidBody);
 		}
 
 		private GravityAttractor FindClosestAttractor()
@@ -27,10 +33,10 @@ namespace CustomPhysics
 			{
 				return gravityAttractors[0];
 			}
-			
+
 			GravityAttractor closest = null;
 			float closestDistance = float.PositiveInfinity;
-			
+
 			foreach (GravityAttractor gravityAttractor in gravityAttractors)
 			{
 				float distance = Vector3.Distance(CachedTransform.position, gravityAttractor.CachedTransform.position);
@@ -44,12 +50,6 @@ namespace CustomPhysics
 			}
 
 			return closest;
-		}
-
-		// Update is called once per frame
-		void FixedUpdate()
-		{
-			FindClosestAttractor().Attract(rigidBody);
 		}
 	}
 }

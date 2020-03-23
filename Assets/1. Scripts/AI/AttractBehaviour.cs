@@ -18,29 +18,28 @@ namespace AI
 		}
 
 		private void FixedUpdate()
-		{	
+		{
 			Vector3 accelleration = GetSteerOrientation();
 
 			Steer(accelleration);
 			LookWhereYouGoing();
 		}
-		
+
 		private void LookWhereYouGoing()
 		{
 			Vector3 direction = rigidbody.velocity;
-        
+
 			direction.Normalize();
 
 			if (direction.magnitude > 0.001)
 			{
 				float targetRotation = -1 * (Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg);
-				float newRotation = Mathf.LerpAngle(rigidbody.rotation.eulerAngles.y, targetRotation, Time.deltaTime * sheepBehaviourManager.RotateSpeed);
-				rigidbody.rotation = Quaternion.Euler(0,newRotation,0);
-            
+				float newRotation = Mathf.LerpAngle(rigidbody.rotation.eulerAngles.y, targetRotation,
+					Time.deltaTime * sheepBehaviourManager.RotateSpeed);
+				rigidbody.rotation = Quaternion.Euler(0, newRotation, 0);
 			}
-        
 		}
-		
+
 		private void Steer(Vector3 linearAcceleration)
 		{
 			rigidbody.velocity += linearAcceleration * Time.deltaTime;
@@ -50,7 +49,7 @@ namespace AI
 				rigidbody.velocity = rigidbody.velocity.normalized * sheepBehaviourManager.MaxVelocity;
 			}
 		}
-		
+
 		private Vector3 GetSteerOrientation()
 		{
 			float sheepOrientation = OrientationInRadians(); //rotation of the sheep in radians
@@ -61,19 +60,20 @@ namespace AI
 
 			Vector3 targetPosition = sheepBehaviourManager.LureOrigin;
 
-			targetPosition = targetPosition + (GetOrientationVector(targetOrientation) * sheepBehaviourManager.WanderRadius);
+			targetPosition = targetPosition +
+							 (GetOrientationVector(targetOrientation) * sheepBehaviourManager.WanderRadius);
 
 			return Seek(targetPosition);
 		}
-		
+
 		private Vector3 Seek(Vector3 targetPosition)
 		{
 			Vector3 acceleration = targetPosition - transform.position;
 			acceleration.y = 0;
 			acceleration.Normalize();
-    
+
 			acceleration *= sheepBehaviourManager.MaxAcceleration;
-        
+
 			return acceleration;
 		}
 
@@ -88,6 +88,9 @@ namespace AI
 			return rigidbody.rotation.eulerAngles.y * Mathf.Deg2Rad;
 		}
 
+		/// <summary>
+		/// Returns a number between -1 and 1
+		/// </summary>
 		private float GetRandomNumber()
 		{
 			return Random.value - Random.value;

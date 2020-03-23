@@ -22,10 +22,13 @@ namespace MovementScripts.SphereMovement
 		{
 			Vector3 direction = JoystickInput.GetAxes(joystickNumber);
 
-			if (direction.magnitude > 0)
+			if (Mathf.Approximately(direction.magnitude, 0))
 			{
-				CachedTransform.rotation = Quaternion.LookRotation(CachedTransform.parent.TransformDirection(direction), CachedTransform.parent.up);
+				return;
 			}
+
+			Transform parent = CachedTransform.parent;
+			CachedTransform.rotation = Quaternion.LookRotation(parent.TransformDirection(direction), parent.up);
 		}
 	}
 }
