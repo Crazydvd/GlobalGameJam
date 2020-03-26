@@ -1,74 +1,92 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using VDFramework;
+using VDFramework.Utility;
+using Random = UnityEngine.Random;
 
 namespace AI
 {
 	public class WanderBehaviour : BetterMonoBehaviour
 	{
+		private enum WanderState
+		{
+			RotateLeft,
+			RotateRight,
+			Walking,
+			Idle,
+		}
+
 		//private BehaviourManager BehaviourManager;
 		public float moveSpeed = 3f;
 		public float rotSpeed = 100f;
 
-		private bool isWondering = false;
-		private bool isRotatingLeft = false;
-		private bool isRotatingRight = false;
-		private bool isWalking = false;
+		private WanderState currentState = WanderState.Idle;
+
+		private Coroutine coroutine = null;
 
 		// Update is called once per frame
-		void Update()
+		private void Update()
 		{
-			if (isWondering == false)
+			if (coroutine == null)
 			{
-				StartCoroutine(Wonder());
+				coroutine = StartCoroutine(Wander());
 			}
 
-			if (isRotatingRight == true)
+			switch (currentState)
 			{
-				transform.Rotate(transform.up * Time.deltaTime * rotSpeed);
-			}
-
-			if (isRotatingLeft == true)
-			{
-				transform.Rotate(transform.up * Time.deltaTime * -rotSpeed);
-			}
-
-			if (isWalking == true)
-			{
-				transform.position += transform.forward * moveSpeed * Time.deltaTime;
+				case WanderState.RotateLeft:
+				case WanderState.RotateRight:
+					Rotate(currentState);
+					break;
+				case WanderState.Walking:
+					Walk();
+					break;
+				case WanderState.Idle:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
 			}
 		}
 
-		IEnumerator Wonder()
+		private IEnumerator Wander()
 		{
-			int rotTime = Random.Range(1, 3);
+			int rotateTime = Random.Range(1, 3);
 			int rotateWait = Random.Range(1, 3);
-			int rotateLorR = Random.Range(0, 3);
 			int walkWait = Random.Range(1, 3);
 			int walkTime = Random.Range(1, 8);
 
-			isWondering = true;
-
+			currentState = WanderState.Idle;
+			
 			yield return new WaitForSeconds(walkWait);
-			isWalking = true;
+
+			currentState = WanderState.Walking;
+
 			yield return new WaitForSeconds(walkTime);
-			isWalking = false;
+
+			currentState = WanderState.Idle;
+			
 			yield return new WaitForSeconds(rotateWait);
-			if (rotateLorR == 1)
-			{
-				isRotatingRight = true;
-				yield return new WaitForSeconds(rotTime);
-				isRotatingRight = false;
-			}
 
-			if (rotateLorR == 2)
-			{
-				isRotatingLeft = true;
-				yield return new WaitForSeconds(rotTime);
-				isRotatingLeft = false;
-			}
+			currentState = RandomUtil.GetRandom(WanderState.RotateLeft, WanderState.RotateRight);
 
-			isWondering = false;
+			yield return new WaitForSeconds(rotateTime);
+			
+			yield return null;
+		}
+		
+		private void Walk()
+		{
+			transform.position += Time.deltaTime * moveSpeed * transform.forward;
+		}
+		
+		private void Rotate(WanderState state)
+		{
+			float modifier = state == WanderState.RotateRight ? 1 : -1;
+
+			float rotationSpeed = rotSpeed * modifier;
+
+			CachedTransform.Rotate(rotationSpeed * Time.deltaTime * CachedTransform.up);
 		}
 	}
 }
