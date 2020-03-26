@@ -1,96 +1,92 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using AI;
+using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
+using VDFramework;
+using VDFramework.Utility;
+using Random = UnityEngine.Random;
 
-public class WanderBehaviour : MonoBehaviour
+namespace AI
 {
-    private SheepBehaviourManager sheepBehaviourManager;
-    private Rigidbody rb;
+	public class WanderBehaviour : BetterMonoBehaviour
+	{
+		private enum WanderState
+		{
+			RotateLeft,
+			RotateRight,
+			Walking,
+			Idle,
+		}
 
-    private float wanderOrientation = 0; 
-    bool smooting = true;
+		//private BehaviourManager BehaviourManager;
+		public float moveSpeed = 3f;
+		public float rotSpeed = 100f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        sheepBehaviourManager = GetComponent<SheepBehaviourManager>();
-        rb = GetComponent<Rigidbody>();
-    }
+		private WanderState currentState = WanderState.Idle;
 
-    private void FixedUpdate()
-    {
-        Vector3 sheepAcceleration = GetSteerOrientation();
-        
-        Steer(sheepAcceleration);
-        LookWhereYouGoing();
-    }
+		private Coroutine coroutine = null;
 
-    private Vector3 GetSteerOrientation()
-    {
-        float sheepOrientation = OrientationInRadians(); //rotation of the sheep in radians
+		// Update is called once per frame
+		private void Update()
+		{
+			if (coroutine == null)
+			{
+				coroutine = StartCoroutine(Wander());
+			}
 
-        wanderOrientation += GetRandomNumber() * sheepBehaviourManager.WanderRate;
+			switch (currentState)
+			{
+				case WanderState.RotateLeft:
+				case WanderState.RotateRight:
+					Rotate(currentState);
+					break;
+				case WanderState.Walking:
+					Walk();
+					break;
+				case WanderState.Idle:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
 
-        float targetOrientation = wanderOrientation + sheepOrientation; //get new orientation to rotate to 
+		private IEnumerator Wander()
+		{
+			int rotateTime = Random.Range(1, 3);
+			int rotateWait = Random.Range(1, 3);
+			int walkWait = Random.Range(1, 3);
+			int walkTime = Random.Range(1, 8);
 
-        Vector3 targetPosition = transform.position + (GetOrientationVector(sheepOrientation) * sheepBehaviourManager.WanderOffset);
+			currentState = WanderState.Idle;
+			
+			yield return new WaitForSeconds(walkWait);
 
-        targetPosition = targetPosition + (GetOrientationVector(targetOrientation) * sheepBehaviourManager.WanderRadius);
-        
-        return Seek(targetPosition);
-    }
+			currentState = WanderState.Walking;
 
-    private void LookWhereYouGoing()
-    {
-        Vector3 direction = rb.velocity;
+			yield return new WaitForSeconds(walkTime);
 
-        direction.Normalize();
+			currentState = WanderState.Idle;
+			
+			yield return new WaitForSeconds(rotateWait);
 
-        if (direction.sqrMagnitude > 0.001f)
-        {
-            float targetRotation = -1 * (Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg);
-            float newRotation = Mathf.LerpAngle(rb.rotation.eulerAngles.y, targetRotation, Time.deltaTime * sheepBehaviourManager.RotateSpeed);
-            rb.rotation = Quaternion.Euler(0,newRotation,0);
-        }
-    }
-    
-    private Vector3 Seek(Vector3 targetPosition)
-    {
-        Vector3 acceleration = targetPosition - transform.position;
-        acceleration.y = 0;
-        acceleration.Normalize();
-    
-        acceleration *= sheepBehaviourManager.MaxAcceleration;
-        
-        return acceleration;
-    }
+			currentState = RandomUtil.GetRandom(WanderState.RotateLeft, WanderState.RotateRight);
 
-    private void Steer(Vector3 linearAcceleration)
-    {
-        //Debug.Log(linearAcceleration);
-       // Vector3 testVec = new Vector3(0.3f,0,0.0f);
-        rb.velocity += linearAcceleration * Time.deltaTime;
+			yield return new WaitForSeconds(rotateTime);
+			
+			yield return null;
+		}
+		
+		private void Walk()
+		{
+			transform.position += Time.deltaTime * moveSpeed * transform.forward;
+		}
+		
+		private void Rotate(WanderState state)
+		{
+			float modifier = state == WanderState.RotateRight ? 1 : -1;
 
-        if (rb.velocity.magnitude > sheepBehaviourManager.MaxVelocity)
-        {
-            rb.velocity = rb.velocity.normalized * sheepBehaviourManager.MaxVelocity;
-        }
-    }
+			float rotationSpeed = rotSpeed * modifier;
 
-    private Vector3 GetOrientationVector(float orientation)
-    {
-        return new Vector3(Mathf.Cos(-orientation), 0, Mathf.Sin(-orientation));
-    }
-
-    private float OrientationInRadians()
-    {
-        return rb.rotation.eulerAngles.y * Mathf.Deg2Rad;
-    }
-
-    private float GetRandomNumber()
-    {
-        return Random.value - Random.value;
-    }
+			CachedTransform.Rotate(rotationSpeed * Time.deltaTime * CachedTransform.up);
+		}
+	}
 }

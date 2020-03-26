@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Events.GameplayEvents;
+using UnityEngine;
 using VDFramework.EventSystem;
 
 namespace Gameplay.Player2
@@ -15,11 +16,25 @@ namespace Gameplay.Player2
 
 		private void Awake()
 		{
-			EventManager.Instance.AddListener<ToggleAttractEvent>(OnToggleAttract);
 			sphereMesh = GetComponent<MeshRenderer>();
 		}
 
-		private void OnDestroy()
+		private void OnEnable()
+		{
+			AddListeners();
+		}
+
+		private void OnDisable()
+		{
+			RemoveListeners();
+		}
+
+		private void AddListeners()
+		{
+			EventManager.Instance.AddListener<ToggleAttractEvent>(OnToggleAttract);
+		}
+
+		private void RemoveListeners()
 		{
 			if (EventManager.IsInitialized)
 			{

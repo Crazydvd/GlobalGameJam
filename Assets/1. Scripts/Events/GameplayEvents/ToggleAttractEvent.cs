@@ -1,15 +1,19 @@
-﻿using VDFramework.EventSystem;
-using Gameplay;
-using Gameplay.Player2;
+﻿using Gameplay.Player2;
+using VDFramework.EventSystem;
 
-public class ToggleAttractEvent : VDEvent
+namespace Events.GameplayEvents
 {
-	public readonly bool ToggleOn;
-	public readonly AttractScript AttractScript;
-
-	public ToggleAttractEvent(bool isEnabled, AttractScript attractScript)
+	public class ToggleAttractEvent : VDEvent
 	{
-		ToggleOn = isEnabled;
-		AttractScript = attractScript;
+		public readonly bool ToggleOn;
+		public readonly AttractScript AttractScript;
+		public readonly int Priority;
+
+		public ToggleAttractEvent(bool isEnabled, AttractScript attractScript, int priority)
+		{
+			ToggleOn = isEnabled;
+			AttractScript = attractScript;
+			Priority = priority;
+		}
 	}
 }

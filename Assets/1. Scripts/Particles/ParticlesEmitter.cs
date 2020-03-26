@@ -1,31 +1,34 @@
 ﻿using JoystickData;
 using UnityEngine;
 
-public class ParticlesEmitter : MonoBehaviour
+namespace Particles
 {
-	private ParticleSystem[] particles;
-	private uint joystickNumber; 
-
-	void Awake()
+	public class ParticlesEmitter : MonoBehaviour
 	{
-		particles = GetComponentsInChildren<ParticleSystem>();
-		joystickNumber = GetComponent<JoystickNumber>();
-	}
+		private ParticleSystem[] particles;
+		private uint joystickNumber;
 
-	private void Update()
-	{
-		if (JoystickInput.GetAxes(joystickNumber).magnitude > 0)
+		private void Awake()
 		{
-			foreach (ParticleSystem particle in particles)
-			{
-				particle.Play();
-			}
+			particles = GetComponentsInChildren<ParticleSystem>();
+			joystickNumber = GetComponent<JoystickNumber>();
 		}
-		else
+
+		private void Update()
 		{
-			foreach (ParticleSystem particle in particles)
+			if (JoystickInput.GetAxes(joystickNumber).magnitude > 0)
 			{
-				particle.Stop();
+				foreach (ParticleSystem particle in particles)
+				{
+					particle.Play();
+				}
+			}
+			else
+			{
+				foreach (ParticleSystem particle in particles)
+				{
+					particle.Stop();
+				}
 			}
 		}
 	}

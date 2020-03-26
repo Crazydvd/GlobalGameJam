@@ -8,9 +8,11 @@ namespace Gameplay.Player1
 {
 	public class FencePlacer : BetterMonoBehaviour
 	{
-		[SerializeField] private float connectionRadius = 5.0f;
+		[SerializeField]
+		private float connectionRadius = 5.0f;
 
-		[SerializeField] private GameObject FenceCorner = null;
+		[SerializeField]
+		private GameObject FenceCorner = null;
 
 		private uint joystickNumber;
 

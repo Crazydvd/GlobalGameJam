@@ -1,5 +1,8 @@
-using Gameplay;
+using System.Collections.Generic;
+using System.Linq;
+using Events.GameplayEvents;
 using Gameplay.Player2;
+using Structs;
 using UnityEngine;
 using VDFramework;
 using VDFramework.EventSystem;
@@ -9,35 +12,65 @@ namespace AI
 	[RequireComponent(typeof(WanderBehaviour), typeof(AttractBehaviour))]
 	public class SheepBehaviourManager : BetterMonoBehaviour
 	{
-		public float MaxAcceleration = 13.0f;
-		public float MaxVelocity = 3.0f;
-		public float RotateSpeed = 0;
- 
-		public float WanderRate = 0.4f;
+		public Vector3 LureOrigin => GetHighestPriority().LureOrigin;
 
-		public float WanderOffset = 4f; 
-		public float WanderRadius = 2f;
-		
+		private readonly Dictionary<AttractScript, int> attractScripts = new Dictionary<AttractScript, int>();
+
+		public SheepMovementSettings sheepSettings;
+
 		private WanderBehaviour wanderBehaviour;
 		private AttractBehaviour attractBehaviour;
 
-		private AttractScript attractScript;
-
-		public Vector3 LureOrigin => attractScript.LureOrigin;
-		
 		private void Awake()
 		{
 			wanderBehaviour = GetComponent<WanderBehaviour>();
 			attractBehaviour = GetComponent<AttractBehaviour>();
+			
+			ActivateWander();
+		}
 
+		private void OnEnable()
+		{
+			AddListeners();
+		}
+
+		private void OnDisable()
+		{
+			RemoveListeners();
+		}
+
+		private void AddListeners()
+		{
 			EventManager.Instance.AddListener<ToggleAttractEvent>(OnToggleAttract);
 		}
 
-		private void OnDestroy()
+		private void RemoveListeners()
 		{
 			if (EventManager.IsInitialized)
 			{
 				EventManager.Instance.RemoveListener<ToggleAttractEvent>(OnToggleAttract);
+			}
+		}
+
+		private void Update()
+		{
+			if (attractScripts.Any(IsWithinAttractRange))
+			{
+				if (attractBehaviour.isActiveAndEnabled)
+				{
+					return;
+				}
+
+				ActivateAttract();
+			}
+			else
+			{
+				if (wanderBehaviour.isActiveAndEnabled)
+				{
+					return;
+				}
+
+				ActivateWander();
 			}
 		}
 
@@ -55,25 +88,39 @@ namespace AI
 
 		private void OnToggleAttract(ToggleAttractEvent toggleAttractEvent)
 		{
-			if (!attractScript)
+			if (toggleAttractEvent.ToggleOn && !attractScripts.ContainsKey(toggleAttractEvent.AttractScript))
 			{
-				attractScript = toggleAttractEvent.AttractScript;
-			}
-
-			//TODO: store AttractScript or something and continueously check if we're in range
-			if (toggleAttractEvent.ToggleOn && IsWithinAttractRange(attractScript))
-			{
-				ActivateAttract();
+				attractScripts.Add(toggleAttractEvent.AttractScript, toggleAttractEvent.Priority);
 			}
 			else
 			{
-				ActivateWander();
+				attractScripts.Remove(toggleAttractEvent.AttractScript);
 			}
 		}
 
-		private bool IsWithinAttractRange(AttractScript attractScript)
+		private bool IsWithinAttractRange(KeyValuePair<AttractScript, int> pair)
 		{
-			return Vector3.Distance(CachedTransform.position, attractScript.LureOrigin) <= attractScript.AttractRadius;
+			return Vector3.Distance(CachedTransform.position, pair.Key.LureOrigin) <= pair.Key.AttractRadius;
+		}
+
+		private AttractScript GetHighestPriority()
+		{
+			AttractScript attractScript = null;
+			int priority = int.MinValue;
+
+			// ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+			foreach (KeyValuePair<AttractScript, int> keyValuePair in attractScripts)
+			{
+				if (keyValuePair.Value <= priority)
+				{
+					continue;
+				}
+
+				priority = keyValuePair.Value;
+				attractScript = keyValuePair.Key;
+			}
+
+			return attractScript;
 		}
 	}
 }

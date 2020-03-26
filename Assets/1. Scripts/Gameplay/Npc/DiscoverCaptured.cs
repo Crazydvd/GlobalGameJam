@@ -44,10 +44,10 @@ namespace Gameplay.Npc
 			{
 				currentCorner = currentCorner.Child;
 				corners.Add(currentCorner);
-
 			} while (currentCorner != origin);
 
-			List<Vector2> polygonVertices = corners.Select(fenceCorner => new Vector2(fenceCorner.CachedTransform.position.x, fenceCorner.CachedTransform.position.z)).ToList();
+			List<Vector2> polygonVertices = corners.Select(fenceCorner =>
+				new Vector2(fenceCorner.CachedTransform.position.x, fenceCorner.CachedTransform.position.z)).ToList();
 			Vector2 currentPos = new Vector2(CachedTransform.position.x, CachedTransform.position.z);
 
 			return Poly.ContainsPoint(polygonVertices.ToArray(), currentPos);
