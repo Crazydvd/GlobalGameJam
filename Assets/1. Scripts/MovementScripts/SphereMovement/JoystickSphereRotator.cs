@@ -1,9 +1,11 @@
-﻿using JoystickData;
+﻿using System.Reflection;
+using JoystickData;
 using UnityEngine;
 using VDFramework;
 
 namespace MovementScripts.SphereMovement
 {
+	[RequireComponent(typeof(JoystickNumber))]
 	public class JoystickSphereRotator : BetterMonoBehaviour
 	{
 		private uint joystickNumber;

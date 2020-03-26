@@ -2,8 +2,6 @@
 
 namespace Utility
 {
-	public class ShowFencesWithinReach : BetterMonoBehaviour
-	{
-		
-	}
+	// empty for now: but will draw a line from the fences to this object
+	public class ShowFencesWithinReach : BetterMonoBehaviour { }
 }

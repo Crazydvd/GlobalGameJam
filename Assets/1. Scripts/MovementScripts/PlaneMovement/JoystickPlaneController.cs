@@ -8,7 +8,8 @@ namespace MovementScripts.PlaneMovement
 	[RequireComponent(typeof(JoystickNumber), typeof(CharacterController))]
 	public class JoystickPlaneController : BetterMonoBehaviour
 	{
-		[SerializeField] private float speed = 10.0f;
+		[SerializeField]
+		private float speed = 10.0f;
 
 		private CharacterController characterController;
 		private ScreenBoundsRestrictor boundsRestrictor;
@@ -28,7 +29,7 @@ namespace MovementScripts.PlaneMovement
 		private void Update()
 		{
 			Vector3 movement = JoystickInput.GetClampedAxes(joystickNumber, 1);
-			
+
 			if (boundsRestrictor.IsOutOfBounds(CachedTransform.position, movement))
 			{
 				MoveTowardsCamera();

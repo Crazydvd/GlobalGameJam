@@ -7,8 +7,9 @@ namespace MovementScripts.SphereMovement
 	[RequireComponent(typeof(JoystickNumber), typeof(Rigidbody))]
 	public class JoystickSphereController : BetterMonoBehaviour
 	{
-		[SerializeField] private float speed = 5.0f;
-		
+		[SerializeField]
+		private float speed = 5.0f;
+
 		private uint joystickNumber;
 		private Rigidbody rigidBody;
 
@@ -22,7 +23,7 @@ namespace MovementScripts.SphereMovement
 		{
 			Vector3 acceleration = CachedTransform.TransformDirection(JoystickInput.GetAxes(joystickNumber));
 			Vector3 moveDirection = rigidBody.position + Time.deltaTime * speed * acceleration;
-			
+
 			rigidBody.MovePosition(moveDirection);
 		}
 	}

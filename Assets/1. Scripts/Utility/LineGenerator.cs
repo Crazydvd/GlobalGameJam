@@ -10,8 +10,8 @@ namespace Utility
 	{
 		private LineRenderer lineRenderer;
 
-		private readonly Dictionary<int, Transform> objectPositions = new Dictionary<int, Transform>();
-		private readonly Dictionary<int, Vector3> vectorPositions = new Dictionary<int, Vector3>();
+		private readonly Dictionary<int, Transform> objectPositions = new Dictionary<int, Transform>(); // Variable positions
+		private readonly Dictionary<int, Vector3> vectorPositions = new Dictionary<int, Vector3>(); // Constant positions
 
 		private int positionCount;
 
@@ -30,7 +30,7 @@ namespace Utility
 			AddVertexToEnd(CachedTransform);
 		}
 
-		public void DrawLine(IEnumerable<Vector3> positions)
+		public void AddToLine(IEnumerable<Vector3> positions)
 		{
 			foreach (Vector3 position in positions)
 			{
@@ -38,7 +38,7 @@ namespace Utility
 			}
 		}
 
-		public void DrawLine(IEnumerable<Transform> positions)
+		public void AddToLine(IEnumerable<Transform> positions)
 		{
 			foreach (Transform position in positions)
 			{
@@ -66,7 +66,7 @@ namespace Utility
 			vectorPositions.Remove(positionCount);
 			objectPositions.Remove(positionCount);
 
-			positionCount -= 1;
+			--positionCount;
 		}
 		
 		public void RemoveIndex(int index)
@@ -76,6 +76,8 @@ namespace Utility
 
 			ReduceEveryIndexByOne(vectorPositions, index);
 			ReduceEveryIndexByOne(objectPositions, index);
+
+			--positionCount;
 		}
 
 		public void RemoveLine()
@@ -122,13 +124,15 @@ namespace Utility
 			foreach (KeyValuePair<int, TValueType> entry in dictionary)
 			{
 				int key = entry.Key;
-				int newKey = key - 1;
 
-				if (key > startIndex)
+				if (key <= startIndex)
 				{
-					dictionary[newKey] = dictionary[key];
-					dictionary.Remove(key);
+					continue;
 				}
+
+				int newKey = key - 1;
+				dictionary[newKey] = dictionary[key];
+				dictionary.Remove(key);
 			}
 		}
 	}

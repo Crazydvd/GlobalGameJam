@@ -5,7 +5,7 @@ namespace AI
 {
 	public class AttractBehaviour : BetterMonoBehaviour
 	{
-		private BehaviourManager sheepBehaviourManager;
+		private SheepBehaviourManager sheepBehaviourManager;
 
 		private float wanderOrientation = 0;
 
@@ -14,7 +14,7 @@ namespace AI
 		private void Awake()
 		{
 			rigidbody = GetComponent<Rigidbody>();
-			sheepBehaviourManager = GetComponent<BehaviourManager>();
+			sheepBehaviourManager = GetComponent<SheepBehaviourManager>();
 		}
 
 		private void FixedUpdate()
@@ -35,7 +35,7 @@ namespace AI
 			{
 				float targetRotation = -1 * (Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg);
 				float newRotation = Mathf.LerpAngle(rigidbody.rotation.eulerAngles.y, targetRotation,
-					Time.deltaTime * sheepBehaviourManager.RotateSpeed);
+					Time.deltaTime * sheepBehaviourManager.sheepSettings.RotateSpeed);
 				rigidbody.rotation = Quaternion.Euler(0, newRotation, 0);
 			}
 		}
@@ -44,9 +44,9 @@ namespace AI
 		{
 			rigidbody.velocity += linearAcceleration * Time.deltaTime;
 
-			if (rigidbody.velocity.magnitude > sheepBehaviourManager.MaxVelocity)
+			if (rigidbody.velocity.magnitude > sheepBehaviourManager.sheepSettings.MaxVelocity)
 			{
-				rigidbody.velocity = rigidbody.velocity.normalized * sheepBehaviourManager.MaxVelocity;
+				rigidbody.velocity = rigidbody.velocity.normalized * sheepBehaviourManager.sheepSettings.MaxVelocity;
 			}
 		}
 
@@ -54,14 +54,14 @@ namespace AI
 		{
 			float sheepOrientation = OrientationInRadians(); //rotation of the sheep in radians
 
-			wanderOrientation += GetRandomNumber() * sheepBehaviourManager.WanderRate;
+			wanderOrientation += GetRandomNumber() * sheepBehaviourManager.sheepSettings.WanderRate;
 
 			float targetOrientation = wanderOrientation + sheepOrientation; //get new orientation to rotate to 
 
 			Vector3 targetPosition = sheepBehaviourManager.LureOrigin;
 
-			targetPosition = targetPosition +
-							 (GetOrientationVector(targetOrientation) * sheepBehaviourManager.WanderRadius);
+			targetPosition += (GetOrientationVector(targetOrientation) *
+							   sheepBehaviourManager.sheepSettings.WanderRadius);
 
 			return Seek(targetPosition);
 		}
@@ -72,13 +72,13 @@ namespace AI
 			acceleration.y = 0;
 			acceleration.Normalize();
 
-			acceleration *= sheepBehaviourManager.MaxAcceleration;
+			acceleration *= sheepBehaviourManager.sheepSettings.MaxAcceleration;
 
 			return acceleration;
 		}
 
 
-		private Vector3 GetOrientationVector(float orientation)
+		private static Vector3 GetOrientationVector(float orientation)
 		{
 			return new Vector3(Mathf.Cos(-orientation), 0, Mathf.Sin(-orientation));
 		}
@@ -91,7 +91,7 @@ namespace AI
 		/// <summary>
 		/// Returns a number between -1 and 1
 		/// </summary>
-		private float GetRandomNumber()
+		private static float GetRandomNumber()
 		{
 			return Random.value - Random.value;
 		}

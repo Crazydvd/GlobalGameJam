@@ -1,4 +1,5 @@
 ﻿using Enums;
+using Events.GameplayEvents;
 using JoystickData;
 using VDFramework;
 using VDFramework.EventSystem;
@@ -25,7 +26,7 @@ namespace Gameplay.Player2
 			{
 				attractEnabled = !attractEnabled;
 
-				EventManager.Instance.RaiseEvent(new ToggleAttractEvent(attractEnabled, attractScript));
+				EventManager.Instance.RaiseEvent(new ToggleAttractEvent(attractEnabled, attractScript, int.MaxValue));
 			}
 		}
 	}
