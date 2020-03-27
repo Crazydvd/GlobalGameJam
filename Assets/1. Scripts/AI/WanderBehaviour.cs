@@ -21,7 +21,6 @@ namespace AI
 		public float moveSpeed = 3f;
 		public float rotSpeed = 100f;
 
-		[SerializeField]
 		private WanderState currentState = WanderState.Idle;
 
 		private Coroutine coroutine = null;
