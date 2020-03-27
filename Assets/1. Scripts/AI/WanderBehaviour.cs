@@ -21,6 +21,7 @@ namespace AI
 		public float moveSpeed = 3f;
 		public float rotSpeed = 100f;
 
+		[SerializeField]
 		private WanderState currentState = WanderState.Idle;
 
 		private Coroutine coroutine = null;
@@ -32,7 +33,7 @@ namespace AI
 			{
 				coroutine = StartCoroutine(Wander());
 			}
-
+			
 			switch (currentState)
 			{
 				case WanderState.RotateLeft:
@@ -71,8 +72,9 @@ namespace AI
 			currentState = RandomUtil.GetRandom(WanderState.RotateLeft, WanderState.RotateRight);
 
 			yield return new WaitForSeconds(rotateTime);
-			
-			yield return null;
+
+			StopCoroutine(coroutine);
+			coroutine = null;
 		}
 		
 		private void Walk()
@@ -86,7 +88,7 @@ namespace AI
 
 			float rotationSpeed = rotSpeed * modifier;
 
-			CachedTransform.Rotate(rotationSpeed * Time.deltaTime * CachedTransform.up);
+			CachedTransform.RotateAround(CachedTransform.position, CachedTransform.up, rotationSpeed * Time.deltaTime);
 		}
 	}
 }
